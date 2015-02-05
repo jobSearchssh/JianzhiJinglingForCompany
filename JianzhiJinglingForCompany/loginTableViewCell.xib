@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="63" id="KGk-i7-Jjw" customClass="loginTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="baq-1q-zuv">
+                        <rect key="frame" x="32" y="19" width="80" height="30"/>
+                        <color key="backgroundColor" red="0.090196078430000007" green="0.3411764706" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="8qN-Ke-bhL"/>
+                            <constraint firstAttribute="width" constant="80" id="tvN-eL-DiE"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                        <state key="normal" title="注册">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="registerAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="4Fb-cg-6Ui"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gFc-37-I2Z">
+                        <rect key="frame" x="144" y="19" width="80" height="30"/>
+                        <color key="backgroundColor" red="0.68235294117647061" green="0.77254901960784317" blue="0.31372549019607843" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="HWA-LE-mO6"/>
+                            <constraint firstAttribute="width" constant="80" id="pfG-ga-BSz"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                        <state key="normal" title="登陆">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="loginAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="bdp-K5-JCL"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="baq-1q-zuv" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="24" id="Fcn-Ai-0vg"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="baq-1q-zuv" secondAttribute="bottom" constant="-8" id="fut-rt-eJy"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="gFc-37-I2Z" secondAttribute="bottom" constant="-8" id="hHu-nT-J6E"/>
+                    <constraint firstItem="gFc-37-I2Z" firstAttribute="leading" secondItem="baq-1q-zuv" secondAttribute="trailing" constant="32" id="lIf-5P-eqi"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="loginOutlet" destination="gFc-37-I2Z" id="3hT-SJ-jKM"/>
+                <outlet property="registerOutlet" destination="baq-1q-zuv" id="1eC-yl-h75"/>
+            </connections>
+            <point key="canvasLocation" x="353" y="258"/>
+        </tableViewCell>
+    </objects>
+</document>

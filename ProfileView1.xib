@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="yKz-Xt-F9Z" customClass="ProfileView1">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="100"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img1.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="2NW-YR-9qL">
+                    <rect key="frame" x="22" y="7" width="85" height="85"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="85" id="YdY-xp-ar5"/>
+                        <constraint firstAttribute="width" constant="85" id="Ytw-pU-0Wq"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="帮助小欣" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CIe-Gt-twU">
+                    <rect key="frame" x="124" y="7" width="410" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="OMh-yg-WKl"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="咨询经理" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cbe-6c-aNc">
+                    <rect key="frame" x="124" y="28" width="410" height="32"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="32" id="dPh-1H-r2j"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="19"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="heart.png" translatesAutoresizingMaskIntoConstraints="NO" id="UaE-1y-Cjh">
+                    <rect key="frame" x="557" y="3" width="22" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="22" id="0vv-zX-NTs"/>
+                        <constraint firstAttribute="width" constant="22" id="oRa-CD-Wr1"/>
+                    </constraints>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j91-P8-mGf">
+                    <rect key="frame" x="124" y="61" width="22" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="22" id="THf-Nc-UsC"/>
+                        <constraint firstAttribute="height" constant="22" id="odX-Ao-oCw"/>
+                    </constraints>
+                    <state key="normal" image="choose.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wt4-gT-xUx">
+                    <rect key="frame" x="169" y="61" width="22" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="22" id="9xM-HF-EUS"/>
+                        <constraint firstAttribute="height" constant="22" id="xdI-UJ-7Kf"/>
+                    </constraints>
+                    <state key="normal" image="drop.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="cbe-6c-aNc" firstAttribute="top" secondItem="CIe-Gt-twU" secondAttribute="bottom" id="3pB-jq-Ryc"/>
+                <constraint firstItem="CIe-Gt-twU" firstAttribute="leading" secondItem="2NW-YR-9qL" secondAttribute="trailing" constant="17" id="6Y2-g6-UWw"/>
+                <constraint firstItem="CIe-Gt-twU" firstAttribute="top" secondItem="yKz-Xt-F9Z" secondAttribute="top" constant="7" id="BTt-ye-NEu"/>
+                <constraint firstItem="2NW-YR-9qL" firstAttribute="top" secondItem="yKz-Xt-F9Z" secondAttribute="top" constant="7" id="EZh-Sg-8dr"/>
+                <constraint firstItem="wt4-gT-xUx" firstAttribute="top" secondItem="cbe-6c-aNc" secondAttribute="bottom" constant="1" id="M4I-8f-kJ1"/>
+                <constraint firstItem="UaE-1y-Cjh" firstAttribute="leading" secondItem="CIe-Gt-twU" secondAttribute="trailing" constant="23" id="cL6-q3-V0a"/>
+                <constraint firstItem="cbe-6c-aNc" firstAttribute="leading" secondItem="2NW-YR-9qL" secondAttribute="trailing" constant="17" id="dR8-Ft-KPJ"/>
+                <constraint firstItem="UaE-1y-Cjh" firstAttribute="top" secondItem="yKz-Xt-F9Z" secondAttribute="top" constant="3" id="dXJ-Ph-kMj"/>
+                <constraint firstItem="2NW-YR-9qL" firstAttribute="leading" secondItem="yKz-Xt-F9Z" secondAttribute="leading" constant="22" id="kob-r2-Lvo"/>
+                <constraint firstItem="j91-P8-mGf" firstAttribute="leading" secondItem="2NW-YR-9qL" secondAttribute="trailing" constant="17" id="ouc-YY-JJP"/>
+                <constraint firstAttribute="trailing" secondItem="UaE-1y-Cjh" secondAttribute="trailing" constant="21" id="pJb-il-bHp"/>
+                <constraint firstItem="j91-P8-mGf" firstAttribute="top" secondItem="cbe-6c-aNc" secondAttribute="bottom" constant="1" id="tX6-XO-kRh"/>
+                <constraint firstAttribute="trailing" secondItem="cbe-6c-aNc" secondAttribute="trailing" constant="66" id="uAc-yr-GAX"/>
+                <constraint firstItem="wt4-gT-xUx" firstAttribute="leading" secondItem="j91-P8-mGf" secondAttribute="trailing" constant="23" id="uh4-pb-9c5"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="TitleLabel" destination="cbe-6c-aNc" id="JKk-Oz-7Sx"/>
+                <outlet property="chooseBtn" destination="j91-P8-mGf" id="1Dy-Vq-8M6"/>
+                <outlet property="dropBtn" destination="wt4-gT-xUx" id="7Cc-uq-s6x"/>
+                <outlet property="likeIcon" destination="UaE-1y-Cjh" id="pUk-bo-Dbf"/>
+                <outlet property="profileImageView" destination="2NW-YR-9qL" id="PKa-VA-J3J"/>
+                <outlet property="usernameLabel" destination="CIe-Gt-twU" id="AwW-P5-Pan"/>
+            </connections>
+            <point key="canvasLocation" x="-312" y="296"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="choose.png" width="50" height="50"/>
+        <image name="drop.png" width="50" height="50"/>
+        <image name="heart.png" width="50" height="50"/>
+        <image name="img1.jpg" width="330" height="340"/>
+    </resources>
+</document>

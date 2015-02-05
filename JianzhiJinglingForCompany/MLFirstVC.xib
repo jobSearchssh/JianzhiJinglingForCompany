@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MLFirstVC">
+            <connections>
+                <outlet property="tabbar" destination="hq5-HG-YjK" id="5Tz-gx-d5c"/>
+                <outlet property="tableView" destination="4Zw-aG-ERW" id="0Bl-e8-1Jh"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tabBar contentMode="scaleToFill" backgroundImage="tabbarBackground.png" translatesAutoresizingMaskIntoConstraints="NO" id="hq5-HG-YjK">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="49" id="5Ef-EI-lDa"/>
+                    </constraints>
+                    <items>
+                        <tabBarItem title="地图" image="location.png" selectedImage="location.png" id="i4c-Uu-9PM"/>
+                        <tabBarItem tag="1" title="分类" image="catagory.png" selectedImage="catagory.png" id="qDR-4l-c4X"/>
+                        <tabBarItem tag="2" title="消息" image="letter.png" selectedImage="letter.png" id="IDM-zW-qqE"/>
+                        <tabBarItem tag="3" title="筛选" image="target.png" selectedImage="target.png" id="yGw-lO-0HX"/>
+                        <tabBarItem tag="4" title="精灵匹配" image="calendar.png" selectedImage="calendar.png" id="750-FT-GBd"/>
+                    </items>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="5Ef-EI-lDa"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=regular-widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="5Ef-EI-lDa"/>
+                        </mask>
+                    </variation>
+                </tabBar>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="4Zw-aG-ERW">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </tableView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="hq5-HG-YjK" secondAttribute="trailing" id="0zu-XN-f1d"/>
+                <constraint firstAttribute="trailing" secondItem="4Zw-aG-ERW" secondAttribute="trailing" id="1tN-nS-kJq"/>
+                <constraint firstItem="hq5-HG-YjK" firstAttribute="top" secondItem="4Zw-aG-ERW" secondAttribute="bottom" id="7iA-v5-HAr"/>
+                <constraint firstItem="4Zw-aG-ERW" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="CAZ-p0-XRm"/>
+                <constraint firstAttribute="bottom" secondItem="hq5-HG-YjK" secondAttribute="bottom" id="TAO-ty-ky8"/>
+                <constraint firstItem="hq5-HG-YjK" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="YjO-MK-dxs"/>
+                <constraint firstItem="4Zw-aG-ERW" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="i5a-ju-B0P"/>
+            </constraints>
+            <variation key="default">
+                <mask key="subviews">
+                    <exclude reference="hq5-HG-YjK"/>
+                    <exclude reference="4Zw-aG-ERW"/>
+                </mask>
+                <mask key="constraints">
+                    <exclude reference="0zu-XN-f1d"/>
+                    <exclude reference="7iA-v5-HAr"/>
+                    <exclude reference="TAO-ty-ky8"/>
+                    <exclude reference="YjO-MK-dxs"/>
+                    <exclude reference="1tN-nS-kJq"/>
+                    <exclude reference="CAZ-p0-XRm"/>
+                    <exclude reference="i5a-ju-B0P"/>
+                </mask>
+            </variation>
+            <variation key="heightClass=regular-widthClass=compact">
+                <mask key="subviews">
+                    <include reference="hq5-HG-YjK"/>
+                    <include reference="4Zw-aG-ERW"/>
+                </mask>
+                <mask key="constraints">
+                    <include reference="0zu-XN-f1d"/>
+                    <include reference="7iA-v5-HAr"/>
+                    <include reference="TAO-ty-ky8"/>
+                    <include reference="YjO-MK-dxs"/>
+                    <include reference="1tN-nS-kJq"/>
+                    <include reference="CAZ-p0-XRm"/>
+                    <include reference="i5a-ju-B0P"/>
+                </mask>
+            </variation>
+            <point key="canvasLocation" x="-351" y="280"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="calendar.png" width="30" height="30"/>
+        <image name="catagory.png" width="30" height="30"/>
+        <image name="letter.png" width="30" height="30"/>
+        <image name="location.png" width="30" height="30"/>
+        <image name="tabbarBackground.png" width="720" height="106"/>
+        <image name="target.png" width="30" height="30"/>
+    </resources>
+</document>

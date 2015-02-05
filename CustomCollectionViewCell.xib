@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CustomCollectionCell" id="gTV-IL-0wX" customClass="CustomCollectionViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+                <subviews>
+                    <imageView multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img2.jpg" highlighted="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XkT-tG-7ct">
+                        <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="heart.png" translatesAutoresizingMaskIntoConstraints="NO" id="VQS-Od-TIG">
+                        <rect key="frame" x="122" y="8" width="20" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="VQS-Od-TIG" secondAttribute="height" multiplier="1:1" id="2LY-3E-VN9"/>
+                            <constraint firstAttribute="height" constant="20" id="n7V-3x-56n"/>
+                            <constraint firstAttribute="width" constant="20" id="ovv-35-XDi"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="2LY-3E-VN9"/>
+                            </mask>
+                        </variation>
+                    </imageView>
+                    <view alpha="0.79999999999999982" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ele-3s-ZPb">
+                        <rect key="frame" x="0.0" y="125" width="150" height="25"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.4km" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iW6-8a-7cm">
+                                <rect key="frame" x="41" y="3" width="69" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="69" id="Mrr-zj-VEm"/>
+                                    <constraint firstAttribute="height" constant="20" id="eKy-C7-w5b"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="15"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerY" secondItem="iW6-8a-7cm" secondAttribute="centerY" constant="-0.5" id="OCa-NE-PwY"/>
+                            <constraint firstAttribute="height" constant="25" id="ZkH-Ob-7sl"/>
+                            <constraint firstAttribute="centerX" secondItem="iW6-8a-7cm" secondAttribute="centerX" constant="-0.5" id="aMg-Zz-z1c"/>
+                        </constraints>
+                    </view>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="school.png" translatesAutoresizingMaskIntoConstraints="NO" id="zdG-87-wvV">
+                        <rect key="frame" x="8" y="8" width="20" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="20" id="2Yr-PF-87Z"/>
+                            <constraint firstAttribute="height" constant="20" id="NbJ-dn-df7"/>
+                            <constraint firstAttribute="width" secondItem="zdG-87-wvV" secondAttribute="height" multiplier="1:1" id="iFh-HO-Cr4"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="iFh-HO-Cr4"/>
+                            </mask>
+                        </variation>
+                    </imageView>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            </view>
+            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="XkT-tG-7ct" secondAttribute="trailing" id="0cT-4A-4XG"/>
+                <constraint firstItem="VQS-Od-TIG" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="122" id="181-qV-ggP"/>
+                <constraint firstItem="VQS-Od-TIG" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="755-pZ-Tbl"/>
+                <constraint firstAttribute="trailing" secondItem="Ele-3s-ZPb" secondAttribute="trailing" id="IUz-v7-gg0"/>
+                <constraint firstAttribute="centerX" secondItem="XkT-tG-7ct" secondAttribute="centerX" id="L1s-zx-r1r"/>
+                <constraint firstItem="Ele-3s-ZPb" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="125" id="Lqa-3D-VWh"/>
+                <constraint firstItem="XkT-tG-7ct" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="NYt-cF-10M"/>
+                <constraint firstItem="zdG-87-wvV" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="PpA-3X-O70"/>
+                <constraint firstItem="zdG-87-wvV" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="TEj-3v-ax1"/>
+                <constraint firstItem="zdG-87-wvV" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leadingMargin" id="TLZ-V5-hOO"/>
+                <constraint firstAttribute="centerY" secondItem="XkT-tG-7ct" secondAttribute="centerY" id="UhR-kA-5Xk"/>
+                <constraint firstItem="zdG-87-wvV" firstAttribute="top" secondItem="VQS-Od-TIG" secondAttribute="top" id="WSH-oK-sGK"/>
+                <constraint firstAttribute="bottom" secondItem="Ele-3s-ZPb" secondAttribute="bottom" id="Xrt-DF-qkp"/>
+                <constraint firstAttribute="centerX" secondItem="Ele-3s-ZPb" secondAttribute="centerX" id="YPp-Lc-Oqq"/>
+                <constraint firstAttribute="trailing" secondItem="VQS-Od-TIG" secondAttribute="trailing" constant="8" id="eSB-02-bmm"/>
+                <constraint firstAttribute="trailing" secondItem="VQS-Od-TIG" secondAttribute="trailing" constant="122" id="l2Q-3G-59J"/>
+                <constraint firstAttribute="centerX" secondItem="Ele-3s-ZPb" secondAttribute="centerX" id="lrF-Mq-2rH"/>
+                <constraint firstAttribute="trailing" secondItem="Ele-3s-ZPb" secondAttribute="trailing" id="rng-Hq-lFK"/>
+                <constraint firstItem="XkT-tG-7ct" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="sMj-7j-XWZ"/>
+                <constraint firstAttribute="bottom" secondItem="Ele-3s-ZPb" secondAttribute="bottom" id="t6Y-9I-ZtX"/>
+                <constraint firstAttribute="bottom" secondItem="XkT-tG-7ct" secondAttribute="bottom" id="tao-lH-F46"/>
+                <constraint firstItem="Ele-3s-ZPb" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="w2V-1o-wbq"/>
+            </constraints>
+            <size key="customSize" width="157" height="171"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="TLZ-V5-hOO"/>
+                    <exclude reference="WSH-oK-sGK"/>
+                    <exclude reference="181-qV-ggP"/>
+                    <exclude reference="l2Q-3G-59J"/>
+                    <exclude reference="Lqa-3D-VWh"/>
+                    <exclude reference="Xrt-DF-qkp"/>
+                    <exclude reference="YPp-Lc-Oqq"/>
+                    <exclude reference="rng-Hq-lFK"/>
+                </mask>
+            </variation>
+            <connections>
+                <outlet property="ContentImage" destination="XkT-tG-7ct" id="d8G-zR-sH6"/>
+                <outlet property="distanceLabelWithoutUnit" destination="iW6-8a-7cm" id="Mxe-7V-Im9"/>
+                <outlet property="markIconImageView" destination="VQS-Od-TIG" id="PG4-Ga-jNj"/>
+            </connections>
+            <point key="canvasLocation" x="200" y="259"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="heart.png" width="50" height="50"/>
+        <image name="img2.jpg" width="330" height="340"/>
+        <image name="school.png" width="160" height="160"/>
+    </resources>
+</document>
