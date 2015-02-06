@@ -15,6 +15,9 @@
 #import "SMS_SDK/SMS_SDK.h"
 #import "MainTabBarViewController.h"
 #import "MLNaviViewController.h"
+#import "baseAPP.h"
+#import "netAPI.h"
+
 @interface AppDelegate ()
 @property (strong,nonatomic,readonly)MainTabBarViewController *mainTabberVC;
 @property (strong, nonatomic) Reachability *internetReachability;
@@ -49,6 +52,13 @@
     self.window.rootViewController =self.mainTabberVC;
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
+    //基础网络初始化baseAPP
+    //初始化base信息
+    id base = [[baseAPP alloc]init];
+    if (base == [NSNull null]) {
+        NSLog(@"baseAPP初始化失败");
+    }
     //友盟
     [MobClick startWithAppkey:@"54c10ddbfd98c5b7c2000836" reportPolicy:BATCH  channelId:nil];
     [MobClick checkUpdate:@"兼职精灵有新版本啦" cancelButtonTitle:@"无情的忽略" otherButtonTitles:@"欣然前往下载"];
@@ -69,8 +79,13 @@
     [self.internetReachability startNotifier];
     
 
+//    [self test];
     return YES;
 }
+
+//-(void)test{
+//    [netAPI test];
+//}
 
 -(void)reachabilityChanged:(NSNotification *)note
 {

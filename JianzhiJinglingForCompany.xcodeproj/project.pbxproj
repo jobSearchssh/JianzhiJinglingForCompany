@@ -620,6 +620,25 @@
 		04DC9BE41A7880B00097DEB0 /* jobListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04DC9BE21A7880B00097DEB0 /* jobListViewController.xib */; };
 		04DC9BFD1A78C4DA0097DEB0 /* jobPublicationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DC9BFB1A78C4DA0097DEB0 /* jobPublicationViewController.m */; };
 		04DC9BFE1A78C4DA0097DEB0 /* jobPublicationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04DC9BFC1A78C4DA0097DEB0 /* jobPublicationViewController.xib */; };
+		B72ABBEE1A849CBD0029FF5D /* URLOperationWithBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = B72ABBED1A849CBD0029FF5D /* URLOperationWithBlock.m */; };
+		B72ABBF11A849CCB0029FF5D /* URLReturnModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B72ABBF01A849CCB0029FF5D /* URLReturnModel.m */; };
+		B72ABBF41A849CD60029FF5D /* netAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = B72ABBF31A849CD60029FF5D /* netAPI.m */; };
+		B72ABBF81A849CFD0029FF5D /* baseAPP.m in Sources */ = {isa = PBXBuildFile; fileRef = B72ABBF71A849CFD0029FF5D /* baseAPP.m */; };
+		B72ABBFC1A849DBB0029FF5D /* loginModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B72ABBFB1A849DBB0029FF5D /* loginModel.m */; };
+		B72ABBFF1A849DC50029FF5D /* registerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B72ABBFE1A849DC50029FF5D /* registerModel.m */; };
+		B72ABC041A84A7BB0029FF5D /* baseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B72ABC031A84A7BB0029FF5D /* baseModel.m */; };
+		B72ABC071A84A7DA0029FF5D /* ceateOrEditInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B72ABC061A84A7DA0029FF5D /* ceateOrEditInfoModel.m */; };
+		B72ABC0A1A84B6720029FF5D /* createJobModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B72ABC091A84B6720029FF5D /* createJobModel.m */; };
+		B72ABC0D1A84B73F0029FF5D /* geoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B72ABC0C1A84B73F0029FF5D /* geoModel.m */; };
+		B72ABC101A84B98D0029FF5D /* oprationResultModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B72ABC0F1A84B98D0029FF5D /* oprationResultModel.m */; };
+		B72ABC141A84C3300029FF5D /* DateUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = B72ABC131A84C3300029FF5D /* DateUtil.m */; };
+		B72ABC181A84DC160029FF5D /* enterpriseDetailReturnModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B72ABC171A84DC160029FF5D /* enterpriseDetailReturnModel.m */; };
+		B72ABC1B1A84E06A0029FF5D /* enterpriseDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B72ABC1A1A84E06A0029FF5D /* enterpriseDetailModel.m */; };
+		B72ABC211A84E8280029FF5D /* jobListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B72ABC1E1A84E8280029FF5D /* jobListModel.m */; };
+		B72ABC221A84E8280029FF5D /* jobModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B72ABC201A84E8280029FF5D /* jobModel.m */; };
+		B72ABC251A84E98E0029FF5D /* baseJobModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B72ABC241A84E98E0029FF5D /* baseJobModel.m */; };
+		B72ABC281A84EB270029FF5D /* userListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B72ABC271A84EB270029FF5D /* userListModel.m */; };
+		B72ABC2C1A84EB450029FF5D /* userModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B72ABC2B1A84EB450029FF5D /* userModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1319,6 +1338,44 @@
 		04DC9BFA1A78C4DA0097DEB0 /* jobPublicationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jobPublicationViewController.h; sourceTree = "<group>"; };
 		04DC9BFB1A78C4DA0097DEB0 /* jobPublicationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = jobPublicationViewController.m; sourceTree = "<group>"; };
 		04DC9BFC1A78C4DA0097DEB0 /* jobPublicationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = jobPublicationViewController.xib; sourceTree = "<group>"; };
+		B72ABBEC1A849CBD0029FF5D /* URLOperationWithBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URLOperationWithBlock.h; sourceTree = "<group>"; };
+		B72ABBED1A849CBD0029FF5D /* URLOperationWithBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLOperationWithBlock.m; sourceTree = "<group>"; };
+		B72ABBEF1A849CCB0029FF5D /* URLReturnModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URLReturnModel.h; sourceTree = "<group>"; };
+		B72ABBF01A849CCB0029FF5D /* URLReturnModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLReturnModel.m; sourceTree = "<group>"; };
+		B72ABBF21A849CD60029FF5D /* netAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = netAPI.h; sourceTree = "<group>"; };
+		B72ABBF31A849CD60029FF5D /* netAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = netAPI.m; sourceTree = "<group>"; };
+		B72ABBF61A849CFD0029FF5D /* baseAPP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = baseAPP.h; sourceTree = "<group>"; };
+		B72ABBF71A849CFD0029FF5D /* baseAPP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = baseAPP.m; sourceTree = "<group>"; };
+		B72ABBFA1A849DBB0029FF5D /* loginModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = loginModel.h; sourceTree = "<group>"; };
+		B72ABBFB1A849DBB0029FF5D /* loginModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = loginModel.m; sourceTree = "<group>"; };
+		B72ABBFD1A849DC50029FF5D /* registerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = registerModel.h; sourceTree = "<group>"; };
+		B72ABBFE1A849DC50029FF5D /* registerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = registerModel.m; sourceTree = "<group>"; };
+		B72ABC021A84A7BB0029FF5D /* baseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = baseModel.h; sourceTree = "<group>"; };
+		B72ABC031A84A7BB0029FF5D /* baseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = baseModel.m; sourceTree = "<group>"; };
+		B72ABC051A84A7DA0029FF5D /* ceateOrEditInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ceateOrEditInfoModel.h; sourceTree = "<group>"; };
+		B72ABC061A84A7DA0029FF5D /* ceateOrEditInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ceateOrEditInfoModel.m; sourceTree = "<group>"; };
+		B72ABC081A84B6720029FF5D /* createJobModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = createJobModel.h; sourceTree = "<group>"; };
+		B72ABC091A84B6720029FF5D /* createJobModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = createJobModel.m; sourceTree = "<group>"; };
+		B72ABC0B1A84B73F0029FF5D /* geoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = geoModel.h; sourceTree = "<group>"; };
+		B72ABC0C1A84B73F0029FF5D /* geoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = geoModel.m; sourceTree = "<group>"; };
+		B72ABC0E1A84B98D0029FF5D /* oprationResultModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = oprationResultModel.h; sourceTree = "<group>"; };
+		B72ABC0F1A84B98D0029FF5D /* oprationResultModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = oprationResultModel.m; sourceTree = "<group>"; };
+		B72ABC121A84C3300029FF5D /* DateUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateUtil.h; sourceTree = "<group>"; };
+		B72ABC131A84C3300029FF5D /* DateUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateUtil.m; sourceTree = "<group>"; };
+		B72ABC161A84DC160029FF5D /* enterpriseDetailReturnModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = enterpriseDetailReturnModel.h; sourceTree = "<group>"; };
+		B72ABC171A84DC160029FF5D /* enterpriseDetailReturnModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = enterpriseDetailReturnModel.m; sourceTree = "<group>"; };
+		B72ABC191A84E06A0029FF5D /* enterpriseDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = enterpriseDetailModel.h; sourceTree = "<group>"; };
+		B72ABC1A1A84E06A0029FF5D /* enterpriseDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = enterpriseDetailModel.m; sourceTree = "<group>"; };
+		B72ABC1D1A84E8280029FF5D /* jobListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jobListModel.h; sourceTree = "<group>"; };
+		B72ABC1E1A84E8280029FF5D /* jobListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = jobListModel.m; sourceTree = "<group>"; };
+		B72ABC1F1A84E8280029FF5D /* jobModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jobModel.h; sourceTree = "<group>"; };
+		B72ABC201A84E8280029FF5D /* jobModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = jobModel.m; sourceTree = "<group>"; };
+		B72ABC231A84E98E0029FF5D /* baseJobModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = baseJobModel.h; sourceTree = "<group>"; };
+		B72ABC241A84E98E0029FF5D /* baseJobModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = baseJobModel.m; sourceTree = "<group>"; };
+		B72ABC261A84EB270029FF5D /* userListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = userListModel.h; sourceTree = "<group>"; };
+		B72ABC271A84EB270029FF5D /* userListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = userListModel.m; sourceTree = "<group>"; };
+		B72ABC2A1A84EB450029FF5D /* userModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = userModel.h; sourceTree = "<group>"; };
+		B72ABC2B1A84EB450029FF5D /* userModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = userModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1485,6 +1542,10 @@
 		047B431F1A71ECB00099DAA5 /* JianzhiJinglingForCompany */ = {
 			isa = PBXGroup;
 			children = (
+				B72ABC111A84C3260029FF5D /* utils */,
+				B72ABBF51A849CE00029FF5D /* baseAPP */,
+				B72ABBEA1A8492C30029FF5D /* model */,
+				B72ABBE91A84928B0029FF5D /* network */,
 				047B43251A71ECB00099DAA5 /* AppDelegate.m */,
 				047B43241A71ECB00099DAA5 /* AppDelegate.h */,
 				047AA4811A7A892400A3B278 /* MainTabBarViewController.h */,
@@ -1724,7 +1785,6 @@
 				04589F141A81BFF000B86C0A /* ZHpickView */,
 				04589EDF1A80F85900B86C0A /* RESideMenu */,
 				047AA3F21A7A286100A3B278 /* dropDownList */,
-				04DC99DE1A778BF80097DEB0 /* Reachability */,
 				04DC9B6E1A786C9A0097DEB0 /* radio */,
 				04DC9ABE1A7796B60097DEB0 /* BmobSDK.framework */,
 				04DC98711A7746640097DEB0 /* JSBadgeView */,
@@ -2378,15 +2438,6 @@
 			path = JianzhiJinglingForCompany;
 			sourceTree = "<group>";
 		};
-		04DC99DE1A778BF80097DEB0 /* Reachability */ = {
-			isa = PBXGroup;
-			children = (
-				04DC9ABB1A77967E0097DEB0 /* Reachability.h */,
-				04DC9ABC1A77967E0097DEB0 /* Reachability.m */,
-			);
-			name = Reachability;
-			sourceTree = "<group>";
-		};
 		04DC99F21A778EEB0097DEB0 /* image */ = {
 			isa = PBXGroup;
 			children = (
@@ -2727,6 +2778,122 @@
 				047AA4751A7A30A400A3B278 /* NEW */,
 			);
 			name = JobPublicationListTableView;
+			sourceTree = "<group>";
+		};
+		B72ABBE91A84928B0029FF5D /* network */ = {
+			isa = PBXGroup;
+			children = (
+				B72ABBF21A849CD60029FF5D /* netAPI.h */,
+				B72ABBF31A849CD60029FF5D /* netAPI.m */,
+				B72ABBEF1A849CCB0029FF5D /* URLReturnModel.h */,
+				B72ABBF01A849CCB0029FF5D /* URLReturnModel.m */,
+				B72ABBEC1A849CBD0029FF5D /* URLOperationWithBlock.h */,
+				B72ABBED1A849CBD0029FF5D /* URLOperationWithBlock.m */,
+				B72ABBEB1A849A630029FF5D /* Reachability */,
+			);
+			name = network;
+			sourceTree = "<group>";
+		};
+		B72ABBEA1A8492C30029FF5D /* model */ = {
+			isa = PBXGroup;
+			children = (
+				B72ABC1C1A84E7350029FF5D /* listArray */,
+				B72ABC151A84CB1B0029FF5D /* ceate */,
+				B72ABC011A84A7990029FF5D /* baseModel */,
+				B72ABC001A84A7820029FF5D /* enterprise */,
+				B72ABBF91A849D970029FF5D /* login&register */,
+			);
+			name = model;
+			sourceTree = "<group>";
+		};
+		B72ABBEB1A849A630029FF5D /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				04DC9ABB1A77967E0097DEB0 /* Reachability.h */,
+				04DC9ABC1A77967E0097DEB0 /* Reachability.m */,
+			);
+			name = Reachability;
+			sourceTree = "<group>";
+		};
+		B72ABBF51A849CE00029FF5D /* baseAPP */ = {
+			isa = PBXGroup;
+			children = (
+				B72ABBF61A849CFD0029FF5D /* baseAPP.h */,
+				B72ABBF71A849CFD0029FF5D /* baseAPP.m */,
+			);
+			name = baseAPP;
+			sourceTree = "<group>";
+		};
+		B72ABBF91A849D970029FF5D /* login&register */ = {
+			isa = PBXGroup;
+			children = (
+				B72ABBFD1A849DC50029FF5D /* registerModel.h */,
+				B72ABBFE1A849DC50029FF5D /* registerModel.m */,
+				B72ABBFA1A849DBB0029FF5D /* loginModel.h */,
+				B72ABBFB1A849DBB0029FF5D /* loginModel.m */,
+			);
+			name = "login&register";
+			sourceTree = "<group>";
+		};
+		B72ABC001A84A7820029FF5D /* enterprise */ = {
+			isa = PBXGroup;
+			children = (
+				B72ABC051A84A7DA0029FF5D /* ceateOrEditInfoModel.h */,
+				B72ABC061A84A7DA0029FF5D /* ceateOrEditInfoModel.m */,
+				B72ABC161A84DC160029FF5D /* enterpriseDetailReturnModel.h */,
+				B72ABC171A84DC160029FF5D /* enterpriseDetailReturnModel.m */,
+			);
+			name = enterprise;
+			sourceTree = "<group>";
+		};
+		B72ABC011A84A7990029FF5D /* baseModel */ = {
+			isa = PBXGroup;
+			children = (
+				B72ABC231A84E98E0029FF5D /* baseJobModel.h */,
+				B72ABC241A84E98E0029FF5D /* baseJobModel.m */,
+				B72ABC0E1A84B98D0029FF5D /* oprationResultModel.h */,
+				B72ABC0F1A84B98D0029FF5D /* oprationResultModel.m */,
+				B72ABC021A84A7BB0029FF5D /* baseModel.h */,
+				B72ABC031A84A7BB0029FF5D /* baseModel.m */,
+			);
+			name = baseModel;
+			sourceTree = "<group>";
+		};
+		B72ABC111A84C3260029FF5D /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				B72ABC121A84C3300029FF5D /* DateUtil.h */,
+				B72ABC131A84C3300029FF5D /* DateUtil.m */,
+			);
+			name = utils;
+			sourceTree = "<group>";
+		};
+		B72ABC151A84CB1B0029FF5D /* ceate */ = {
+			isa = PBXGroup;
+			children = (
+				B72ABC191A84E06A0029FF5D /* enterpriseDetailModel.h */,
+				B72ABC1A1A84E06A0029FF5D /* enterpriseDetailModel.m */,
+				B72ABC081A84B6720029FF5D /* createJobModel.h */,
+				B72ABC091A84B6720029FF5D /* createJobModel.m */,
+				B72ABC0B1A84B73F0029FF5D /* geoModel.h */,
+				B72ABC0C1A84B73F0029FF5D /* geoModel.m */,
+			);
+			name = ceate;
+			sourceTree = "<group>";
+		};
+		B72ABC1C1A84E7350029FF5D /* listArray */ = {
+			isa = PBXGroup;
+			children = (
+				B72ABC1D1A84E8280029FF5D /* jobListModel.h */,
+				B72ABC1E1A84E8280029FF5D /* jobListModel.m */,
+				B72ABC1F1A84E8280029FF5D /* jobModel.h */,
+				B72ABC201A84E8280029FF5D /* jobModel.m */,
+				B72ABC261A84EB270029FF5D /* userListModel.h */,
+				B72ABC271A84EB270029FF5D /* userListModel.m */,
+				B72ABC2A1A84EB450029FF5D /* userModel.h */,
+				B72ABC2B1A84EB450029FF5D /* userModel.m */,
+			);
+			name = listArray;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -3367,11 +3534,16 @@
 				04589EFB1A80F86B00B86C0A /* REBackgroundView.m in Sources */,
 				04DC9B801A786E150097DEB0 /* freeselectViewCell.m in Sources */,
 				04DC9AF61A77B84C0097DEB0 /* SWTableViewCell.m in Sources */,
+				B72ABBEE1A849CBD0029FF5D /* URLOperationWithBlock.m in Sources */,
+				B72ABBFF1A849DC50029FF5D /* registerModel.m in Sources */,
+				B72ABBF41A849CD60029FF5D /* netAPI.m in Sources */,
 				047AA4731A7A309A00A3B278 /* TableViewCell.m in Sources */,
 				04DC9BE31A7880B00097DEB0 /* jobListViewController.m in Sources */,
+				B72ABC071A84A7DA0029FF5D /* ceateOrEditInfoModel.m in Sources */,
 				04589F011A80F86B00B86C0A /* UIWindow+RESideMenuExtensions.m in Sources */,
 				04DC98741A7746640097DEB0 /* JSBadgeView.m in Sources */,
 				04DC9AB91A7796360097DEB0 /* QCheckBox.m in Sources */,
+				B72ABC141A84C3300029FF5D /* DateUtil.m in Sources */,
 				04DC9AF51A77B84C0097DEB0 /* SWLongPressGestureRecognizer.m in Sources */,
 				04589F021A80F86B00B86C0A /* usrTableViewCell.m in Sources */,
 				04DC9B731A786DE20097DEB0 /* MLResumePreviewVC.m in Sources */,
@@ -3379,12 +3551,17 @@
 				04DC9AA11A77961B0097DEB0 /* MLCell3.m in Sources */,
 				047AA48D1A7B1E6D00A3B278 /* MLNaviViewController.m in Sources */,
 				04DC9AF81A77B84C0097DEB0 /* SWUtilityButtonView.m in Sources */,
+				B72ABC0A1A84B6720029FF5D /* createJobModel.m in Sources */,
 				04589EF81A80F86B00B86C0A /* Evaluate.m in Sources */,
 				04DC9B7C1A786E000097DEB0 /* AKPickerView.m in Sources */,
 				047B43E01A7223A20099DAA5 /* TabbarForthViewController.m in Sources */,
 				047B43231A71ECB00099DAA5 /* main.m in Sources */,
+				B72ABC041A84A7BB0029FF5D /* baseModel.m in Sources */,
 				04DC9ABD1A77967E0097DEB0 /* Reachability.m in Sources */,
+				B72ABC221A84E8280029FF5D /* jobModel.m in Sources */,
 				04589F131A8111E300B86C0A /* UIViewController+RESideMenu.m in Sources */,
+				B72ABBFC1A849DBB0029FF5D /* loginModel.m in Sources */,
+				B72ABC2C1A84EB450029FF5D /* userModel.m in Sources */,
 				04DC9B051A77BAED0097DEB0 /* MLMapView.m in Sources */,
 				04DC9AC81A77B41B0097DEB0 /* MLFirstVC.m in Sources */,
 				04589EFE1A80F86B00B86C0A /* RESideMenuItem.m in Sources */,
@@ -3392,24 +3569,33 @@
 				047AA3F71A7A287900A3B278 /* DropDownListView.m in Sources */,
 				04589EFC1A80F86B00B86C0A /* RESideMenu.m in Sources */,
 				047AA4C01A7B422500A3B278 /* CustomButton1.m in Sources */,
+				B72ABC0D1A84B73F0029FF5D /* geoModel.m in Sources */,
 				04DC9B871A786E4E0097DEB0 /* MCPagerView.m in Sources */,
 				047AA4921A7B2EB100A3B278 /* ComProfileViewController.m in Sources */,
+				B72ABBF11A849CCB0029FF5D /* URLReturnModel.m in Sources */,
+				B72ABBF81A849CFD0029FF5D /* baseAPP.m in Sources */,
 				04DC9AA91A77962E0097DEB0 /* MLLoginVC.m in Sources */,
 				04DC9BDE1A787BDD0097DEB0 /* jobListTableViewCell.m in Sources */,
+				B72ABC281A84EB270029FF5D /* userListModel.m in Sources */,
 				04DC9B781A786DF20097DEB0 /* MLResumeVC.m in Sources */,
 				04DC9AD71A77B4650097DEB0 /* MLCell2.m in Sources */,
+				B72ABC1B1A84E06A0029FF5D /* enterpriseDetailModel.m in Sources */,
 				047AA46E1A7A309100A3B278 /* PersonListViewController.m in Sources */,
 				047AA4841A7A892400A3B278 /* MainTabBarViewController.m in Sources */,
 				04589F1A1A81C14300B86C0A /* ZHPickView.m in Sources */,
 				04DC9BFD1A78C4DA0097DEB0 /* jobPublicationViewController.m in Sources */,
+				B72ABC101A84B98D0029FF5D /* oprationResultModel.m in Sources */,
 				04DC975D1A763E7F0097DEB0 /* profileImageView.m in Sources */,
 				047B43FA1A7231130099DAA5 /* CustomCollectionViewCell.m in Sources */,
+				B72ABC211A84E8280029FF5D /* jobListModel.m in Sources */,
 				047AA47E1A7A30AC00A3B278 /* TableViewCell2.m in Sources */,
+				B72ABC181A84DC160029FF5D /* enterpriseDetailReturnModel.m in Sources */,
 				04DC9ACB1A77B41B0097DEB0 /* MLFilterVC.m in Sources */,
 				04DC9AF41A77B84C0097DEB0 /* SWCellScrollView.m in Sources */,
 				047AA3E91A79DFDC00A3B278 /* CompanyResumeViewController.m in Sources */,
 				04DC97531A75ED090097DEB0 /* FirstCollectionViewController.m in Sources */,
 				04DC9AA51A7796280097DEB0 /* MLLoginBusiness.m in Sources */,
+				B72ABC251A84E98E0029FF5D /* baseJobModel.m in Sources */,
 				04589EF71A80F86B00B86C0A /* AccelerationAnimation.m in Sources */,
 				04DC9B901A78711C0097DEB0 /* coverFlowView.m in Sources */,
 				04DC9AD51A77B4650097DEB0 /* MLMessageVC.m in Sources */,
@@ -3472,7 +3658,10 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/JianzhiJinglingForCompany/PrefixHeader.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -3484,7 +3673,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "bf2266ff-e58e-4568-a5a2-b1c00256216b";
@@ -3515,13 +3704,16 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/JianzhiJinglingForCompany/PrefixHeader.pch";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PROVISIONING_PROFILE = "bf2266ff-e58e-4568-a5a2-b1c00256216b";
 				SDKROOT = iphoneos;
@@ -3542,9 +3734,9 @@
 					"$(PROJECT_DIR)/JianzhiJinglingForCompany",
 					"$(PROJECT_DIR)/JianzhiJinglingForCompany/Ray/jobSearch",
 				);
-				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = /Users/mac/Desktop/JianzhiJinglingForCompany/JianzhiJinglingForCompany/PrefixHeader.pch;
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/JianzhiJinglingForCompany/PrefixHeader.pch";
 				INFOPLIST_FILE = JianzhiJinglingForCompany/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -3571,9 +3763,9 @@
 					"$(PROJECT_DIR)/JianzhiJinglingForCompany",
 					"$(PROJECT_DIR)/JianzhiJinglingForCompany/Ray/jobSearch",
 				);
-				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = /Users/mac/Desktop/JianzhiJinglingForCompany/JianzhiJinglingForCompany/PrefixHeader.pch;
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/JianzhiJinglingForCompany/PrefixHeader.pch";
 				INFOPLIST_FILE = JianzhiJinglingForCompany/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
