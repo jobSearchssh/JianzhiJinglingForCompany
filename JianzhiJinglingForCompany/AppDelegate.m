@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-
+#import "IQKeyboardManager.h"
 #import "MobClick.h"
 #import "Reachability.h"
 #import <BmobSDK/Bmob.h>
@@ -15,11 +15,15 @@
 #import "SMS_SDK/SMS_SDK.h"
 #import "MainTabBarViewController.h"
 #import "MLNaviViewController.h"
+
 #import "baseAPP.h"
 #import "netAPI.h"
 
+
+
 @interface AppDelegate ()
 @property (strong,nonatomic,readonly)MainTabBarViewController *mainTabberVC;
+
 @property (strong, nonatomic) Reachability *internetReachability;
 @property (nonatomic) BOOL isReachable;
 @property (nonatomic) BOOL beenReachable;
@@ -31,7 +35,7 @@
 -(MainTabBarViewController *)mainTabberVC
 {
     if (_mainTabberVC==nil) {
-        _mainTabberVC=[[MainTabBarViewController alloc]init];
+        _mainTabberVC=[MainTabBarViewController shareInstance];
     }
     return _mainTabberVC;
 }
@@ -47,6 +51,23 @@
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    //初始化键盘控制
+    
+    //Enabling keyboard manager
+    [[IQKeyboardManager sharedManager] setEnable:YES];
+    [[IQKeyboardManager sharedManager] setKeyboardDistanceFromTextField:15];
+    //Enabling autoToolbar behaviour. If It is set to NO. You have to manually create UIToolbar for keyboard.
+    [[IQKeyboardManager sharedManager] setEnableAutoToolbar:YES];
+    
+    //Setting toolbar behavious to IQAutoToolbarBySubviews. Set it to IQAutoToolbarByTag to manage previous/next according to UITextField's tag property in increasing order.
+    [[IQKeyboardManager sharedManager] setToolbarManageBehaviour:IQAutoToolbarBySubviews];
+    
+    //Resign textField if touched outside of UITextField/UITextView.
+    [[IQKeyboardManager sharedManager] setShouldResignOnTouchOutside:YES];
+    
+    
+    
+    
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.rootViewController =self.mainTabberVC;
@@ -59,6 +80,9 @@
     if (base == [NSNull null]) {
         NSLog(@"baseAPP初始化失败");
     }
+    [netAPI test];
+    
+    
     //友盟
     [MobClick startWithAppkey:@"54c10ddbfd98c5b7c2000836" reportPolicy:BATCH  channelId:nil];
     [MobClick checkUpdate:@"兼职精灵有新版本啦" cancelButtonTitle:@"无情的忽略" otherButtonTitles:@"欣然前往下载"];
@@ -74,23 +98,20 @@
     self.isReachable=YES;
     self.beenReachable=YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
-    self.internetReachability = [Reachability reachabilityWithHostName:@"www.bmob.cn"] ;
+    self.internetReachability = [Reachability reachabilityWithHostName:@"www.baidu.com"] ;
     //开始监听，会启动一个run loop
     [self.internetReachability startNotifier];
     
-
-//    [self test];
     return YES;
 }
 
-//-(void)test{
-//    [netAPI test];
-//}
+
 
 -(void)reachabilityChanged:(NSNotification *)note
 {
     Reachability *curReach = [note object];
     NSParameterAssert([curReach isKindOfClass:[Reachability class]]);
+    
     
     //对连接改变做出响应处理动作
     NetworkStatus status = [curReach currentReachabilityStatus];

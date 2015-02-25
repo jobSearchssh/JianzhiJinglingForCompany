@@ -50,7 +50,12 @@
 - (void)hide;
 - (void)setRootViewController:(UIViewController *)viewController;
 
+- (void)setTableItem:(NSInteger)row Title:(NSString*)title Subtitle:(NSString*)subtitle Image:(UIImage*)image;
+
+-(void)setBadgeView:(NSInteger)index badgeText:(NSString*)badgeText;
+
 + (RESideMenu*)initInstanceWithItems:(NSArray *)items;
+
 + (RESideMenu*)sharedInstance;
 
 @end

@@ -44,6 +44,7 @@ static NSString *baseURL = @"http://123.57.5.113:8081/";
         NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
             
             URLReturnModel *objRe = [[URLReturnModel alloc]initWithData:data error:error];
+//            NSLog(@"data:%@",data);
             if (block != Nil) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     block(objRe);

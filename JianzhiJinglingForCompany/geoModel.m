@@ -24,6 +24,6 @@
     return latitude;
 }
 -(NSString *)getGeoArray{
-    return [NSString stringWithFormat:@"\"%f,%f\"",longitude,latitude];
+    return [NSString stringWithFormat:@"%f,%f",longitude,latitude];
 }
 @end

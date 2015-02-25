@@ -42,6 +42,11 @@
 #define jobModel_updated_at @"updated_at"
 #define jobModel_jobHasAccepted @"jobHasAccepted"
 #define jobModel_jobHasRejected @"jobHasRejected"
+#define jobModel_jobGenderReq @"jobGenderReq"
+#define jobModel_jobApplyStatus @"applyStatus"
+#define jobModel_jobApplyId @"apply_id"
+
+#define jinglingMatch @"enterpriseService/queryJingLingList"
 @interface baseJobModel : NSObject
 
 @end

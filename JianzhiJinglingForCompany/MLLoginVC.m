@@ -6,23 +6,29 @@
 //  Copyright (c) 2015年 麻辣工作室. All rights reserved.
 //
 
+#define LogoutAlertViewTag 90101
+#define RegistAlertViewTag 90102
+
+
 #import "MLLoginVC.h"
 #import "QCheckBox.h"
 #import "MLLoginBusiness.h"
 #import "SMS_SDK/SMS_SDK.h"
-
-@interface MLLoginVC ()<QCheckBoxDelegate,loginResult,registerResult,UIGestureRecognizerDelegate>{
+#import "UIViewController+RESideMenu.h"
+#import "UIViewController+HUD.h"
+#import "UIViewController+DismissKeyboard.h"
+#import "UIViewController+ErrorHandler.h"
+@interface MLLoginVC ()<QCheckBoxDelegate,loginResult,registerResult,UIGestureRecognizerDelegate,UIAlertViewDelegate>{
     
     UIButton *chooseLoginBtn;
     UIButton *chooseRegisterBtn;
-    MLLoginBusiness *loginer;
     BOOL agree;
     BOOL autoLogin;
     
     NSTimer *timer;
     int seconds;
 }
-
+@property (strong,nonatomic)MLLoginBusiness *loginer;
 @property (strong, nonatomic) IBOutlet UIView *loginView;
 @property (strong, nonatomic) IBOutlet UIView *registerView;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -39,18 +45,25 @@
 @synthesize userPassword2=_userPassword2;
 
 
+
+
 static  MLLoginVC *thisVC=nil;
 
 + (MLLoginVC*)sharedInstance{
     if (thisVC==nil) {
         thisVC=[[MLLoginVC alloc]init];
+        thisVC.loginer=[[MLLoginBusiness alloc]init];
+        thisVC.loginer.loginResultDelegate=thisVC;
     }
     return thisVC;
 }
 
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
+    
     chooseLoginBtn=[[UIButton alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width/2, 44)];
     chooseLoginBtn.backgroundColor=[UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1.0];
     [chooseLoginBtn setTitle:@"登录" forState:UIControlStateNormal];
@@ -104,7 +117,36 @@ static  MLLoginVC *thisVC=nil;
     self.sendMsgButton.enabled=NO;
     
     [self.sendMsgButton setBackgroundColor:[UIColor lightGrayColor]];
+    
 }
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self checkLoginStatus];
+}
+
+-(void)checkLoginStatus
+{
+    //检查登陆模式、和自动填充
+    NSUserDefaults *mySettingData = [NSUserDefaults standardUserDefaults];
+    NSString *username=[mySettingData objectForKey:@"currentUserName"];
+    if (username!=nil) {
+        self.loginButton.hidden=NO;
+        self.logoutBtn.hidden=YES;
+        self.userAccount.text=username;
+        self.userPassword.text=@"******";
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"确定要退出？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定",nil];
+        alert.tag=LogoutAlertViewTag;
+        [alert show];
+    }else
+    {
+        self.loginButton.hidden=NO;
+        self.logoutBtn.hidden=YES;
+    }
+
+}
+
 
 - (void)didSelectedCheckBox:(QCheckBox *)checkbox checked:(BOOL)checked {
     
@@ -121,7 +163,6 @@ static  MLLoginVC *thisVC=nil;
     [chooseLoginBtn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
     chooseRegisterBtn.backgroundColor=[UIColor darkGrayColor];
     [chooseRegisterBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
     [self.scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
 }
 
@@ -130,7 +171,6 @@ static  MLLoginVC *thisVC=nil;
     chooseRegisterBtn.backgroundColor=[UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1.0];
     [chooseRegisterBtn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
     [chooseLoginBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
     [self.scrollView setContentOffset:CGPointMake([[UIScreen mainScreen] bounds].size.width, 0) animated:YES];
 }
 
@@ -154,6 +194,8 @@ static  MLLoginVC *thisVC=nil;
 }
 
 - (IBAction)touchLoginBtn:(id)sender {
+    
+    [self.userPassword resignFirstResponder];
     if ([inputUserAccount length]==0) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入手机号码或账户名" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [alert show];
@@ -162,18 +204,28 @@ static  MLLoginVC *thisVC=nil;
         [alert show];
     }else{
         
-        if (!loginer) {
-            loginer=[[MLLoginBusiness alloc]init];
-            loginer.loginResultDelegate=self;
-            [loginer loginInBackground:inputUserAccount Password:inputUserPassword];
+        if (!self.loginer) {
+            self.loginer=[[MLLoginBusiness alloc]init];
+            self.loginer.loginResultDelegate=self;
         }
+        [self showHudInView:self.view hint:@"正在登陆请稍后"];
+        [self.loginer loginInBackground:inputUserAccount Password:inputUserPassword];
+        //如果超时 自动hideHub
+        [self performSelector:@selector(timeout) withObject:nil afterDelay:TIMEOUT];
     }
 }
 
+
 - (void)loginResult:(BOOL)isSucceed Feedback:(NSString*)feedback{
+    [self hideHud];
     if (isSucceed) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"登录成功" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [alert show];
+        //登陆成功，退回ResideMenuBar
+//        [self showMenu];
+        [self dismissViewControllerAnimated:YES completion:^{
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"notSettingprofile" object:nil];
+        }];
     }
     else{
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"登录失败" message:feedback delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
@@ -182,8 +234,10 @@ static  MLLoginVC *thisVC=nil;
 }
 
 - (void)registerResult:(BOOL)isSucceed Feedback:(NSString *)feedback{
+    [self hideHud];
     if (isSucceed) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"注册成功" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"注册成功" message:nil delegate:self cancelButtonTitle:@"返回稍后登录" otherButtonTitles:@"立即进入"];
+        alert.tag=RegistAlertViewTag;
         [alert show];
     }
     else{
@@ -227,6 +281,7 @@ static  MLLoginVC *thisVC=nil;
 }
 
 - (IBAction)touchRegister:(id)sender {
+    [self.userPassword2 resignFirstResponder];
     [self checkFinishedInput];
 }
 
@@ -299,11 +354,13 @@ static  MLLoginVC *thisVC=nil;
     
     [SMS_SDK commitVerifyCode:inputSecurityCode result:^(enum SMS_ResponseState state) {
         if (1==state) {
-            if (!loginer) {
-                loginer=[[MLLoginBusiness alloc]init];
-                loginer.registerResultDelegate=self;
+            if (!self.loginer) {
+                self.loginer=[[MLLoginBusiness alloc]init];
+                self.loginer.registerResultDelegate=self;
             }
-            [loginer registerInBackground:inputUserPhoneNumber Password:inputUserPassword2];
+            [self showHudInView:self.view hint:@"正在注册中"];
+            [self.loginer registerInBackground:inputUserPhoneNumber Password:inputUserPassword2];
+            [self performSelector:@selector(timeout) withObject:nil afterDelay:TIMEOUT];
         }
         else if(0==state)
         {
@@ -336,6 +393,38 @@ static  MLLoginVC *thisVC=nil;
     
 }
 
+
+
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (alertView.tag) {
+        case LogoutAlertViewTag:
+            if(buttonIndex==0)
+            {
+                self.logoutBtn.hidden=NO;
+                self.loginButton.hidden=YES;
+            
+            }
+            if (buttonIndex==1) {
+                [self logoutBtnAction:nil];
+            }
+            break;
+            
+        case RegistAlertViewTag:
+            if (buttonIndex==1) {
+                [self showHudInView:self.view hint:@"登录中.."];
+                [self.loginer loginInBackground:inputUserPhoneNumber Password:inputUserPassword2];
+                //如果超时 自动hideHub
+                [self performSelector:@selector(timeout) withObject:nil afterDelay:TIMEOUT];
+            }else if(buttonIndex==0)
+            {
+                [self chooseLogin];
+            }
+            break;
+    }
+}
+
 /*
 #pragma mark - Navigation
 
@@ -346,4 +435,10 @@ static  MLLoginVC *thisVC=nil;
 }
 */
 
+- (IBAction)logoutBtnAction:(id)sender {
+    [MLLoginBusiness logout];
+    self.userPassword.text=nil;
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您的账号已经退出成功" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+    [alert show];
+}
 @end

@@ -13,5 +13,6 @@
 
 @interface jobListViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong,nonatomic)NSString *user_id;
 
 @end

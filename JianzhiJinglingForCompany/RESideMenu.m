@@ -88,6 +88,8 @@ static  RESideMenu *thisMenu=nil;
     return self;
 }
 
+
+
 + (RESideMenu*)initInstanceWithItems:(NSArray *)items{
     if (thisMenu==nil) {
         thisMenu=[[RESideMenu alloc]initWithItems:items];
@@ -99,6 +101,30 @@ static  RESideMenu *thisMenu=nil;
     return thisMenu;
 }
 
+- (void)setTableItem:(NSInteger)row Title:(NSString*)title Subtitle:(NSString*)subtitle Image:(UIImage*)image{
+ 
+    if (row==0) {
+        if ([_items count]>0) {
+            RESideMenuItem*usrItem=[_items objectAtIndex:0];
+            
+            [usrItem setTitle:title Subtitle:subtitle Image:image];
+            
+            NSIndexPath *indexPath=[NSIndexPath indexPathForRow:0 inSection:0];
+            usrTableViewCell *usrcell=(usrTableViewCell *)[_tableView cellForRowAtIndexPath:indexPath];
+            [usrcell setUsrAvatar:image];
+            [usrcell setusrName:title];
+            [usrcell setusrAction:subtitle];
+        }
+    }
+}
+
+-(void)setBadgeView:(NSInteger)index badgeText:(NSString*)badgeText{
+    
+    RESideMenuItem *usrItem=[_items objectAtIndex:index];
+    
+    usrItem.badgeText=badgeText;
+    
+}
 
 - (void) showItems:(NSArray *)items
 {
@@ -370,7 +396,6 @@ static  RESideMenu *thisMenu=nil;
         [tableView registerNib:nibusr forCellReuseIdentifier:usrCellIdentifier];
         UINib *nibnormal = [UINib nibWithNibName:@"sideNormalTableViewCell" bundle:nil];
         [tableView registerNib:nibnormal forCellReuseIdentifier:normalcellIdentifier];
-        nibsRegistered = YES;
     }
     
 
@@ -411,6 +436,10 @@ static  RESideMenu *thisMenu=nil;
         [normalcell setAction:item.title];
         normalcell.item = item;
         [normalcell notifyDatasetChange];
+        if ([item.badgeText length]>0) {
+            [normalcell setBadgeString:@"6"];
+        }
+        
         normalcell.selectionStyle = UITableViewCellSelectionStyleNone;
         return normalcell;
     }

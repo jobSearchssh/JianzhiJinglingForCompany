@@ -1,9 +1,8 @@
 //
 //  MLResumePreviewVC.m
-//  jobSearch For Employer
+//  jobSearch
 //
 //  Created by 田原 on 15/1/26.
-//  Modified by  郭玉宝  on 15/1/28.
 //  Copyright (c) 2015年 麻辣工作室. All rights reserved.
 //
 
@@ -11,6 +10,13 @@
 #import "MLResumeVC.h"
 #import "jobListViewController.h"
 #import "jobPublicationViewController.h"
+#import "netAPI.h"
+
+#import "UIViewController+HUD.h"
+#import "RESideMenu.h"
+
+#import "NSDate+Category.h"
+#import "NSDateFormatter+Category.h"
 static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 @interface MLResumePreviewVC (){
@@ -20,6 +26,9 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     bool selectFreeData[21];
     CGFloat freecellwidth;
 }
+
+
+
 @property (weak, nonatomic) IBOutlet UIScrollView *mainScrollviewOutlet;
 //第一项
 @property (weak, nonatomic) IBOutlet UIView *coverflowOutlet;
@@ -27,57 +36,188 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 @property (strong, nonatomic) IBOutlet UIView *usrinfo1Outlet;
 //第三项
 @property (strong, nonatomic) IBOutlet UIView *usrinfo2Outlet;
+@property (weak, nonatomic) IBOutlet UILabel *usrNameOutlet;
+@property (weak, nonatomic) IBOutlet UIImageView *sexOutlet;
+@property (weak, nonatomic) IBOutlet UILabel *ageOutlet;
+@property (weak, nonatomic) IBOutlet UILabel *locationOutlet;
+@property (weak, nonatomic) IBOutlet UILabel *intentionOutlet;
+@property (weak, nonatomic) IBOutlet UILabel *phoneOutlet;
+
 //第四项
 @property (strong, nonatomic) IBOutlet UIView *collectionViewOutlet;
 @property (weak, nonatomic) IBOutlet UICollectionView *selectfreeCollectionOutlet;
 //第五项
 @property (strong, nonatomic) IBOutlet UIView *usrinfo3Outet;
 @property (weak, nonatomic) IBOutlet UILabel *workexperienceOutlet;
-@property (weak, nonatomic) IBOutlet UILabel *phoneOutlet;
+@property (weak, nonatomic) IBOutlet UILabel *userIntroductionOutlet;
+
 //最后一项
 @property (strong, nonatomic) IBOutlet UIView *userInfoBtnView;
 @property (weak, nonatomic) IBOutlet UIButton *inviteBtn;
+
+@property (strong, nonatomic) IBOutletCollection(UILabel) NSArray *RefuseAndAcceptLabel;
+
+//接受  拒绝 处理
+@property (strong, nonatomic) IBOutlet UIView *userInfor7View;
+@property (weak, nonatomic) IBOutlet UIButton *acceptBtn;
+@property (weak, nonatomic) IBOutlet UIButton *refuseBtn;
+
+@property (weak, nonatomic) IBOutlet UIButton *sendMessage;
+- (IBAction)refuseAction:(id)sender;
+
+- (IBAction)acceptAction:(id)sender;
+
+//右侧按钮
+@property (strong,nonatomic)UIBarButtonItem *rightBarBtn;
 - (IBAction)invitationAction:(id)sender;
+
+- (IBAction)showVedioAction:(id)sender;
 
 @end
 
 @implementation MLResumePreviewVC
 
+
+-(UIBarButtonItem*)rightBarBtn
+{
+    if (_rightBarBtn==nil) {
+        _rightBarBtn=[[UIBarButtonItem alloc]initWithImage:Nil style:UIBarButtonItemStyleBordered target:self action:@selector(addToFavorite)];
+        
+    }
+    return _rightBarBtn;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    
     self.mainScrollviewOutlet.delegate=self;
     [self.navigationItem setTitle:@"简历预览"];
     
-    self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithImage:Nil style:UIBarButtonItemStyleBordered target:self action:@selector(editResume)];
-    [self.navigationItem.rightBarButtonItem setTitle:@"编辑"];
+    if (!self.hideRightBarButton) {
+        self.navigationItem.rightBarButtonItem=self.rightBarBtn;
+        [self.navigationItem.rightBarButtonItem setTitle:@"收藏"];
+    }
     
-    NSMutableArray *sourceImages = [[NSMutableArray alloc]init];
-    [sourceImages addObject:[UIImage imageNamed:@"0.jpg"]];
-    [sourceImages addObject:[UIImage imageNamed:@"1.jpg"]];
-    [sourceImages addObject:[UIImage imageNamed:@"2.jpg"]];
+    [self.coverflowOutlet setFrame:CGRectMake(0,0,[UIScreen mainScreen].bounds.size.width,[UIScreen mainScreen].bounds.size.width*0.6)];
+    [self.mainScrollviewOutlet addSubview:self.coverflowOutlet];
+    
+    if (self.hideAcceptBtn) {
+        self.acceptBtn.hidden=YES;
+        self.refuseBtn.hidden=YES;
+        for (UILabel *label in self.RefuseAndAcceptLabel) {
+            label.hidden=YES;
+        }
+    }
+    if (self.thisUser!=nil) {
+        [self initfromUpperVC:self.thisUser];
+    }
+}
+
+- (UIImage *)scaleToSize:(UIImage *)img size:(CGSize)size{
+    // 创建一个bitmap的context
+    // 并把它设置成为当前正在使用的context
+    UIGraphicsBeginImageContext(size);
+    // 绘制改变大小的图片
+    [img drawInRect:CGRectMake(0, 0, size.width, size.height)];
+    // 从当前context中创建一个改变大小后的图片
+    UIImage* scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+    // 使当前的context出堆栈
+    UIGraphicsEndImageContext();
+    // 返回新的改变大小后的图片
+    return scaledImage;
+}
+
+-(void)initfromUpperVC:(userModel *)userModel{
     
     
     //第一项
-    [self.coverflowOutlet setFrame:CGRectMake(0,0,MainScreenWidth,MainScreenWidth*0.6)];
-    //背景黑
-    CGRect coverflowFrame = CGRectMake(0,0,MainScreenWidth,self.coverflowOutlet.frame.size.height -20);
-    //添加coverflow
-    coverFlowView *cfView = [coverFlowView coverFlowViewWithFrame:coverflowFrame andImages:sourceImages sideImageCount:2 sideImageScale:0.55 middleImageScale:0.7];
-    [self.coverflowOutlet addSubview:cfView];
-    [self.mainScrollviewOutlet addSubview:self.coverflowOutlet];
+    NSMutableArray *sourceImages = [[NSMutableArray alloc]init];
     
+    //设置头像
+    NSMutableArray *sourceImagesURL = [userModel getImageFileURL];
+    CGSize size = CGSizeMake(225, 225);
+    UIImage *temp = [self scaleToSize:[UIImage imageNamed:@"placeholder"] size:size];
+    
+    for (NSUInteger i=0; i<[sourceImagesURL count]; i++) {
+        [sourceImages addObject:temp];
+    }
+    //背景黑
+    CGRect coverflowFrame = CGRectMake(0,0,[UIScreen mainScreen].bounds.size.width,self.coverflowOutlet.frame.size.height -20);
+    //添加coverflow
+    coverFlowView *cfView = [coverFlowView coverFlowViewWithFrame:coverflowFrame andImages:sourceImages andURLs:sourceImagesURL sideImageCount:2 sideImageScale:0.55 middleImageScale:0.7];
+    [cfView setDuration:0.3];
+    [self.coverflowOutlet addSubview:cfView];
     //第二项
-    [self.usrinfo1Outlet setFrame:CGRectMake(0,self.coverflowOutlet.frame.size.height,MainScreenWidth,110)];
-    [self.mainScrollviewOutlet addSubview:self.usrinfo1Outlet];
+    //    [self.usrinfo1Outlet setFrame:CGRectMake(0,self.coverflowOutlet.frame.size.height,[UIScreen mainScreen].bounds.size.width,110)];
+    //    [self.mainScrollviewOutlet addSubview:self.usrinfo1Outlet];
     //第三项
-    [self.usrinfo2Outlet setFrame:CGRectMake(0,self.usrinfo1Outlet.frame.origin.y+self.usrinfo1Outlet.frame.size.height,MainScreenWidth,180)];
+    //用户名字
+    NSString *usrname = [userModel getuserName];
+    [self.usrNameOutlet setNumberOfLines:0];
+    [self.usrNameOutlet setLineBreakMode:NSLineBreakByWordWrapping];
+    CGSize usrnameSize = [usrname sizeWithFont:[self.usrNameOutlet font] constrainedToSize:CGSizeMake(0,0) lineBreakMode:NSLineBreakByWordWrapping];
+    
+    [self.usrNameOutlet setFrame:CGRectMake(self.usrNameOutlet.frame.origin.x,
+                                            self.usrNameOutlet.frame.origin.y,
+                                            usrnameSize.width,
+                                            usrnameSize.height)];
+    [self.usrNameOutlet setText:usrname];
+    
+    [self.sexOutlet setFrame:CGRectMake(
+                                        300,
+                                        self.sexOutlet.frame.origin.y,
+                                        self.sexOutlet.frame.size.width,
+                                        self.sexOutlet.frame.size.height)];
+    //性别
+    if ([userModel getuserGender].intValue == 0) {
+        self.sexOutlet.image = [UIImage imageNamed:@"resume_male"];
+    }else if ([userModel getuserGender].intValue == 1){
+        self.sexOutlet.image = [UIImage imageNamed:@"resume_female"];
+    }else{
+        self.sexOutlet.image = Nil;
+    }
+    
+    //年龄
+    if ([userModel getuserBirthday] != Nil) {
+        @try {
+            NSString *ageString = [NSString stringWithFormat:@"%ld岁",(long)[DateUtil ageWithDateOfBirth:[userModel getuserBirthday]]];
+            self.ageOutlet.text = ageString;
+        }
+        @catch (NSException *exception) {
+            self.ageOutlet.text = @"未知年龄";
+        }
+    }else{
+        self.ageOutlet.text = @"未知年龄";
+    }
+    //电话
+    self.phoneOutlet.text = [userModel getuserPhone];
+    //位置
+    NSString *usrLoaction = [NSString stringWithFormat:@"%@%@%@",[userModel getuserProvince],[userModel getuserCity],[userModel getuserDistrict]];
+    [self.locationOutlet setNumberOfLines:0];
+    [self.locationOutlet setLineBreakMode:NSLineBreakByWordWrapping];
+    CGSize locationOutletlabelsize = [usrLoaction sizeWithFont:[self.locationOutlet font] constrainedToSize:CGSizeMake(self.locationOutlet.frame.size.width,2000) lineBreakMode:NSLineBreakByWordWrapping];
+    [self.locationOutlet setFrame:CGRectMake(self.locationOutlet.frame.origin.x,
+                                             self.locationOutlet.frame.origin.y, locationOutletlabelsize.width, locationOutletlabelsize.height)];
+    [self.locationOutlet setText:usrLoaction];
+    NSString *usrintention = @"咨询经理、设计师、客服、文员、其他、临时工";
+    [self.intentionOutlet setNumberOfLines:0];
+    [self.intentionOutlet setLineBreakMode:NSLineBreakByWordWrapping];
+    CGSize intentionOutletlabelsize = [usrLoaction sizeWithFont:[self.intentionOutlet font] constrainedToSize:CGSizeMake(self.intentionOutlet.frame.size.width,2000) lineBreakMode:NSLineBreakByWordWrapping];
+    [self.intentionOutlet setFrame:CGRectMake(self.intentionOutlet.frame.origin.x,
+                                              self.intentionOutlet.frame.origin.y,
+                                              intentionOutletlabelsize.width,
+                                              intentionOutletlabelsize.height)];
+    [self.intentionOutlet setText:usrintention];
+    
+    [self.usrinfo2Outlet setFrame:CGRectMake(0,self.coverflowOutlet.frame.origin.y+self.coverflowOutlet.frame.size.height,[UIScreen mainScreen].bounds.size.width,self.intentionOutlet.frame.origin.y+self.intentionOutlet.frame.size.height+20)];
     [self.mainScrollviewOutlet addSubview:self.usrinfo2Outlet];
+    
     //第四项
     selectfreetimepicArray = [[NSMutableArray alloc]init];
     selectfreetimetitleArray = [[NSMutableArray alloc]init];
-    freecellwidth = (MainScreenWidth - 110)/7;
+    freecellwidth = ([UIScreen mainScreen].bounds.size.width - 110)/7;
     selectfreetimetitleArray = @[[UIImage imageNamed:@"resume_7"],
                                  [UIImage imageNamed:@"resume_1"],
                                  [UIImage imageNamed:@"resume_2"],
@@ -93,35 +233,71 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
                                [UIImage imageNamed:@"resume_night1"],
                                [UIImage imageNamed:@"resume_night2"]
                                ];
-    for (int index = 0; index<21; index++) {
-        selectFreeData[index] = FALSE;
+    
+    NSArray *freeTime = [userModel getuserFreeTime];
+    for (int index = 0; index < 21; index++) {
+        selectFreeData[index] = false;
+    }
+    for (NSNumber *free in freeTime) {
+        if (free.intValue >=0 && free.intValue < 21) {
+            selectFreeData[free.intValue] = true;
+        }
     }
     self.selectfreeCollectionOutlet.delegate = self;
     self.selectfreeCollectionOutlet.dataSource = self;
     UINib *niblogin = [UINib nibWithNibName:selectFreecellIdentifier bundle:nil];
     [self.selectfreeCollectionOutlet registerNib:niblogin forCellWithReuseIdentifier:selectFreecellIdentifier];
-    [self.collectionViewOutlet setFrame:CGRectMake(0,self.usrinfo2Outlet.frame.origin.y+self.usrinfo2Outlet.frame.size.height,[UIScreen mainScreen].bounds.size.width,60+freecellwidth*4)];
+    [self.collectionViewOutlet setFrame:CGRectMake(0,self.usrinfo2Outlet.frame.origin.y+self.usrinfo2Outlet.frame.size.height,[UIScreen mainScreen].bounds.size.width,60+freecellwidth*4+50)];
     [self.mainScrollviewOutlet addSubview:self.collectionViewOutlet];
+    [self.selectfreeCollectionOutlet reloadData];
+    
     //第五项
-    NSString *testworkexperience = @"IBM\n售后服务-客服\n2013年至今(2年1月)";
-    NSString  *testworkexperienceFormat = [testworkexperience stringByReplacingOccurrencesOfString:@"\\n" withString:@" \r\n" ];
+    
+    NSString *intro = [userModel getuserIntroduction];
+    NSString  *testintroFormat = [intro stringByReplacingOccurrencesOfString:@"\\n" withString:@" \r\n" ];
+    [self.userIntroductionOutlet setNumberOfLines:0];
+    [self.userIntroductionOutlet setLineBreakMode:NSLineBreakByWordWrapping];
+    CGSize testintrolabelsize = [testintroFormat sizeWithFont:[self.userIntroductionOutlet font] constrainedToSize:CGSizeMake(self.userIntroductionOutlet.frame.size.width,2000) lineBreakMode:NSLineBreakByWordWrapping];
+    [self.userIntroductionOutlet setFrame:CGRectMake(self.userIntroductionOutlet.frame.origin.x,
+                                                     self.userIntroductionOutlet.frame.origin.y, testintrolabelsize.width,
+                                                     testintrolabelsize.height)];
+    [self.userIntroductionOutlet setText:testintroFormat];
+    
+    
+    NSString *workexperience = [userModel getuserExperience];
+    NSString  *workexperienceFormat = [workexperience stringByReplacingOccurrencesOfString:@"\\n" withString:@" \r\n" ];
     [self.workexperienceOutlet setNumberOfLines:0];
     [self.workexperienceOutlet setLineBreakMode:NSLineBreakByWordWrapping];
-    CGSize testworkexperiencelabelsize = [testworkexperienceFormat sizeWithFont:[self.workexperienceOutlet font] constrainedToSize:CGSizeMake(self.workexperienceOutlet.frame.size.width,2000) lineBreakMode:NSLineBreakByWordWrapping];
+    
+    CGSize testworkexperiencelabelsize = [workexperienceFormat sizeWithFont:[self.workexperienceOutlet font] constrainedToSize:CGSizeMake(self.workexperienceOutlet.frame.size.width,2000) lineBreakMode:NSLineBreakByWordWrapping];
     [self.workexperienceOutlet setFrame:CGRectMake(self.workexperienceOutlet.frame.origin.x,
                                                    self.workexperienceOutlet.frame.origin.y, testworkexperiencelabelsize.width, testworkexperiencelabelsize.height)];
-    [self.workexperienceOutlet setText:testworkexperienceFormat];
+    [self.workexperienceOutlet setText:workexperienceFormat];
     
-    [self.usrinfo3Outet setFrame:CGRectMake(0,self.collectionViewOutlet.frame.origin.y+self.collectionViewOutlet.frame.size.height,MainScreenWidth,200)];
+    [self.usrinfo3Outet setFrame:CGRectMake(0,
+                                            self.collectionViewOutlet.frame.origin.y+self.collectionViewOutlet.frame.size.height,
+                                            [UIScreen mainScreen].bounds.size.width,
+                                            testintrolabelsize.height + testworkexperiencelabelsize.height+150)];
+    NSLog(@"%f  %f",testintrolabelsize.height,testworkexperiencelabelsize.height);
     [self.mainScrollviewOutlet addSubview:self.usrinfo3Outet];
     
-
-    [self.userInfoBtnView setFrame:CGRectMake(0,self.usrinfo3Outet.frame.origin.y+self.usrinfo3Outet.frame.size.height,MainScreenWidth,self.inviteBtn.bounds.size.height)];
-    [self.mainScrollviewOutlet addSubview:self.userInfoBtnView];
-    
-    
-    //设置最终长度
-    [self.mainScrollviewOutlet setContentSize:CGSizeMake(0,self.userInfoBtnView.frame.origin.y+self.userInfoBtnView.frame.size.height)];
+    if (self.stateFlag==UnhanldedState) {
+        self.userInfor7View.autoresizingMask=UIViewAutoresizingFlexibleWidth;
+        [self.userInfor7View setFrame:CGRectMake(0,self.usrinfo3Outet.frame.origin.y+self.usrinfo3Outet.frame.size.height,MainScreenWidth,self.inviteBtn.bounds.size.height)];
+        [self.mainScrollviewOutlet addSubview:self.userInfor7View];
+        //设置最终长度
+        [self.mainScrollviewOutlet setContentSize:CGSizeMake(0,self.userInfor7View.frame.origin.y+self.userInfor7View.frame.size.height+10)];
+    }
+    else if(self.stateFlag==InviteState){
+        [self.userInfoBtnView setFrame:CGRectMake(0,self.usrinfo3Outet.frame.origin.y+self.usrinfo3Outet.frame.size.height,MainScreenWidth,self.inviteBtn.bounds.size.height)];
+        [self.mainScrollviewOutlet addSubview:self.userInfoBtnView];
+        //设置最终长度
+        [self.mainScrollviewOutlet setContentSize:CGSizeMake(0,self.userInfoBtnView.frame.origin.y+self.userInfoBtnView.frame.size.height)];
+    }
+    else if(self.stateFlag==hanldedState)
+    {
+        
+    }
 }
 
 - (void)viewWillLayoutSubviews{
@@ -130,13 +306,38 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
     NSMutableDictionary *titleBarAttributes = [NSMutableDictionary dictionaryWithDictionary:[[UINavigationBar appearance] titleTextAttributes]];
     [titleBarAttributes setValue:[UIColor whiteColor] forKey:UITextAttributeTextColor];
+    [self.userInfor7View setFrame:CGRectMake(0,self.usrinfo3Outet.frame.origin.y+self.usrinfo3Outet.frame.size.height,MainScreenWidth,self.inviteBtn.bounds.size.height)];
     
     [self.navigationController.navigationBar setTitleTextAttributes:titleBarAttributes];
 }
 
-- (void)editResume{
-    MLResumeVC *resumeVC=[[MLResumeVC alloc]init];
-    [self.navigationController pushViewController:resumeVC animated:YES];
+#pragma --mark  添加收藏
+- (void)addToFavorite{
+    [self showHudInView:self.mainScrollviewOutlet hint:@"收藏中.."];
+    NSUserDefaults *myseting=[NSUserDefaults standardUserDefaults];
+    NSString *com_id=[myseting objectForKey:CURRENTUSERID];
+    if (self.jobUserId==nil ||com_id==nil ) {
+        ALERT(@"参数出错，请重试");
+    }
+    [netAPI starJobUser:com_id jobUserID:self.jobUserId withBlock:^(oprationResultModel *oprationModel) {
+        [self hideHud];
+        if([[oprationModel getStatus] isEqualToNumber:[NSNumber numberWithInt:BASE_SUCCESS]]){
+            
+            ALERT(@"收藏成功，可前往“关注的人”查看");
+            self.navigationItem.rightBarButtonItem.title=@"已收藏";
+            self.rightBarBtn.enabled=NO;
+#warning 带完成收藏成功后的逻辑
+            RESideMenu *sideMenu=[RESideMenu sharedInstance];
+            //获取原来的数
+            [sideMenu setBadgeView:2 badgeText:@"1"];
+        }else
+        {
+            NSString *error=[NSString stringWithFormat:@"%@",[oprationModel getInfo]];
+            ALERT(error);
+        }
+    }];
+    //超时自动消失
+    [self performSelector:@selector(hideHud) withObject:nil afterDelay:20];
 }
 
 -(UIImage *)compressImage:(UIImage *)imgSrc size:(int)width
@@ -176,7 +377,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     if (indexPath.row>=0 && indexPath.row<7) {
         return NO;
     }
-    return YES;
+    return NO;
 }
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -226,14 +427,15 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 }
 
 /*
-#pragma mark - Navigation
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 - (IBAction)invitationAction:(id)sender {
     UIActionSheet *actionSheet=[[UIActionSheet alloc]initWithTitle:@"" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"选择职位"  otherButtonTitles:@"创建新职位", nil];
@@ -242,21 +444,27 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     
 }
 
+- (IBAction)showVedioAction:(id)sender {
+    ALERT(@"该用户没有视频");
+}
+
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 0) {
         jobListViewController *joblistForChoice=[[jobListViewController alloc]init];
+        joblistForChoice.user_id=[self.thisUser getjob_user_id];
         [self.navigationController pushViewController:joblistForChoice animated:YES];
-        [actionSheet dismissWithClickedButtonIndex:nil animated:YES];
+//        [actionSheet dismissWithClickedButtonIndex:nil animated:YES];
         
     }else if (buttonIndex == 1) {
         
         jobPublicationViewController *newJobVC=[[jobPublicationViewController alloc]init];
-        
         [self.navigationController pushViewController:newJobVC animated:YES];
-        [actionSheet dismissWithClickedButtonIndex:nil animated:YES];
+//        [actionSheet dismissWithClickedButtonIndex:nil animated:YES];
         
     }else if(buttonIndex == 2) {
+        
+        
         
         
     }else if(buttonIndex == 3) {
@@ -270,8 +478,54 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 }
 -(void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex{
     
+    
+    
 }
 -(void)actionSheet:(UIActionSheet *)actionSheet willDismissWithButtonIndex:(NSInteger)buttonIndex{
     
+    
+    
+}
+- (IBAction)refuseAction:(id)sender {
+    
+    if (self.thisUser==nil) {
+        return;
+    }
+    [self showHudInView:self.mainScrollviewOutlet hint:@""];
+    MLResumePreviewVC *__weak weakSelf=self;
+    [netAPI refuseJobApply:[self.thisUser getApply_id] withBlock:^(oprationResultModel *oprationModel) {
+        [weakSelf hideHud];
+        if ([[oprationModel getStatus]isEqualToNumber:[NSNumber numberWithInt:BASE_SUCCESS]]) {
+            ALERT(@"成功");
+            self.refuseBtn.enabled=NO;
+            self.acceptBtn.enabled=NO;
+            //修改前页代码
+        }else
+        {
+            NSString *error=[NSString stringWithFormat:@"%@",[oprationModel getInfo]];
+            ALERT(error);
+        }
+    }];
+    [self performSelector:@selector(hideHud) withObject:nil afterDelay:20];
+}
+- (IBAction)acceptAction:(id)sender {
+    if (self.thisUser==nil) {
+        return;
+    }
+    [self showHudInView:self.mainScrollviewOutlet hint:@""];
+    MLResumePreviewVC *__weak weakSelf=self;
+    [netAPI acceptJobApply:[self.thisUser getApply_id] withBlock:^(oprationResultModel *oprationModel) {
+        [weakSelf hideHud];
+        if ([[oprationModel getStatus]isEqualToNumber:[NSNumber numberWithInt:BASE_SUCCESS]]) {
+            ALERT(@"成功");
+            self.refuseBtn.enabled=NO;
+            self.acceptBtn.enabled=NO;
+        }else
+        {
+            NSString *error=[NSString stringWithFormat:@"%@",[oprationModel getInfo]];
+            ALERT(error);
+        }
+    }];
+    [self performSelector:@selector(hideHud) withObject:nil afterDelay:20];
 }
 @end

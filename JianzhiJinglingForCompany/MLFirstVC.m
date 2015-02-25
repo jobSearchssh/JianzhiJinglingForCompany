@@ -69,7 +69,6 @@ static  MLFirstVC *thisVC=nil;
     
     [self initTabbar];
     
-    MLLoginBusiness *log=[[MLLoginBusiness alloc]init];
 
 }
 
@@ -268,7 +267,6 @@ static  MLFirstVC *thisVC=nil;
     if (!nibsRegistered) {
         UINib *nib = [UINib nibWithNibName:@"MLCell1" bundle:nil];
         [tableView registerNib:nib forCellReuseIdentifier:Cellidentifier];
-        nibsRegistered = YES;
     }
     
     MLCell1 *cell = [tableView dequeueReusableCellWithIdentifier:Cellidentifier forIndexPath:indexPath];

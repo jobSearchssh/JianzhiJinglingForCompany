@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "freeselectViewCell.h"
-@interface jobPublicationViewController : UIViewController<UIScrollViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UIActionSheetDelegate>
+#import "jobModel.h"
+#define PublishNewJob 1
+#define PublishedJob 2
 
+
+@interface jobPublicationViewController : UIViewController<UIScrollViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UIActionSheetDelegate>
+@property int viewStatus;
+@property (strong,nonatomic)jobModel *publishedJob;
+@property BOOL editButtonEnable;
+- (IBAction)TextField_DidEndOnExit:(id)sender;
 @end

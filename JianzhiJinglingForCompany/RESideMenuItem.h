@@ -59,8 +59,14 @@ static int ACTION_LOGINFLAG = 2;
 
 @property (strong, readwrite, nonatomic) NSArray *subItems;
 
+@property (strong, nonatomic)NSString *badgeText;
+
 - (id)initWithTitle:(NSString *)title setFlag:(int)getFlag action:(void(^)(RESideMenu *menu, RESideMenuItem *item))action;
 - (id)initWithTitle:(NSString *)title setFlag:(int)getFlag setSubtitle:(NSString *)subtitle action:(void(^)(RESideMenu *menu, RESideMenuItem *item))action;
 - (id)initWithTitle:(NSString *)title setFlag:(int)getFlag image:(UIImage *)image highlightedImage:(UIImage *)highlightedImage action:(void(^)(RESideMenu *menu, RESideMenuItem *item))action;
 - (id)initWithTitle:(NSString *)title setFlag:(int)getFlag setSubtitle:(NSString *)subtitle image:(UIImage *)image highlightedImage:(UIImage *)highlightedImage action:(void(^)(RESideMenu *menu, RESideMenuItem *item))action;
+- (void)setTitle:(NSString*)title Subtitle:(NSString*)subtitle Image:(UIImage*)image;
+
+
+
 @end

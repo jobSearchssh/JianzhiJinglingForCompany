@@ -26,7 +26,7 @@
             NSNumber *lat = [geoArray objectAtIndex:1];
             geomodel = [[geoModel alloc]initWith:[lon doubleValue] lat:[lat doubleValue]];
         }
-        enterpriseLogoURL = [dictinary objectForKey:@"enterpriseName"];
+        enterpriseLogoURL = [dictinary objectForKey:@"enterpriseLogoURL"];
         enterpriseInviteTypes = [dictinary objectForKey:@"enterpriseName"];
     }
     return self;
@@ -54,10 +54,10 @@
         [baseString appendFormat:@"&enterpriseAddressDetail=%@",enterpriseAddressDetail];
     }
     if (enterpriseIntroduction != Nil) {
-        [baseString appendFormat:@"&jobEnterpriseIntroduction=%@",enterpriseIntroduction];
+        [baseString appendFormat:@"&enterpriseIntroduction=%@",enterpriseIntroduction];
     }
     if ([geomodel getLon] < 360 && [geomodel getLat] <360) {
-        NSString *geoPoint = [NSString stringWithFormat:@"\"%f,%f\"",[geomodel getLon],[geomodel getLat]];
+        NSString *geoPoint = [NSString stringWithFormat:@"%f,%f",[geomodel getLon],[geomodel getLat]];
         [baseString appendFormat:@"&enterpriseGeoPoint=%@",geoPoint];
     }
     if (enterpriseLogoURL != Nil) {

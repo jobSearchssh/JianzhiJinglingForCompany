@@ -29,12 +29,7 @@
     [self.navigationBar setTintColor:[UIColor whiteColor]];
     NSMutableDictionary *titleBarAttributes = [NSMutableDictionary dictionaryWithDictionary:[[UINavigationBar appearance] titleTextAttributes]];
     [titleBarAttributes setValue:[UIColor whiteColor] forKey:UITextAttributeTextColor];
-    
     [self.navigationBar setTitleTextAttributes:titleBarAttributes];
-    
-
-    
-    
 }
 
 

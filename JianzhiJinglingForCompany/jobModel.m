@@ -23,7 +23,7 @@
         
         tempstring = [initDictionary objectForKey:jobModel_jobEndTime];
         jobEndTime = [DateUtil dateFromString:tempstring];
-        
+        jobGenderReq=[initDictionary objectForKey:jobModel_jobGenderReq];
         jobId = [initDictionary objectForKey:jobModel_jobID];
         jobWorkTime = [initDictionary objectForKey:jobModel_jobWorkTime];
         jobWorkPlaceGeoPoint = [initDictionary objectForKey:jobModel_jobWorkPlaceGeoPoint];
@@ -81,7 +81,7 @@
 -(NSArray *)getjobWorkPlaceGeoPoint{
     return jobWorkPlaceGeoPoint;
 }
--(NSArray *)getjobType{
+-(NSNumber *)getjobType{
     return jobType;
 }
 -(NSNumber *)getjobRecruitNum{
@@ -164,6 +164,11 @@
 }
 -(NSNumber*)getjobHasRejected{
     return jobHasRejected;
+}
+
+-(NSNumber*)getjobGenderReq
+{
+    return jobGenderReq;
 }
 
 + (float)getDistance:(NSArray*)p1{

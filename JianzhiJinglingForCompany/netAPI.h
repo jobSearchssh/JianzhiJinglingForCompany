@@ -72,6 +72,33 @@ typedef void (^userListReturnBlock)(userListModel *userListModel);
 //关注人列表
 +(void)queryStarJobUsers:(NSString *)enterprise_id start:(int)start length:(int)length withBlock:(userListReturnBlock)userListBlock;
 
+//附近的人
++(void)queryNearestUsers:(NSString *)enterprise_id start:(int)start length:(int)length lon:(double)lon lat:(double)lat withBlock:(userListReturnBlock)userListBlock;
+
+//申请我职位的人
++(void)getMyRecruitUsers:(NSString*)enterprise_id start:(int)start length:(int)length withBlock:(userListReturnBlock)userListBlock;
+
+//创建职位模板
++(void)createJobTemplate:(createJobModel *)jobmodel withBlock:(operationReturnBlock)operationBlock;
+
+//获取职位模板
++(void)getJobTemplate:(NSString*)enterprise_id start:(int)start length:(int)length withBlock:(jobListReturnBlock)jobListBlock;
+
+//删除一条发布的职位
++(void)deleteTheJob:(NSString *)enterprise_id job_id:(NSString *)job_id withBlock:(operationReturnBlock)oprationReturnBlock;
+
+//删除一条职位模板
++(void)deleteTheJobTemplate:(NSString *)enterprise_id jobTemplate_id:(NSString *)jobTemplate_id withBlock:(operationReturnBlock)oprationReturnBlock;
+
+//精灵匹配
++(void)getjinglingMatch:(NSString*)enterprise_id start:(int)start length:(int)length withBlock:(userListReturnBlock)userListBlock;
+
+//取消关注
++(void)cancelFocusUser:(NSString*)enterprise_id user_id:(NSString*)userId withBlock:(operationReturnBlock)oprationReturnBlock;
+
+//邀请求职者
++(void)inviteUserWithEnterpriseId:(NSString*)enterprise_id userId:(NSString*)userId jobId:(NSString*)jobId withBlock:(operationReturnBlock)oprationReturnBlock;
 +(void)test;
+
 
 @end

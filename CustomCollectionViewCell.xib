@@ -15,7 +15,7 @@
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
                 <subviews>
-                    <imageView multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img2.jpg" highlighted="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XkT-tG-7ct">
+                    <imageView multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder.png" highlighted="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XkT-tG-7ct" customClass="AsyncImageView">
                         <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="heart.png" translatesAutoresizingMaskIntoConstraints="NO" id="VQS-Od-TIG">
@@ -52,7 +52,7 @@
                             <constraint firstAttribute="centerX" secondItem="iW6-8a-7cm" secondAttribute="centerX" constant="-0.5" id="aMg-Zz-z1c"/>
                         </constraints>
                     </view>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="school.png" translatesAutoresizingMaskIntoConstraints="NO" id="zdG-87-wvV">
+                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="school.png" translatesAutoresizingMaskIntoConstraints="NO" id="zdG-87-wvV">
                         <rect key="frame" x="8" y="8" width="20" height="20"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="20" id="2Yr-PF-87Z"/>
@@ -116,7 +116,7 @@
     </objects>
     <resources>
         <image name="heart.png" width="50" height="50"/>
-        <image name="img2.jpg" width="330" height="340"/>
+        <image name="placeholder.png" width="60" height="60"/>
         <image name="school.png" width="160" height="160"/>
     </resources>
 </document>

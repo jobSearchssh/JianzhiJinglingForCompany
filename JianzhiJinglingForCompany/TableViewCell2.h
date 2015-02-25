@@ -8,10 +8,18 @@
 
 #import <UIKit/UIKit.h>
 #import "SWTableViewCell.h"
-
+#import "AsyncImageView.h"
 @interface TableViewCell2 : SWTableViewCell
-@property (weak, nonatomic) IBOutlet UIImageView *jobImageView;
+@property (strong,nonatomic)NSString *Job_id;
+@property (assign,nonatomic)NSInteger row;
 
+
+@property (weak, nonatomic) IBOutlet AsyncImageView *jobImageView;
+@property (weak, nonatomic) IBOutlet UILabel *jobTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *jobAddressDetailLabel;
+@property (weak, nonatomic) IBOutlet UILabel *jobDistanceLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *jobUpdateTimeLabel;
 
 -(void)setJobImageViewWithJsBadgeNSString:(NSString*) badgeString;
 @end

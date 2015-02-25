@@ -12,6 +12,7 @@
 @interface jobModel : baseJobModel{
     NSString *jobId;
 //    NSDate *jobBirthdayMonthYear;
+    NSNumber *jobGenderReq;
     NSDate *jobBeginTime;
     NSDate *jobEndTime;
     NSArray *jobWorkTime;
@@ -22,7 +23,7 @@
     NSString *jobWorkAddressDetail;
     NSString *jobTitle;
     NSNumber *jobRecruitNum;
-    NSArray *jobType;
+    NSNumber *jobType;
     NSNumber *jobSalaryRange;
     NSString *jobSettlementWay;
     NSString *jobIntroduction;
@@ -37,11 +38,12 @@
     NSString *jobDegreeReq;
     NSString *jobPhone;
 //    NSString *jobEmail;
-    NSDate *created_at;
+    
     NSString *jobContactName;
     NSString *jobEnterpriseImageURL;
     NSString *jobEnterpriseLogoURL;
     NSDate * updated_at;
+    NSDate *created_at;
     NSNumber *jobHasAccepted;
     NSNumber *jobHasRejected;
 }
@@ -53,7 +55,7 @@
 -(NSDate *)getcreated_at;
 -(NSArray *)getjobWorkTime;
 -(NSArray *)getjobWorkPlaceGeoPoint;
--(NSArray *)getjobType;
+-(NSNumber *)getjobType;
 -(NSNumber *)getjobRecruitNum;
 -(NSNumber *)getjobSalaryRange;
 -(NSString *)getjobWorkPlaceProvince;
@@ -81,7 +83,7 @@
 -(NSDate *)getupdated_at;
 -(NSNumber*)getjobHasAccepted;
 -(NSNumber*)getjobHasRejected;
-
+-(NSNumber*)getjobGenderReq;
 + (float)getDistance:(NSArray*)p1;
 
 @end

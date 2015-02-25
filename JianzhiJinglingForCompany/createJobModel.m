@@ -29,7 +29,7 @@
     return result;
 }
 -(NSString *)getWorkTimeArray{
-    NSMutableString *getArray = [[NSMutableString alloc]initWithFormat:@"\""];
+    NSMutableString *getArray = [[NSMutableString alloc]initWithFormat:@""];
     for (int index = 0; index < [jobWorkTime count] ; index++ ) {
         NSNumber *number = [jobWorkTime objectAtIndex:index];
         [getArray appendFormat:@"%d",number.intValue];
@@ -37,7 +37,7 @@
             [getArray appendFormat:@","];
         }
     }
-    [getArray appendFormat:@"\""];
+//    [getArray appendFormat:@"\""];
     return getArray;
 }
 

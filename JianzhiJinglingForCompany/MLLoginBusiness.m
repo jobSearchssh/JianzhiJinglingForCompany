@@ -8,34 +8,56 @@
 
 #import "MLLoginBusiness.h"
 #import <BmobSDK/Bmob.h>
+#import "MLLoginBusiness.h"
+#import "netAPI.h"
+#import "User.h"
 
 @implementation MLLoginBusiness
 
 - (void)registerInBackground:(NSString*)username Password:(NSString*)pwd{
     
-    BmobQuery *query=[BmobQuery queryWithClassName:@"JobUser"];
-    [query whereKey:@"userName" equalTo:username];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
-        if (!error) {
-            if ([array count]==0) {
-                BmobObject *jobUser=[BmobObject objectWithClassName:@"JobUser"];
-                [jobUser setObject:username forKey:@"userName"];
-                [jobUser setObject:pwd forKey:@"userPassword"];
-                [jobUser saveInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
-                    if (isSuccessful) {
-                        [self saveUserInfoLocally:jobUser];
-                        [self registerIsSucceed:YES feedback:@"注册成功"];
-                    }else{
-                        [self registerIsSucceed:NO feedback:@"网络请求错误，注册失败"];
-                    }
-                }];
-            }else{
-                [self registerIsSucceed:NO feedback:@"该用户名已被注册"];
+      MLLoginBusiness *__weak weakself=self;
+    [netAPI enterpriseRegister:username usrPassword:pwd withBlock:^(registerModel *registerModel) {
+        if(registerModel!=nil)
+        {
+            if ([[registerModel getStatus]intValue]==STATIS_NO) {
+                [weakself registerIsSucceed:NO feedback:[registerModel getInfo]];
+                
+            }else if([[registerModel getStatus]intValue]==STATIS_OK)
+            {
+              //user本地化
+                [weakself saveUserInfoLocally:username usrID:[registerModel getUsrID]];
+                [weakself registerIsSucceed:YES feedback:@"注册成功"];
+                
             }
-        }else{
-            [self registerIsSucceed:NO feedback:@"网络请求错误，注册失败"];
         }
     }];
+    
+//    BmobQuery *query=[BmobQuery queryWithClassName:@"JobUser"];
+//    [query whereKey:@"userName" equalTo:username];
+//    [query findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
+//        if (!error) {
+//            if ([array count]==0) {
+//                BmobObject *jobUser=[BmobObject objectWithClassName:@"JobUser"];
+//                [jobUser setObject:username forKey:@"userName"];
+//                [jobUser setObject:pwd forKey:@"userPassword"];
+//                [jobUser saveInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
+//                    if (isSuccessful) {
+//                        [self saveUserInfoLocally:jobUser];
+//                        [self registerIsSucceed:YES feedback:@"注册成功"];
+//                    }else{
+//                        [self registerIsSucceed:NO feedback:@"网络请求错误，注册失败"];
+//                    }
+//                }];
+//            }else{
+//                [self registerIsSucceed:NO feedback:@"该用户名已被注册"];
+//            }
+//        }else{
+//            [self registerIsSucceed:NO feedback:@"网络请求错误，注册失败"];
+//        }
+//    }];
+    
+    
 }
 
 -(void)registerIsSucceed:(BOOL)result feedback:(NSString*)feedback{
@@ -44,25 +66,22 @@
 }
 
 -(void) loginInBackground:(NSString*) username Password:(NSString*)pwd{
-    BmobQuery *query=[BmobQuery queryWithClassName:@"JobUser"];
-    [query whereKey:@"userName" equalTo:username];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
-        if (!error) {
-            if ([array count]>0) {
-                BmobObject *object=[array firstObject];
-                NSLog(@"%@",[object objectForKey:@"userPassword"]);
-                if ([pwd isEqualToString:[object objectForKey:@"userPassword"]]) {
-                    [self saveUserInfoLocally:object];
-                    [self loginIsSucceed:YES feedback:@"登录成功"];
-                }else{
-                    [self loginIsSucceed:NO feedback:@"密码错误"];
-                }
-            }else{
-                [self loginIsSucceed:NO feedback:@"该用户不存在"];
+    
+    MLLoginBusiness *__weak weakself=self;
+    [netAPI enterpriseLogin:username usrPassword:pwd withBlock:^(loginModel *loginModel) {
+        if(loginModel!=nil)
+        {
+            if ([[loginModel getStatus]intValue]==STATIS_NO) {
+                [weakself registerIsSucceed:NO feedback:[loginModel getInfo]];
+                
+            }else if([[loginModel getStatus]intValue]==STATIS_OK)
+            {
+                //user本地化
+                [weakself saveUserInfoLocally:username usrID:[loginModel getUsrID]];
+                [weakself loginIsSucceed:YES feedback:@"注册成功"];
             }
-        }else{
-            [self loginIsSucceed:NO feedback:@"请求错误"];
         }
+
     }];
 }
 
@@ -74,14 +93,21 @@
 
 }
 
-- (void)saveUserInfoLocally:(BmobObject *)jobUser{
-    if (jobUser) {
+
+- (void)saveUserInfoLocally:(NSString*)usrname usrID:(NSString*)objectId{
+    
         NSUserDefaults *mySettingData = [NSUserDefaults standardUserDefaults];
-        [mySettingData setObject:[jobUser objectForKey:@"userName"] forKey:@"currentUserName"];
-        [mySettingData setObject:jobUser.objectId forKey:@"currentUserObjectId"];
+        [mySettingData setObject:usrname forKey:@"currentUserName"];
+        [mySettingData setObject:objectId forKey:@"currentUserObjectId"];
         [mySettingData synchronize];
-    }
+    
+    
+    NSLog(@"currentUserName:%@",[mySettingData objectForKey:@"currentUserName"]);
+
 }
+
+
+
 
 + (void)logout{
     NSUserDefaults *mySettingData = [NSUserDefaults standardUserDefaults];

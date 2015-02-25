@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface CustomCollectionViewCell : UICollectionViewCell
-@property (weak, nonatomic) IBOutlet UIImageView *ContentImage;
+#import "AsyncImageView.h"
+@interface CustomCollectionViewCell: UICollectionViewCell
+@property (weak, nonatomic) IBOutlet AsyncImageView *ContentImage;
 @property (weak, nonatomic) IBOutlet UIImageView *markIconImageView;
 @property (weak, nonatomic) IBOutlet UILabel *distanceLabelWithoutUnit;
 @end

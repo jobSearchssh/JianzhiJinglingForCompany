@@ -16,9 +16,22 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="pwo-dE-ZTg">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="pwo-dE-ZTg">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="400" id="Nwv-IM-MSA"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="Nwv-IM-MSA"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=regular-widthClass=compact">
+                        <mask key="constraints">
+                            <exclude reference="Nwv-IM-MSA"/>
+                        </mask>
+                    </variation>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="XXt-eX-FgB"/>
                         <outlet property="delegate" destination="-1" id="aYy-gN-WMV"/>
@@ -26,6 +39,28 @@
                 </tableView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="pwo-dE-ZTg" secondAttribute="bottom" id="SCK-EQ-l8x"/>
+                <constraint firstItem="pwo-dE-ZTg" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Sww-Fd-oDN"/>
+                <constraint firstItem="pwo-dE-ZTg" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="V2C-SB-pbf"/>
+                <constraint firstAttribute="trailing" secondItem="pwo-dE-ZTg" secondAttribute="trailing" id="Vsb-KZ-vjq"/>
+            </constraints>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="SCK-EQ-l8x"/>
+                    <exclude reference="Sww-Fd-oDN"/>
+                    <exclude reference="V2C-SB-pbf"/>
+                    <exclude reference="Vsb-KZ-vjq"/>
+                </mask>
+            </variation>
+            <variation key="heightClass=regular-widthClass=compact">
+                <mask key="constraints">
+                    <include reference="SCK-EQ-l8x"/>
+                    <include reference="Sww-Fd-oDN"/>
+                    <include reference="V2C-SB-pbf"/>
+                    <include reference="Vsb-KZ-vjq"/>
+                </mask>
+            </variation>
         </view>
     </objects>
 </document>

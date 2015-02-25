@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AsyncImageView.h"
+@interface ComProfileViewController : UIViewController<UITextFieldDelegate>
+@property (weak, nonatomic) IBOutlet UILabel *comAddress;
 
-@interface ComProfileViewController : UIViewController
-
+@property (weak, nonatomic) IBOutlet UITextView *comIntro;
+@property (weak, nonatomic) IBOutlet UILabel *comName;
+@property (weak, nonatomic) IBOutlet AsyncImageView *comImage;
 @end

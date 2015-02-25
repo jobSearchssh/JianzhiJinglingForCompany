@@ -9,9 +9,11 @@
 #import <Foundation/Foundation.h>
 
 @interface DateUtil : NSObject
++(NSInteger)ageWithDateOfBirth:(NSDate *)date;
 +(NSDate *)dateFromString:(NSString *)dateString;
 +(NSString *)stringFromDate:(NSDate *)date;
 +(NSString *)birthdayStringFromDate:(NSDate *)date;
 +(NSString *)startTimeStringFromDate:(NSDate *)date;
 +(NSString *)msgTimetoCurrent:(NSDate *)date;
++(NSDate *)BirthdateFromString:(NSString *)dateString;
 @end

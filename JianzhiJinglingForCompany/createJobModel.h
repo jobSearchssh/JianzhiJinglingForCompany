@@ -46,6 +46,19 @@
     
     BOOL isOK[ITEMNUMBER];
 }
+//get方法
+
+
+
+
+
+
+
+
+
+
+
+//原始方法
 -(id)init;
 -(int)getIsOK;
 -(NSString *)notOKResult:(int)number;

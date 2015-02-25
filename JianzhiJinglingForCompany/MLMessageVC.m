@@ -8,14 +8,13 @@
 
 #import "MLMessageVC.h"
 #import "MLCell2.h"
-#import "ApplyDetailVCViewController.h"
 //#import "MLResumePreviewVC.h"
 @interface MLMessageVC ()<UITableViewDataSource,UITableViewDelegate,SWTableViewCellDelegate>
 {
     int cellNum;
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-
+@property (strong,nonatomic)NSMutableArray *datasource;
 @end
 
 @implementation MLMessageVC
@@ -51,7 +50,6 @@
     if (!nibsRegistered) {
         UINib *nib = [UINib nibWithNibName:@"MLCell2" bundle:nil];
         [tableView registerNib:nib forCellReuseIdentifier:Cellidentifier];
-        nibsRegistered = YES;
     }
     
     MLCell2 *cell = [tableView dequeueReusableCellWithIdentifier:Cellidentifier forIndexPath:indexPath];
@@ -96,10 +94,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    ApplyDetailVCViewController *detailVC=[[ApplyDetailVCViewController alloc]init];
-    detailVC.hidesBottomBarWhenPushed=YES;
-  
-    [self.navigationController pushViewController:detailVC animated:YES];
     [self performSelector:@selector(deselect) withObject:nil afterDelay:0.5f];
 }
 
@@ -196,6 +190,8 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
 
 /*
 #pragma mark - Navigation

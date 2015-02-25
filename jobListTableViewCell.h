@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AsyncImageView.h"
 typedef enum{
     CELLSELECTED,
     CELLUNSELECTED
@@ -19,7 +20,7 @@ typedef enum{
 @property (weak, nonatomic) IBOutlet UILabel *distanceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
 @property (weak, nonatomic) IBOutlet UILabel *jobTitleLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *jobImageView;
+@property (weak, nonatomic) IBOutlet AsyncImageView *jobImageView;
 
 
 @property int selectedFlag;

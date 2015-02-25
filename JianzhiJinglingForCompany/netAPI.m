@@ -18,18 +18,27 @@
 #define GETENTERPRISEDETAIL_FUNCTION @"enterprise/getEnterpriseDetail"
 #define queryEnterpriseJobs_FUNCTION @"enterpriseService/queryEnterpriseJobs"
 #define queryStarJobUsers_FUNCTINON @"enterpriseService/queryStarJobUsers"
+#define queryNearestUsers_FUNCTINON @"enterpriseService/queryNearestUsers"
+#define getMyRecruitUsers_FUNCTINON @"enterpriseService/queryRecieveJobList"
+#define createJobTemplate_FUNCTINON @"enterprise/createJobTemplate"
+#define getJobTemplate_FUNCTINON @"enterprise/getJobTemplateList"
+#define deleteOneJob_FUNCTINON @"enterprise/deleteOneJob"
+#define deleteOneJobTemplate @"enterprise/deleteOneJobTemplate"
+#define cancelStarUser @"enterprise/cancelStarUser"
+#define jinglingMatch @"enterpriseService/queryJingLingList"
+#define INVITEUSER_FUNCTION @"enterprise/addEnterpriseInvite"
 
 @implementation netAPI
 +(void)test{
 //    //测试ok
-//    [netAPI enterpriseLogin:@"18511007524" usrPassword:@"1234" withBlock:^(loginModel *loginModel) {
+//    [netAPI enterpriseLogin:@"17801034920" usrPassword:@"1234" withBlock:^(loginModel *loginModel) {
 //        NSLog(@"usrLogin id = %@",[loginModel getUsrID]);
 //    }];
     
     
     
 //    //测试ok
-//    [netAPI enterpriseRegister:@"18610782215" usrPassword:@"1234" withBlock:^(registerModel *registerModel) {
+//    [netAPI enterpriseRegister:@"17801&034920" usrPassword:@"1234" withBlock:^(registerModel *registerModel) {
 //        NSLog(@"usrRegister id = %@",[registerModel getUsrID]);
 //    }];
     
@@ -38,7 +47,7 @@
     
 //    //测试ok
 //    enterpriseDetailModel *detail = [[enterpriseDetailModel alloc] init];
-//    [detail setgetenterprise_id:@"54d3919296d9aeeb5a8b4568"];
+//    [detail setgetenterprise_id:@"54d85c5296d9aeca6f8b456e"];
 //    [detail setenterpriseName:@"百度"];
 //    [detail setenterpriseIndustry:[NSNumber numberWithInt:2]];
 //    [detail setenterpriseProvince:@"北京"];
@@ -53,10 +62,10 @@
 //    }];
     
     
-//    //新建job 测试ok
-//    //下面所有项不能为空
-//    jobModel *newJob = [[jobModel alloc]init];
-//    [newJob setenterprise_id:@"54d3919296d9aeeb5a8b4568"];
+    //新建job 测试ok
+    //下面所有项不能为空
+//    createJobModel *newJob = [[createJobModel alloc]init];
+//    [newJob setenterprise_id:@"54d82f0096d9aeaa708b456a"];
 //    [newJob setjobBeginTime:[NSDate date]];
 //    [newJob setjobEndTime:[NSDate date]];
 //    [newJob setjobGenderReq:1];
@@ -86,11 +95,11 @@
 //    [newJob setjobEnterpriseImageURL:@"a"];
 //    [newJob setjobEnterpriseLogoURL:@"b"];
 //    [newJob setjobRecruitNum:12];
-//    NSLog(@"%@",[newJob notOKResult:[newJob getIsOK]]);
+//    NSLog(@"%@",[newJob getBaseString]);
 //    [netAPI createJob:newJob withBlock:^(oprationResultModel *oprationModel) {
 //        NSLog(@"新建job id = %@",[oprationModel getOprationID]);
 //    }];
-    
+//    
     
 //    //接受兼职申请 测试ok
 //    [netAPI acceptJobApply:@"54d3919296d9aeeb5a8b457f" withBlock:^(oprationResultModel *oprationModel) {
@@ -99,31 +108,44 @@
     
 //    //拒绝兼职申请 测试ok
 //    [netAPI refuseJobApply:@"54d3919296d9aeeb5a8b457f" withBlock:^(oprationResultModel *oprationModel) {
-//        NSLog(@"acceptJobApply info = %@",[oprationModel getInfo]);
+//        NSLog(@"refuseJobApply info = %@",[oprationModel getInfo]);
 //    }];
     
 //    //starjober 测试ok
-//    [netAPI starJobUser:@"54d3919296d9aeeb5a8b4568" jobUserID:@"54d46a9796d9aecd6f8b4567" withBlock:^(oprationResultModel *oprationModel) {
-//        NSLog(@"acceptJobApply info = %@",[oprationModel getInfo]);
+//    [netAPI starJobUser:@"54d77c2196d9aecb6f8b4569" jobUserID:@"54d76bd496d9aece6f8b4568" withBlock:^(oprationResultModel *oprationModel) {
+//        NSLog(@"starJobUser info = %@",[oprationModel getInfo]);
 //    }];
     
 //    //获取企业详情 OK
-//    [netAPI getEnterpriseDetail:@"54d3919296d9aeeb5a8b4568" withBlock:^(enterpriseDetailReturnModel *detailModel) {
+//    [netAPI getEnterpriseDetail:@"54d85c5296d9aeca6f8b456e" withBlock:^(enterpriseDetailReturnModel *detailModel) {
 //        NSLog(@"enterpriseName = %@",[[detailModel getenterpriseDetailModel] getenterpriseName]);
 //    }];
     
 //    //发布的列表 ok
-//    [netAPI queryEnterpriseJobs:@"54d3919296d9aeeb5a8b4568" start:1 length:10 withBlock:^(jobListModel *jobListModel) {
+//    [netAPI queryEnterpriseJobs:@"54d82f0096d9aeaa708b456a" start:1 length:10 withBlock:^(jobListModel *jobListModel) {
 //        NSMutableArray *a = [jobListModel getJobArray];
 //        for (jobModel *job in a) {
 //            NSLog(@"getNearByJobs jobid = %@",[job getjobID]);
 //        }
 //    }];
     
-    //关注的人
-    [netAPI queryStarJobUsers:@"54d3919296d9aeeb5a8b4568" start:1 length:10 withBlock:^(userListModel *userListModel) {
-        
-    }];
+//    //关注的人 ok
+//    [netAPI queryStarJobUsers:@"54d77c2196d9aecb6f8b4569" start:1 length:10 withBlock:^(userListModel *userListModel) {
+//        NSLog(@"queryStarJobUsers info = %@",[userListModel getInfo]);
+//        NSMutableArray *userList = [userListModel getuserArray];
+//        for (userModel *user in userList) {
+//            NSLog(@"queryStarJobUsers user name =%@",[user getuserName]);
+//        }
+//    }];
+    
+//    //附近的人 ok
+//    [netAPI queryNearestUsers:@"54d77c2196d9aecb6f8b4569" start:1 length:2 lon:-70.9300376 lat:42.8583925 withBlock:^(userListModel *userListModel) {
+//        NSLog(@"queryNearestUsers info = %@",[userListModel getInfo]);
+//        NSMutableArray *userList = [userListModel getuserArray];
+//        for (userModel *user in userList) {
+//            NSLog(@"queryNearestUsers user name =%@",[user getuserName]);
+//        }
+//    }];
 }
 
 
@@ -254,6 +276,7 @@
     [self testAPIPostTestWithBlock:data getFunction:queryEnterpriseJobs_FUNCTION block:^(URLReturnModel *returnModel) {
         if (returnModel != Nil && [returnModel getFlag]) {
             jobListModel *a = [[jobListModel alloc]initWithData:[returnModel getData]];
+            NSLog(@"result:%@",returnModel );
             jobListBlock(a);
         }else{
             jobListModel *a = [[jobListModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
@@ -267,11 +290,148 @@
     NSString *str = [[NSString alloc]initWithFormat:@"enterprise_id=%@&start=%d&length=%d",enterprise_id,start,length];
     NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
     [self testAPIPostTestWithBlock:data getFunction:queryStarJobUsers_FUNCTINON block:^(URLReturnModel *returnModel) {
-        NSString *receiveStr = [[NSString alloc]initWithData:[returnModel getData] encoding:NSUTF8StringEncoding];
-        NSLog(@"%@",receiveStr);
+        if (returnModel != Nil && [returnModel getFlag]) {
+            userListModel *a = [[userListModel alloc]initWithData:[returnModel getData]];
+            userListBlock(a);
+        }else{
+            userListModel *a = [[userListModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
+            userListBlock(a);
+        }
     }];
 }
 
+//附近的人
++(void)queryNearestUsers:(NSString *)enterprise_id start:(int)start length:(int)length lon:(double)lon lat:(double)lat withBlock:(userListReturnBlock)userListBlock{
+    NSString *str = [[NSString alloc]initWithFormat:@"enterprise_id=%@&start=%d&length=%d&lon=%f&lat=%f",enterprise_id,start,length,lon,lat];
+    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+    [self testAPIPostTestWithBlock:data getFunction:queryNearestUsers_FUNCTINON block:^(URLReturnModel *returnModel) {
+        if (returnModel != Nil && [returnModel getFlag]) {
+            userListModel *a = [[userListModel alloc]initWithData:[returnModel getData]];
+            userListBlock(a);
+        }else{
+            userListModel *a = [[userListModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
+            userListBlock(a);
+        }
+    }];
+}
+
+//申请我职位的人
++(void)getMyRecruitUsers:(NSString*)enterprise_id start:(int)start length:(int)length withBlock:(userListReturnBlock)userListReturnBlock{
+    NSString *str = [[NSString alloc]initWithFormat:@"enterprise_id=%@&start=%d&length=%d&",enterprise_id,start,length];
+    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+    [self testAPIPostTestWithBlock:data getFunction:getMyRecruitUsers_FUNCTINON block:^(URLReturnModel *returnModel) {
+        if (returnModel != Nil && [returnModel getFlag]) {
+            userListModel *a = [[userListModel alloc]initWithData:[returnModel getData]];
+            userListReturnBlock(a);
+        }else{
+            userListModel *a = [[userListModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
+            userListReturnBlock(a);
+        }
+    }];
+}
+
+//新建工作模板
++(void)createJobTemplate:(createJobModel *)jobmodel withBlock:(operationReturnBlock)operationBlock{
+    NSData *data = [[jobmodel getBaseString] dataUsingEncoding:NSUTF8StringEncoding];
+    [self testAPIPostTestWithBlock:data getFunction:createJobTemplate_FUNCTINON block:^(URLReturnModel *returnModel) {
+        if (returnModel != Nil && [returnModel getFlag]) {
+            oprationResultModel *a = [[oprationResultModel alloc]initWithData:[returnModel getData]];
+            operationBlock(a);
+        }else{
+            oprationResultModel *a = [[oprationResultModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
+            operationBlock(a);
+        }
+    }];
+}
+
++(void)getJobTemplate:(NSString*)enterprise_id start:(int)start length:(int)length withBlock:(jobListReturnBlock)jobListBlock{
+    NSString *str = [[NSString alloc]initWithFormat:@"enterprise_id=%@&start=%d&length=%d",enterprise_id,start,length];
+    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+    [self testAPIPostTestWithBlock:data getFunction:getJobTemplate_FUNCTINON block:^(URLReturnModel *returnModel) {
+        if (returnModel != Nil && [returnModel getFlag]) {
+            jobListModel *a = [[jobListModel alloc]initWithData:[returnModel getData]];
+            //NSLog(@"result:%@",returnModel );
+            jobListBlock(a);
+        }else{
+            jobListModel *a = [[jobListModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
+            jobListBlock(a);
+        }
+    }];
+}
+//删除一条发布的职位
++(void)deleteTheJob:(NSString *)enterprise_id job_id:(NSString *)job_id withBlock:(operationReturnBlock)oprationReturnBlock{
+    NSString *str = [[NSString alloc]initWithFormat:@"enterprise_id=%@&job_id=%@",enterprise_id,job_id];
+    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+    [self testAPIPostTestWithBlock:data getFunction:deleteOneJob_FUNCTINON block:^(URLReturnModel *returnModel) {
+        if (returnModel != Nil && [returnModel getFlag]) {
+            oprationResultModel *a = [[oprationResultModel alloc]initWithData:[returnModel getData]];
+            oprationReturnBlock(a);
+        }else{
+            oprationResultModel *a = [[oprationResultModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
+            oprationReturnBlock(a);
+        }
+    }];
+}
+//删除一条职位模板
++(void)deleteTheJobTemplate:(NSString *)enterprise_id jobTemplate_id:(NSString *)jobTemplate_id withBlock:(operationReturnBlock)oprationReturnBlock{
+    NSString *str = [[NSString alloc]initWithFormat:@"enterprise_id=%@&jobTemplate_id=%@",enterprise_id,jobTemplate_id];
+    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+    [self testAPIPostTestWithBlock:data getFunction:deleteOneJobTemplate block:^(URLReturnModel *returnModel) {
+        if (returnModel != Nil && [returnModel getFlag]) {
+            oprationResultModel *a = [[oprationResultModel alloc]initWithData:[returnModel getData]];
+            oprationReturnBlock(a);
+        }else{
+            oprationResultModel *a = [[oprationResultModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
+            oprationReturnBlock(a);
+        }
+    }];
+}
+
++(void)cancelFocusUser:(NSString*)enterprise_id user_id:(NSString*)userId withBlock:(operationReturnBlock)oprationReturnBlock{
+    
+    NSString *str = [[NSString alloc]initWithFormat:@"enterprise_id=%@&job_user_id=%@",enterprise_id,userId];
+    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+    [self testAPIPostTestWithBlock:data getFunction:cancelStarUser block:^(URLReturnModel *returnModel) {
+        if (returnModel != Nil && [returnModel getFlag]) {
+            oprationResultModel *a = [[oprationResultModel alloc]initWithData:[returnModel getData]];
+            oprationReturnBlock(a);
+        }else{
+            oprationResultModel *a = [[oprationResultModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
+            oprationReturnBlock(a);
+        }
+    }];
+}
+
++(void)getjinglingMatch:(NSString*)enterprise_id start:(int)start length:(int)length withBlock:(userListReturnBlock)userListBlock{
+    NSString *str = [[NSString alloc]initWithFormat:@"enterprise_id=%@&start=%d&length=%d&",enterprise_id,start,length];
+    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+    
+    [self testAPIPostTestWithBlock:data getFunction:jinglingMatch block:^(URLReturnModel *returnModel) {
+        if (returnModel != Nil && [returnModel getFlag]) {
+            userListModel *a = [[userListModel alloc]initWithData:[returnModel getData]];
+            userListBlock(a);
+        }else{
+            userListModel *a = [[userListModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
+            userListBlock(a);
+        }
+
+    }];
+}
+//邀请求职者
++(void)inviteUserWithEnterpriseId:(NSString*)enterprise_id userId:(NSString*)userId jobId:(NSString*)jobId withBlock:(operationReturnBlock)oprationReturnBlock{
+    
+    NSString *str = [[NSString alloc]initWithFormat:@"enterprise_id=%@&job_user_id=%@&job_id=%@",enterprise_id,userId,jobId];
+    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+    [self testAPIPostTestWithBlock:data getFunction:INVITEUSER_FUNCTION block:^(URLReturnModel *returnModel) {
+        if (returnModel != Nil && [returnModel getFlag]) {
+            oprationResultModel *a = [[oprationResultModel alloc]initWithData:[returnModel getData]];
+            oprationReturnBlock(a);
+        }else{
+            oprationResultModel *a = [[oprationResultModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
+            oprationReturnBlock(a);
+        }
+    }];
+}
 
 
 #pragma base API

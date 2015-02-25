@@ -28,6 +28,21 @@
     self.backgroundColor = [UIColor clearColor];
     self.actionOutlet.textColor = [UIColor whiteColor];
     
+    // for BadgeView
+    self.badge = [[JSBadgeView alloc] initWithParentView:self.badgeContainerView alignment:JSBadgeViewAlignmentCenter];
+    self.badge.badgeBackgroundColor=[UIColor colorWithRed:36.0/255.0 green:105.0/255.0 blue:167.0/255.0 alpha:1.0];
+    self.badge.badgeTextShadowColor=[UIColor clearColor];
+    
+}
+
+- (void)setBadgeString:(NSString *)badgeString{
+    
+    if ([badgeString length]>0) {
+        self.badge.badgeText = badgeString;
+        self.badgeContainerView.hidden=NO;
+    }else{
+        self.badgeContainerView.hidden=YES;
+    }
 }
 
 -(void)clickNotify{

@@ -12,15 +12,22 @@
 #import "FirstCollectionViewController.h"
 
 #import "MLMessageVC.h"
-#import "jobPublicationViewController.h"
+#import "JobPublishedListViewController.h"
 #import "MLMatchVC.h"
 #import "TabbarForthViewController.h"
 #import "UIViewController+RESideMenu.h"
 
+#import "PersonListViewController.h"
+#import "jobTemplateListViewController.h"
+
+#import "UIViewController+LoginManager.h"
+#import "MLLoginVC.h"
+
+#import "ComProfileViewController.h"
 @interface MainTabBarViewController ()
-{
-    NSArray  *_vcArray;
-}
+
+@property (strong,nonatomic)NSArray  *vcArray;
+
 @end
 
 @implementation MainTabBarViewController
@@ -40,29 +47,27 @@ static MainTabBarViewController* thisVC=nil;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
 //    [self.tabBar setBackgroundColor:TabBarColor];
     // Do any additional setup after loading the view from its nib.
     //设置颜色
+    if (![UIViewController isLogin]) {
+        [self notLoginHandler];
+//        MLLoginVC *viewController = [MLLoginVC sharedInstance];
+//        [self presentViewController:viewController animated:YES completion:nil];
+    }
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(checkUnLoadConProfile) name:@"checkUnLoadConProfile" object:nil];
     [self.tabBar setBarTintColor:TabBarColor];
-
     [self initViewControllers];
-    
     [self modifyTabbarItem];
-    
-   
-//    self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"mainItem"] style:UIBarButtonItemStyleBordered target:self action:@selector(showMenu)];
-//    self.navigationItem.translucent = NO;
-
+    [self initReSideMenu];
 }
 
--(void)addLeftBarItem:(UINavigationController*)targetVC
+-(void)checkUnLoadConProfile
 {
-    
-    targetVC.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"mainItem"] style:UIBarButtonItemStyleBordered target:targetVC action:@selector(showMenu)];
-    targetVC.navigationController.navigationBar.translucent = NO;
-    
-    
+    if (![UIViewController isUpLoadComProfile]) {
+        [self notSettingprofile];
+    }
 }
 
 -(void)initViewControllers
@@ -78,18 +83,15 @@ static MainTabBarViewController* thisVC=nil;
     [self addLeftBarItem:firstVC];
     
         MLNaviViewController *firstNavi=[[MLNaviViewController alloc]initWithRootViewController:firstVC];
-    
-    
     //第二个页面
-    MLMessageVC *secondVC=[[MLMessageVC alloc]init];
+    PersonListViewController *secondVC=[[PersonListViewController alloc]init];
     
     [self addLeftBarItem:secondVC];
     MLNaviViewController *secondNaviVC=[[MLNaviViewController alloc]initWithRootViewController:secondVC];
-    
-    
+
     //第三个页面
     
-    jobPublicationViewController *thirdVC=[[jobPublicationViewController alloc]init];
+    jobTemplateListViewController *thirdVC=[[jobTemplateListViewController alloc]init];
     
     [self addLeftBarItem:thirdVC];
     
@@ -104,21 +106,19 @@ static MainTabBarViewController* thisVC=nil;
     MLNaviViewController *forthNaviVC=[[MLNaviViewController alloc]initWithRootViewController:forthVC];
     
     //第五个页面
-     TabbarForthViewController *fifthVC=[[TabbarForthViewController alloc]init];
+     ComProfileViewController *fifthVC=[[ComProfileViewController alloc]init];
     
     [self addLeftBarItem:fifthVC];
      MLNaviViewController *fifthNaviVC=[[MLNaviViewController alloc]initWithRootViewController:fifthVC];
     
     self.viewControllers=@[firstNavi,secondNaviVC,thirdNaviVC,forthNaviVC,fifthNaviVC];
     
-    _vcArray=self.viewControllers;
+    self.vcArray=self.viewControllers;
 }
 
 -(void)modifyTabbarItem
 {
-    
-    
-    
+
     UITabBar *tabBar=self.tabBar;
     tabBar.tintColor=[UIColor whiteColor];
     

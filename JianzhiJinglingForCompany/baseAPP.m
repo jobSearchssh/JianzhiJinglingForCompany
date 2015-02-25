@@ -14,17 +14,12 @@ static NSString *usrID;
 -(id)init{
     self = [super init];
     if(nil != self){
-        @try {
-            [self initData];
-        }
-        @catch (NSException *exception) {
-            NSLog(@"%@",exception.description);
-        }
+        
     }
     return self;
 }
 -(void)initData{
-    queue = [[NSOperationQueue alloc]init];
+    
 //    usrID = [[NSString alloc]init];
     usrID = [NSString stringWithFormat:@"54cdee5b3ed1ccf5358b458a"];
 }
@@ -37,6 +32,10 @@ static NSString *usrID;
 }
 
 +(NSOperationQueue *)getBaseNSOperationQueue{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        queue = [[NSOperationQueue alloc]init];
+    });
     return queue;
 }
 

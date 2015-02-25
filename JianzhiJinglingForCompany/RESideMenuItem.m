@@ -75,6 +75,11 @@
     return self;
 }
 
+- (void)setTitle:(NSString*)title Subtitle:(NSString*)subtitle Image:(UIImage*)image{
+    self.title=title;
+    self.subtitle=subtitle;
+    self.image=image;
+}
 
 - (NSString *)description
 {

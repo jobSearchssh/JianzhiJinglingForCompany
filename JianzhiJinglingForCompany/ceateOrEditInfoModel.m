@@ -13,6 +13,7 @@
     self = [super init];
     if (self) {
         NSString *receiveStr = [[NSString alloc]initWithData:mainData encoding:NSUTF8StringEncoding];
+        NSLog(@"receiveStr asdasda= %@",receiveStr);
         NSError *error;
         NSData* aData = [receiveStr dataUsingEncoding: NSASCIIStringEncoding];
         NSDictionary *a = Nil;
@@ -22,6 +23,7 @@
         }
         @catch (NSException *exception) {
             a = Nil;
+            NSLog(@"NSDictionary 解析错误");
             flag = false;
         }
         if (flag) {
@@ -30,6 +32,7 @@
                 info = [a objectForKey:@"info"];
                 datas = [a objectForKey:@"datas"];
             }@catch (NSException *exception) {
+                NSLog(@"status  解析错误");
                 flag = false;
             }
         }

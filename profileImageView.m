@@ -45,12 +45,12 @@
 -(void)initCoverFlowWithDataSource:(NSArray*)userImageArray
 {
 
-    if (userImageArray!=nil) {
-        CGRect childframe=CGRectMake(self.ImageCoverFlowView.frame.origin.x, self.ImageCoverFlowView.frame.origin.y,MainScreenWidth, self.ImageCoverFlowView.frame.size.height);
-        
-//        coverFlowView *coverFlowView = [coverFlowView coverFlowViewWithFrame:childframe andImages:userImageArray sideImageCount:4 sideImageScale:0.35 middleImageScale:0.7];
-//        [self.ImageCoverFlowView addSubview:coverFlowView];
-    }
+//    if (userImageArray!=nil) {
+////        CGRect childframe=CGRectMake(self.ImageCoverFlowView.frame.origin.x, self.ImageCoverFlowView.frame.origin.y,MainScreenWidth, self.ImageCoverFlowView.frame.size.height);
+//        
+////        coverFlowView *coverFlowView = [coverFlowView coverFlowViewWithFrame:childframe andImages:userImageArray sideImageCount:4 sideImageScale:0.35 middleImageScale:0.7];
+////        [self.ImageCoverFlowView addSubview:coverFlowView];
+//    }
 
 
 }

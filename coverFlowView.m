@@ -7,12 +7,15 @@
 //
 
 #import "coverFlowView.h"
+#import "CALayer+urlImage.h"
 #import <QuartzCore/QuartzCore.h>
 #import <CoreGraphics/CoreGraphics.h>
 
 #define DISTNACE_TO_MAKE_MOVE_FOR_SWIPE 60
 
-@interface coverFlowView ()
+@interface coverFlowView (){
+    CFTimeInterval durationTime;
+}
 
 //setup templates
 -(void)setupTemplateLayers;
@@ -25,7 +28,7 @@
 //empty imagelayers
 -(void)cleanImageLayers;
 //add reflections
--(void)showImageAndReflection:(CALayer *)layer;
+- (void)showImageAndReflection:(CALayer*)layer withURL:(NSString *)url;
 //adjust the bounds
 -(void)scaleBounds: (CALayer *) layer x:(CGFloat)scaleWidth y:(CGFloat)scaleHeight;
 //add uipagecontrol
@@ -38,6 +41,7 @@
 @private
     
     NSMutableArray *_images;
+    NSMutableArray *_imagesURL;
     NSMutableArray *_imageLayers;
     NSMutableArray *_templateLayers;
     int _currentRenderingImageIndex;
@@ -49,6 +53,7 @@
 
 
 @synthesize images = _images;
+@synthesize imagesURL = _imagesURL;
 @synthesize imageLayers = _imageLayers;
 @synthesize templateLayers = _templateLayers;
 @synthesize currentRenderingImageIndex = _currentRenderingImageIndex;
@@ -56,6 +61,10 @@
 @synthesize sideVisibleImageCount = _sideVisibleImageCount;
 @synthesize sideVisibleImageScale = _sideVisibleImageScale;
 @synthesize middleImageScale = _middleImageScale;
+
+-(void)setDuration:(CFTimeInterval)dration{
+    durationTime = dration;
+}
 
 
 - (void)adjustReflectionBounds:(CALayer *)layer scale:(CGFloat)scale {
@@ -85,7 +94,7 @@
         CALayer *originLayer = [self.imageLayers objectAtIndex:i];
         CALayer *targetTemplate = [self.templateLayers objectAtIndex: i + indexOffsetFromImageLayersToTemplates];
         
-        [CATransaction setAnimationDuration:1];
+        [CATransaction setAnimationDuration:durationTime];
         originLayer.position = targetTemplate.position;
         originLayer.zPosition = targetTemplate.zPosition;
         originLayer.transform = targetTemplate.transform;
@@ -116,6 +125,8 @@
             UIImage *candidateImage = [self.images objectAtIndex:self.currentRenderingImageIndex  + self.sideVisibleImageCount + 1];
             CALayer *candidateLayer = [CALayer layer];
             candidateLayer.contents = (__bridge id)candidateImage.CGImage;
+            NSString *url = [self.imagesURL objectAtIndex:self.currentRenderingImageIndex  + self.sideVisibleImageCount + 1];
+            [candidateLayer loadImageWithURL:url];
             CGFloat scale = self.sideVisibleImageScale;
             candidateLayer.bounds = CGRectMake(0, 0, candidateImage.size.width * scale, candidateImage.size.height * scale);
             [self.imageLayers addObject:candidateLayer];
@@ -126,7 +137,7 @@
             candidateLayer.transform = template.transform;
             
             //show the layer
-            [self showImageAndReflection:candidateLayer];
+            [self showImageAndReflection:candidateLayer withURL:url];
         }
         
     }else{//if the right, then move the rightest layer and insert one to left (if left is full)
@@ -143,6 +154,8 @@
             UIImage *candidateImage = [self.images objectAtIndex:self.currentRenderingImageIndex - 1 - self.sideVisibleImageCount];
             CALayer *candidateLayer = [CALayer layer];
             candidateLayer.contents = (__bridge id)candidateImage.CGImage;
+            NSString *url = [self.imagesURL objectAtIndex:self.currentRenderingImageIndex - 1 - self.sideVisibleImageCount];
+            [candidateLayer loadImageWithURL:url];
             CGFloat scale = self.sideVisibleImageScale;
             candidateLayer.bounds = CGRectMake(0, 0, candidateImage.size.width * scale, candidateImage.size.height * scale);
             [self.imageLayers insertObject:candidateLayer atIndex:0];
@@ -153,7 +166,7 @@
             candidateLayer.transform = template.transform;
             
             //show the layer
-            [self showImageAndReflection:candidateLayer];
+            [self showImageAndReflection:candidateLayer withURL:url];
         }
         
     }
@@ -180,7 +193,7 @@
     
 }
 
-+ (id)coverFlowViewWithFrame:(CGRect)frame andImages:(NSMutableArray *)rawImages sideImageCount:(int)sideCount sideImageScale:(CGFloat)sideImageScale middleImageScale:(CGFloat)middleImageScale {
++ (id)coverFlowViewWithFrame:(CGRect)frame andImages: (NSMutableArray *)rawImages andURLs: (NSMutableArray *)urls sideImageCount:(int) sideCount sideImageScale: (CGFloat) sideImageScale middleImageScale: (CGFloat) middleImageScale {
     coverFlowView *flowView = [[coverFlowView alloc] initWithFrame:frame];
     
     flowView.sideVisibleImageCount = sideCount;
@@ -191,6 +204,7 @@
     flowView.currentRenderingImageIndex = (unsigned)rawImages.count/2;
     
     flowView.images = [NSMutableArray arrayWithArray:rawImages];
+    flowView.imagesURL = [NSMutableArray arrayWithArray:urls];
     flowView.imageLayers = [[NSMutableArray alloc] initWithCapacity:flowView.sideVisibleImageCount* 2 + 1];
     flowView.templateLayers = [[NSMutableArray alloc] initWithCapacity:(flowView.sideVisibleImageCount + 1)* 2 + 1];
     
@@ -215,6 +229,7 @@
         CATransform3D transformPerspective = CATransform3DIdentity;
         transformPerspective.m34 = -1.0 / 500.0;
         self.layer.sublayerTransform = transformPerspective;
+        durationTime = 1;
     }
     
     return self;
@@ -269,6 +284,8 @@
         UIImage *image = [self.images objectAtIndex:i];
         CALayer *imageLayer = [CALayer layer];
         imageLayer.contents = (__bridge id)image.CGImage;
+        NSString *url = [self.imagesURL objectAtIndex:i];
+        [imageLayer loadImageWithURL:url];
         CGFloat scale = (i == self.currentRenderingImageIndex) ? self.middleImageScale : self.sideVisibleImageScale;
         imageLayer.bounds = CGRectMake(0, 0, image.size.width * scale, image.size.height*scale);
         [self.imageLayers addObject:imageLayer];
@@ -285,18 +302,20 @@
         imageLayer.zPosition = correspondingTemplateLayer.zPosition;
         imageLayer.transform = correspondingTemplateLayer.transform;
         //show its reflections
-        [self showImageAndReflection:imageLayer];
+        NSString *url = [self.imagesURL objectAtIndex:i];
+        [self showImageAndReflection:imageLayer withURL:url];
     }
     
 }
 
 // 添加layer及其“倒影”
-- (void)showImageAndReflection:(CALayer*)layer
+- (void)showImageAndReflection:(CALayer*)layer withURL:(NSString *)url
 {
     
     // 制作reflection
     CALayer *reflectLayer = [CALayer layer];
     reflectLayer.contents = layer.contents;
+    [reflectLayer loadImageWithURL:url];
     reflectLayer.bounds = layer.bounds;
     reflectLayer.position = CGPointMake(layer.bounds.size.width/2, layer.bounds.size.height*1.5);
     reflectLayer.transform = CATransform3DMakeRotation(M_PI, 1, 0, 0);

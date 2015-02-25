@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface PersonListViewController : UIViewController
++(PersonListViewController*)shareSingletonInstance;
+
+
 
 @end

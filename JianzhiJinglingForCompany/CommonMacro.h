@@ -34,4 +34,15 @@
 
 
 
+//NSUserDefaults  中的字段
+#define CURRENTUSERNAME   @"currentUserName"
+#define CURRENTUSERID  @"currentUserObjectId"
+#define CURRENTLOCATOIN @"currentCoordinate"
+#define CURRENTLOGOURL @"currentLogoUrl"
+#define CURRENTINTRODUCTION @"currentIntro"
+#define CURRENTUSERREALNAME @"enterpriseName"
+#define CURRENTUSERINDUSTRY @"enterpriseIndustry"
+#define CURRENTUSERADDRESS @"enterpriseAddress"
+
+#define COMPROFILEFlag  @"profileSetted"
 #endif

@@ -7,7 +7,13 @@
 //
 
 #import "baseModel.h"
+#import "userModel.h"
 
-@interface userListModel : baseModel
+@interface userListModel : baseModel{
+    NSMutableArray *userList;
+}
 
+-(userListModel *)initWithData:(NSData *)mainData;
+-(userListModel *)initWithError:(NSNumber *)getStatus info:(NSString *)error;
+-(NSMutableArray *)getuserArray;
 @end
