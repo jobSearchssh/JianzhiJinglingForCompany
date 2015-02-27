@@ -19,6 +19,7 @@
 #define queryEnterpriseJobs_FUNCTION @"enterpriseService/queryEnterpriseJobs"
 #define queryStarJobUsers_FUNCTINON @"enterpriseService/queryStarJobUsers"
 #define queryNearestUsers_FUNCTINON @"enterpriseService/queryNearestUsers"
+#define queryUsersByDistance_FUNCTINON @"enterpriseService/queryUsersByDistance"
 #define getMyRecruitUsers_FUNCTINON @"enterpriseService/queryRecieveJobList"
 #define createJobTemplate_FUNCTINON @"enterprise/createJobTemplate"
 #define getJobTemplate_FUNCTINON @"enterprise/getJobTemplateList"
@@ -290,6 +291,21 @@
     NSString *str = [[NSString alloc]initWithFormat:@"enterprise_id=%@&start=%d&length=%d",enterprise_id,start,length];
     NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
     [self testAPIPostTestWithBlock:data getFunction:queryStarJobUsers_FUNCTINON block:^(URLReturnModel *returnModel) {
+        if (returnModel != Nil && [returnModel getFlag]) {
+            userListModel *a = [[userListModel alloc]initWithData:[returnModel getData]];
+            userListBlock(a);
+        }else{
+            userListModel *a = [[userListModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
+            userListBlock(a);
+        }
+    }];
+}
+//一定距离范围的人
++(void)queryNearestUsersWithDistance:(NSString *)enterprise_id start:(int)start length:(int)length lon:(double)lon lat:(double)lat distance:(int)dis withBlock:(userListReturnBlock)userListBlock
+{
+    NSString *str = [[NSString alloc]initWithFormat:@"enterprise_id=%@&start=%d&length=%d&lon=%f&lat=%f&distance=%d",enterprise_id,start,length,lon,lat,dis];
+    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+    [self testAPIPostTestWithBlock:data getFunction:queryUsersByDistance_FUNCTINON block:^(URLReturnModel *returnModel) {
         if (returnModel != Nil && [returnModel getFlag]) {
             userListModel *a = [[userListModel alloc]initWithData:[returnModel getData]];
             userListBlock(a);

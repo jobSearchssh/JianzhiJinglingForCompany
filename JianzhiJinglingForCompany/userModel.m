@@ -32,6 +32,8 @@
             beiyong3 = [dictionary objectForKey:@"beiyong3"];
             beiyong4 = [dictionary objectForKey:@"beiyong4"];
             userGender = [dictionary objectForKey:@"userGender"];
+            NSString *updateAtString=[dictionary objectForKey:@"updated_at"];
+            NSString *createAtString=[dictionary objectForKey:@"created_at"];
 //            job_id= [dictionary objectForKey:@"job_id"];
             NSNumber *applyStatusNum=[dictionary objectForKey:@"applyStatus"];
             applyStatus= [[[NSNumberFormatter alloc]init]stringFromNumber:applyStatusNum];
@@ -54,6 +56,13 @@
                 if (tempstring !=Nil) {
                     userBirthday = [DateUtil BirthdateFromString:tempstring];
                 }
+                if (updateAtString!=nil) {
+                    updateAt=[DateUtil dateFromString:updateAtString];
+                }
+                if (createAtString!=nil) {
+                    createAt=[DateUtil dateFromString:createAtString];
+                }
+
             }
             @catch (NSException *exception) {
                 
@@ -139,14 +148,23 @@
                     beiyong4 = [dictionary objectForKey:@"beiyong4"];
                     userHeight = [dictionary objectForKey:@"userHeight"];
                     userGender = [dictionary objectForKey:@"userGender"];
-                    updateAt=[dictionary objectForKey:@""];
-                    createAt=[dictionary objectForKey:@"created_at"];
-                    applyStatus=[dictionary objectForKey:@"applyStatus"];
-                    apply_id=[dictionary objectForKey:@"apply_id"];
+                    NSString *updateAtString=[dictionary objectForKey:@"updated_at"];
+                    NSString *createAtString=[dictionary objectForKey:@"created_at"];
+                    NSNumber *applyStatusNum=[dictionary objectForKey:@"applyStatus"];
+                    applyStatus= [[[NSNumberFormatter alloc]init]stringFromNumber:applyStatusNum];
+                    NSLog(@"applyStatus:%@",applyStatus);
+                    apply_id= [dictionary objectForKey:@"apply_id"];
                     NSString *tempstring = [dictionary objectForKey:@"userBirthday"];
                     @try {
                         if (tempstring !=Nil) {
                             userBirthday = [DateUtil BirthdateFromString:tempstring];
+                        }
+                        
+                        if (updateAtString!=nil) {
+                            updateAt=[DateUtil dateFromString:updateAtString];
+                        }
+                        if (createAtString!=nil) {
+                            createAt=[DateUtil dateFromString:createAtString];
                         }
                     }
                     @catch (NSException *exception) {

@@ -74,6 +74,8 @@ typedef void (^userListReturnBlock)(userListModel *userListModel);
 
 //附近的人
 +(void)queryNearestUsers:(NSString *)enterprise_id start:(int)start length:(int)length lon:(double)lon lat:(double)lat withBlock:(userListReturnBlock)userListBlock;
+//一定距离内的人
++(void)queryNearestUsersWithDistance:(NSString *)enterprise_id start:(int)start length:(int)length lon:(double)lon lat:(double)lat distance:(int)dis withBlock:(userListReturnBlock)userListBlock;
 
 //申请我职位的人
 +(void)getMyRecruitUsers:(NSString*)enterprise_id start:(int)start length:(int)length withBlock:(userListReturnBlock)userListBlock;

@@ -97,12 +97,12 @@
 - (void)saveUserInfoLocally:(NSString*)usrname usrID:(NSString*)objectId{
     
         NSUserDefaults *mySettingData = [NSUserDefaults standardUserDefaults];
-        [mySettingData setObject:usrname forKey:@"currentUserName"];
-        [mySettingData setObject:objectId forKey:@"currentUserObjectId"];
+        [mySettingData setObject:usrname forKey:CURRENTUSERNAME];
+        [mySettingData setObject:objectId forKey:CURRENTUSERID];
         [mySettingData synchronize];
     
     
-    NSLog(@"currentUserName:%@",[mySettingData objectForKey:@"currentUserName"]);
+    NSLog(@"登录成功:%@",[mySettingData objectForKey:CURRENTUSERNAME]);
 
 }
 
@@ -110,10 +110,12 @@
 
 
 + (void)logout{
+    //登出操作
+    
     NSUserDefaults *mySettingData = [NSUserDefaults standardUserDefaults];
-    if ([mySettingData objectForKey:@"currentUserObjectId"]) {
-        [mySettingData setObject:nil forKey:@"currentUserName"];
-        [mySettingData setObject:nil forKey:@"currentUserObjectId"];
+    if ([mySettingData objectForKey:CURRENTUSERID]) {
+        [mySettingData setObject:nil forKey:CURRENTUSERNAME];
+        [mySettingData setObject:nil forKey:CURRENTUSERID];
         [mySettingData synchronize];
     }
 }

@@ -55,6 +55,7 @@ static int ACTION_LOGINFLAG = 2;
 @property (strong,nonatomic) UIImage *image;
 @property (strong,nonatomic) UIImage *highlightedImage;
 @property (assign,nonatomic) NSInteger tag;
+@property (strong, nonatomic)NSString *imageUrl;
 @property (copy,nonatomic) void (^action)(RESideMenu *menu, RESideMenuItem *item);
 
 @property (strong, readwrite, nonatomic) NSArray *subItems;
@@ -64,8 +65,8 @@ static int ACTION_LOGINFLAG = 2;
 - (id)initWithTitle:(NSString *)title setFlag:(int)getFlag action:(void(^)(RESideMenu *menu, RESideMenuItem *item))action;
 - (id)initWithTitle:(NSString *)title setFlag:(int)getFlag setSubtitle:(NSString *)subtitle action:(void(^)(RESideMenu *menu, RESideMenuItem *item))action;
 - (id)initWithTitle:(NSString *)title setFlag:(int)getFlag image:(UIImage *)image highlightedImage:(UIImage *)highlightedImage action:(void(^)(RESideMenu *menu, RESideMenuItem *item))action;
-- (id)initWithTitle:(NSString *)title setFlag:(int)getFlag setSubtitle:(NSString *)subtitle image:(UIImage *)image highlightedImage:(UIImage *)highlightedImage action:(void(^)(RESideMenu *menu, RESideMenuItem *item))action;
-- (void)setTitle:(NSString*)title Subtitle:(NSString*)subtitle Image:(UIImage*)image;
+- (id)initWithTitle:(NSString *)title setFlag:(int)getFlag setSubtitle:(NSString *)subtitle image:(UIImage *)image imageUrl:(NSString*)url highlightedImage:(UIImage *)highlightedImage action:(void(^)(RESideMenu *menu, RESideMenuItem *item))action;
+- (void)setTitle:(NSString*)title Subtitle:(NSString*)subtitle Url:(NSString*)url;
 
 
 

@@ -15,7 +15,7 @@
 #import "SMS_SDK/SMS_SDK.h"
 #import "MainTabBarViewController.h"
 #import "MLNaviViewController.h"
-
+#import "UMFeedback.h"
 #import "baseAPP.h"
 #import "netAPI.h"
 
@@ -86,7 +86,7 @@
     //友盟
     [MobClick startWithAppkey:@"54c10ddbfd98c5b7c2000836" reportPolicy:BATCH  channelId:nil];
     [MobClick checkUpdate:@"兼职精灵有新版本啦" cancelButtonTitle:@"无情的忽略" otherButtonTitles:@"欣然前往下载"];
-    
+    [UMFeedback setAppkey:@"54c10ddbfd98c5b7c2000836"];
     //Bmob后台服务
     [Bmob registerWithAppKey:@"feda8b57c5da4a0364a3406906f77e2d"];
     

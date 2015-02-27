@@ -71,7 +71,6 @@ static  RESideMenu *thisMenu=nil;
     self.hideStatusBarArea = YES;
     
     self.menuStack = [NSMutableArray array];
-    
     return self;
 }
 
@@ -101,28 +100,42 @@ static  RESideMenu *thisMenu=nil;
     return thisMenu;
 }
 
-- (void)setTableItem:(NSInteger)row Title:(NSString*)title Subtitle:(NSString*)subtitle Image:(UIImage*)image{
+- (void)setTableItem:(NSInteger)row Title:(NSString*)title Subtitle:(NSString*)subtitle ImageUrl:(NSString*)imageurl{
  
     if (row==0) {
         if ([_items count]>0) {
             RESideMenuItem*usrItem=[_items objectAtIndex:0];
             
-            [usrItem setTitle:title Subtitle:subtitle Image:image];
+            [usrItem setTitle:title Subtitle:subtitle Url:imageurl];
             
             NSIndexPath *indexPath=[NSIndexPath indexPathForRow:0 inSection:0];
             usrTableViewCell *usrcell=(usrTableViewCell *)[_tableView cellForRowAtIndexPath:indexPath];
-            [usrcell setUsrAvatar:image];
+            [usrcell setUsrAvatarWithURL:imageurl];
             [usrcell setusrName:title];
             [usrcell setusrAction:subtitle];
         }
     }
 }
 
+- (void)setUserImageUrl:(NSString*)imageurl{
+
+    if ([_items count]>0) {
+            
+        RESideMenuItem*usrItem=[_items objectAtIndex:0];
+        usrItem.imageUrl=imageurl;
+    }
+
+}
+
 -(void)setBadgeView:(NSInteger)index badgeText:(NSString*)badgeText{
     
-    RESideMenuItem *usrItem=[_items objectAtIndex:index];
+    RESideMenuItem*usrItem=[_items objectAtIndex:index];
     
     usrItem.badgeText=badgeText;
+    
+    NSIndexPath *indexPath=[NSIndexPath indexPathForRow:index inSection:0];
+    sideNormalTableViewCell *cell=(sideNormalTableViewCell *)[_tableView cellForRowAtIndexPath:indexPath];
+    [cell setBadgeString:badgeText];
     
 }
 
@@ -396,6 +409,7 @@ static  RESideMenu *thisMenu=nil;
         [tableView registerNib:nibusr forCellReuseIdentifier:usrCellIdentifier];
         UINib *nibnormal = [UINib nibWithNibName:@"sideNormalTableViewCell" bundle:nil];
         [tableView registerNib:nibnormal forCellReuseIdentifier:normalcellIdentifier];
+        nibsRegistered = YES;
     }
     
 
@@ -418,7 +432,12 @@ static  RESideMenu *thisMenu=nil;
             usrcell.usrNameOutlet.font = self.font;
             usrcell.usrNameOutlet.textColor = self.textColor;
         }
-        [usrcell setUsrAvatar:item.image];
+        if (item.imageUrl) {
+            [usrcell setUsrAvatarWithURL:item.imageUrl];
+        }else{
+            [usrcell setUsrAvatar:[UIImage imageNamed:@"tourists"]];
+        }
+        
         [usrcell setusrName:item.title];
         [usrcell setusrAction:item.subtitle];
         usrcell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -436,9 +455,9 @@ static  RESideMenu *thisMenu=nil;
         [normalcell setAction:item.title];
         normalcell.item = item;
         [normalcell notifyDatasetChange];
-        if ([item.badgeText length]>0) {
-            [normalcell setBadgeString:@"6"];
-        }
+        //if ([item.badgeText intValue]>0) {
+        [normalcell setBadgeString:item.badgeText];
+        //}
         
         normalcell.selectionStyle = UITableViewCellSelectionStyleNone;
         return normalcell;
@@ -459,7 +478,6 @@ static  RESideMenu *thisMenu=nil;
 }
 
 #pragma mark - Table view delegate
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -507,5 +525,4 @@ static  RESideMenu *thisMenu=nil;
     if (item.action)
         item.action(self, item);
 }
-
 @end

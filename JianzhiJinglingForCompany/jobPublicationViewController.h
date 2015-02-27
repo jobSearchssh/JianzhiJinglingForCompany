@@ -17,5 +17,7 @@
 @property int viewStatus;
 @property (strong,nonatomic)jobModel *publishedJob;
 @property BOOL editButtonEnable;
+
+@property BOOL isHideBottomBtn;
 - (IBAction)TextField_DidEndOnExit:(id)sender;
 @end

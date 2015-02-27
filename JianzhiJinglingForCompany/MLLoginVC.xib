@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MLLoginVC">
             <connections>
+                <outlet property="customNavi" destination="7yt-LN-VnY" id="f6E-1d-Zpy"/>
                 <outlet property="errorAlertLabel" destination="JpK-Ay-gbz" id="jnb-zE-GNq"/>
                 <outlet property="loginButton" destination="aqj-dV-utd" id="1kt-ZZ-UO9"/>
                 <outlet property="loginView" destination="qvT-2l-fLE" id="4Xp-lD-90b"/>
@@ -29,22 +30,56 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <navigationBar contentMode="scaleToFill" backIndicatorImage="menu1.png" translatesAutoresizingMaskIntoConstraints="NO" id="7yt-LN-VnY">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="400" id="th9-5Z-sYG"/>
+                    </constraints>
+                    <textAttributes key="titleTextAttributes">
+                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="textShadowColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </textAttributes>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="th9-5Z-sYG"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=regular-widthClass=compact">
+                        <mask key="constraints">
+                            <exclude reference="th9-5Z-sYG"/>
+                        </mask>
+                    </variation>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="6ja-Of-hmL"/>
+                    </connections>
+                </navigationBar>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hKW-7x-SZ6">
                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                 </scrollView>
             </subviews>
-            <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="hKW-7x-SZ6" secondAttribute="bottom" id="3pL-Me-viM"/>
-                <constraint firstItem="hKW-7x-SZ6" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="44" id="9nM-1k-H8g"/>
+                <constraint firstAttribute="bottom" secondItem="hKW-7x-SZ6" secondAttribute="bottom" id="3pL-Me-viM">
+                    <variation key="heightClass=regular-widthClass=compact" constant="-76"/>
+                </constraint>
+                <constraint firstItem="hKW-7x-SZ6" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="44" id="9nM-1k-H8g">
+                    <variation key="heightClass=regular-widthClass=compact" constant="120"/>
+                </constraint>
+                <constraint firstItem="7yt-LN-VnY" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="DWd-c4-f5x"/>
                 <constraint firstItem="hKW-7x-SZ6" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="GhI-wr-IzR"/>
                 <constraint firstAttribute="trailing" secondItem="hKW-7x-SZ6" secondAttribute="trailing" id="eWl-66-0Lu"/>
+                <constraint firstItem="7yt-LN-VnY" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ks7-ce-3hn"/>
+                <constraint firstAttribute="trailing" secondItem="7yt-LN-VnY" secondAttribute="trailing" id="pJG-lN-i9X"/>
             </constraints>
             <variation key="default">
                 <mask key="subviews">
+                    <exclude reference="7yt-LN-VnY"/>
                     <exclude reference="hKW-7x-SZ6"/>
                 </mask>
                 <mask key="constraints">
+                    <exclude reference="DWd-c4-f5x"/>
+                    <exclude reference="ks7-ce-3hn"/>
+                    <exclude reference="pJG-lN-i9X"/>
                     <exclude reference="3pL-Me-viM"/>
                     <exclude reference="9nM-1k-H8g"/>
                     <exclude reference="GhI-wr-IzR"/>
@@ -53,9 +88,13 @@
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
                 <mask key="subviews">
+                    <include reference="7yt-LN-VnY"/>
                     <include reference="hKW-7x-SZ6"/>
                 </mask>
                 <mask key="constraints">
+                    <include reference="DWd-c4-f5x"/>
+                    <include reference="ks7-ce-3hn"/>
+                    <include reference="pJG-lN-i9X"/>
                     <include reference="3pL-Me-viM"/>
                     <include reference="9nM-1k-H8g"/>
                     <include reference="GhI-wr-IzR"/>
@@ -275,19 +314,26 @@
                     <variation key="heightClass=regular-widthClass=compact" constant="45"/>
                 </constraint>
                 <constraint firstItem="aqj-dV-utd" firstAttribute="leading" secondItem="qvT-2l-fLE" secondAttribute="leading" constant="20" id="aY9-b8-Pvx"/>
-                <constraint firstItem="j3Q-Eg-DV3" firstAttribute="top" secondItem="qvT-2l-fLE" secondAttribute="top" constant="32" id="cha-Ec-uAX"/>
+                <constraint firstItem="j3Q-Eg-DV3" firstAttribute="top" secondItem="qvT-2l-fLE" secondAttribute="top" constant="32" id="cha-Ec-uAX">
+                    <variation key="heightClass=regular-widthClass=compact" constant="28"/>
+                </constraint>
                 <constraint firstItem="aqj-dV-utd" firstAttribute="top" secondItem="55i-yR-r1w" secondAttribute="bottom" constant="17" id="f3T-QM-YHr"/>
                 <constraint firstItem="QpQ-Fy-yaW" firstAttribute="top" secondItem="PKh-UD-eVe" secondAttribute="bottom" constant="13" id="f4c-ak-xNH"/>
                 <constraint firstAttribute="trailing" secondItem="QpQ-Fy-yaW" secondAttribute="trailing" constant="31" id="fft-iV-TsR"/>
                 <constraint firstItem="Zxe-bk-sM2" firstAttribute="leading" secondItem="qvT-2l-fLE" secondAttribute="leading" constant="32" id="hsV-xO-fez"/>
                 <constraint firstItem="j3Q-Eg-DV3" firstAttribute="leading" secondItem="oyH-cY-omJ" secondAttribute="trailing" constant="8" id="mu9-Th-Drr"/>
-                <constraint firstItem="oyH-cY-omJ" firstAttribute="top" secondItem="qvT-2l-fLE" secondAttribute="top" constant="32" id="nBV-bo-UT3"/>
+                <constraint firstItem="oyH-cY-omJ" firstAttribute="top" secondItem="qvT-2l-fLE" secondAttribute="top" constant="32" id="nBV-bo-UT3">
+                    <variation key="heightClass=regular-widthClass=compact" constant="28"/>
+                </constraint>
                 <constraint firstAttribute="trailing" secondItem="PKh-UD-eVe" secondAttribute="trailing" constant="20" id="nZV-P5-dBi"/>
                 <constraint firstItem="SDp-fb-UD4" firstAttribute="top" secondItem="aqj-dV-utd" secondAttribute="bottom" constant="8" id="qfb-dp-h60"/>
                 <constraint firstItem="Zxe-bk-sM2" firstAttribute="top" secondItem="PKh-UD-eVe" secondAttribute="bottom" constant="13" id="uOx-Js-pgZ"/>
                 <constraint firstItem="chb-hu-tTL" firstAttribute="top" secondItem="PKh-UD-eVe" secondAttribute="bottom" constant="8" id="umC-fx-SkR"/>
-                <constraint firstItem="PKh-UD-eVe" firstAttribute="top" secondItem="qvT-2l-fLE" secondAttribute="top" constant="27" id="vS1-ff-f85"/>
+                <constraint firstItem="PKh-UD-eVe" firstAttribute="top" secondItem="qvT-2l-fLE" secondAttribute="top" constant="27" id="vS1-ff-f85">
+                    <variation key="heightClass=regular-widthClass=compact" constant="23"/>
+                </constraint>
             </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <variation key="default">
                 <mask key="subviews">
@@ -369,7 +415,7 @@
                     <include reference="f3T-QM-YHr"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="719" y="135"/>
+            <point key="canvasLocation" x="719" y="147"/>
         </view>
         <view contentMode="scaleToFill" id="AlJ-Tf-CRZ">
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -809,6 +855,7 @@
         </view>
     </objects>
     <resources>
+        <image name="menu1.png" width="50" height="50"/>
         <image name="textfieldBackground.png" width="600" height="81"/>
         <image name="userAccount.png" width="30" height="30"/>
         <image name="userPassword.png" width="30" height="30"/>

@@ -20,7 +20,6 @@
 #import "JSBadgeView.h"
 
 @implementation UIViewController (RESideMenu)
-
 -(void)addLeftBarItem:(UIViewController*)targetVC
 {
     
@@ -31,32 +30,33 @@
 }
 
 //add by  郭玉宝   用于更新用户登陆信息，username,userImageUrl,loginStatus
--(void)checkUserStatus
+-(void)checkUserStatusForReSideMenu
 {
     //没有作用
     RESideMenu *_sideMenu=[RESideMenu sharedInstance];
     
     RESideMenuItem *usrItem=[_sideMenu.items objectAtIndex:0];
     NSUserDefaults *mySettingData = [NSUserDefaults standardUserDefaults];
-    NSString *username=[mySettingData objectForKey:@"currentUserName"];
+    NSString *username=[mySettingData objectForKey:CURRENTUSERNAME];
     //
-    NSString *userImageUrl=[mySettingData objectForKey:@"currentUserImageName"];
+    NSString *userImageUrl=[mySettingData objectForKey:CURRENTLOGOURL];
+    
     if (username!=nil)
     {
-        usrItem.title=@"登出";
-        usrItem.subtitle=username;
+        usrItem.title=@"点击退出";
+        if ([username length]>7) {
+            usrItem.subtitle=[NSString stringWithFormat:@"%@**%@",[username substringToIndex:3],[username substringFromIndex:([username length]-3)]];
+        }else
+        {
+          usrItem.subtitle=username;
+        }
+        if (userImageUrl!=nil) {
+            [_sideMenu setTableItem:0 Title:usrItem.title Subtitle:usrItem.subtitle ImageUrl:userImageUrl];
+        }
     }else
     {
         usrItem.title=@"未登录";
         usrItem.subtitle=@"游客";
-        
-    }
-    if (userImageUrl!=nil) {
-        usrItem.image=[UIImage imageNamed:userImageUrl];
-    }else
-    {
-        usrItem.image=[UIImage imageNamed:@"tourists"];
-        
     }
 }
 
@@ -64,18 +64,25 @@
 
 //初始化侧拉菜单
 -(void)initReSideMenu
-{   RESideMenu *_sideMenu=[RESideMenu sharedInstance];
+{
+    RESideMenu *_sideMenu=[RESideMenu sharedInstance];
     if (!_sideMenu) {
-        
-        RESideMenuItem *usrItem = [[RESideMenuItem alloc] initWithTitle:@"未登录" setFlag:USRCELL setSubtitle:@"游客"  image:[UIImage imageNamed:@"tourists"] highlightedImage:[UIImage imageNamed:@"avatar_round_m"] action:^(RESideMenu *menu, RESideMenuItem *item){
+        RESideMenuItem *usrItem = [[RESideMenuItem alloc] initWithTitle:@"未登录" setFlag:USRCELL setSubtitle:@"游客"image:nil imageUrl:nil highlightedImage:[UIImage imageNamed:@"avatar_round_m"] action:^(RESideMenu *menu, RESideMenuItem *item){
+            NSLog(@"Item %@", item);
+            [menu hide];
+            MainTabBarViewController *mainTab=[MainTabBarViewController shareInstance];
             
-            MLLoginVC *viewController = [MLLoginVC sharedInstance];
-            [self addLeftBarItem:viewController];
-            MLNaviViewController *navigationController = [[MLNaviViewController alloc] initWithRootViewController:viewController];
-            navigationController.navigationBar.translucent = NO;
-            navigationController.tabBarController.tabBar.translucent = NO;
-            navigationController.toolbar.translucent = NO;
-            [menu setRootViewController:navigationController];
+            [menu setRootViewController:mainTab];
+            
+            [mainTab showLoginVC];
+            
+//            MLLoginVC *viewController = [MLLoginVC sharedInstance];
+//            [self addLeftBarItem:viewController];
+//            MLNaviViewController *navigationController = [[MLNaviViewController alloc] initWithRootViewController:viewController];
+//            navigationController.navigationBar.translucent = NO;
+//            navigationController.tabBarController.tabBar.translucent = NO;
+//            navigationController.toolbar.translucent = NO;
+//            [menu setRootViewController:navigationController];
         }];
         
         //        RESideMenuItem *searchItem = [[RESideMenuItem alloc] initWithTitle:@"搜索" setFlag:NORMALCELL image:[UIImage imageNamed:@"search"] highlightedImage:[UIImage imageNamed:@"search"] action:^(RESideMenu *menu, RESideMenuItem *item) {
@@ -98,12 +105,10 @@
         }];
         
         
-        RESideMenuItem *savedItem = [[RESideMenuItem alloc] initWithTitle:@"关注的人" setFlag:NORMALCELL image:[UIImage imageNamed:@"collection"] highlightedImage:[UIImage imageNamed:@"collection"] action:^(RESideMenu *menu, RESideMenuItem *item) {
+        RESideMenuItem *savedItem = [[RESideMenuItem alloc] initWithTitle:@"申请人管理" setFlag:NORMALCELL image:[UIImage imageNamed:@"collection"] highlightedImage:[UIImage imageNamed:@"collection"] action:^(RESideMenu *menu, RESideMenuItem *item) {
             
             PersonListViewController *personVC=[PersonListViewController shareSingletonInstance];
-            
             [self addLeftBarItem:personVC];
-            
             MLNaviViewController *navigationVC=[[MLNaviViewController alloc]initWithRootViewController:personVC];
             [menu setRootViewController:navigationVC];
         }];
@@ -151,13 +156,14 @@
         _sideMenu.verticalOffset = IS_WIDESCREEN ? 110 : 76;
         _sideMenu.hideStatusBarArea = [AppDelegate OSVersion] < 7;
     }
-    [self checkUserStatus];
+    [self checkUserStatusForReSideMenu];
     //显示未读消息}
 }
 
 
 - (void)showMenu
-{   [self checkUserStatus];
+{
+    [self checkUserStatusForReSideMenu];
     RESideMenu *_sideMenu=[RESideMenu sharedInstance];
 //    [_sideMenu setBadgeView:3 badgeText:@"7"];
     [_sideMenu show];

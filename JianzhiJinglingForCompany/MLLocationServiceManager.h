@@ -13,5 +13,7 @@
 
 -(void)startLocationServiceWithCompleteBlock:(void(^)(void))block;
 -(void)startLocationServiceWithCompleteBlock:(void(^)(void))block Error:(void(^)(void))errorBlock;
+
+//为坐标添加KVO
 @property (nonatomic,readonly)geoModel *rightNowGeoPoint;
 @end

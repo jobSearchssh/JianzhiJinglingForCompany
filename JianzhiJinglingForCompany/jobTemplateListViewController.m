@@ -40,7 +40,7 @@
     self.edgesForExtendedLayout=UIRectEdgeNone;
     self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithImage:Nil style:UIBarButtonItemStyleBordered target:self action:@selector(publishNewJob)];
     [self.navigationItem.rightBarButtonItem setTitle:@"创建新职位"];
-    
+    self.navigationItem.title=@"发布职位";
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self tableViewInit];
@@ -75,7 +75,7 @@
     [self showHudInView:self.tableView hint:@"加载中.."];
     
     jobTemplateListViewController *__weak weakSelf=self;
-    [netAPI getJobTemplate:com_id start:start length:length withBlock:^(jobListModel *jobListModel) {
+    [netAPI queryEnterpriseJobs:com_id start:start length:length withBlock:^(jobListModel *jobListModel) {
         [weakSelf.tableView headerEndRefreshing];
         [weakSelf.tableView footerEndRefreshing];
         if ([jobListModel getStatus]) {
@@ -107,7 +107,7 @@
     [self showHudInView:self.tableView hint:@"加载中.."];
     
     jobTemplateListViewController *__weak weakSelf=self;
-    [netAPI getJobTemplate:com_id start:start length:length withBlock:^(jobListModel *jobListModel) {
+    [netAPI queryEnterpriseJobs:com_id start:start length:length withBlock:^(jobListModel *jobListModel) {
         [weakSelf.tableView headerEndRefreshing];
         [weakSelf.tableView footerEndRefreshing];
         if ([jobListModel getStatus]) {
@@ -139,8 +139,9 @@
         UINib *nib = [UINib nibWithNibName:@"TableViewCell2" bundle:nil];
         [tableView registerNib:nib forCellReuseIdentifier:Cellidentifier];
     }
-    
     TableViewCell2 *cell = [tableView dequeueReusableCellWithIdentifier:Cellidentifier forIndexPath:indexPath];
+    
+
     
     [cell setRightUtilityButtons:[self rightButtons] WithButtonWidth:58.0f];
     
@@ -178,6 +179,7 @@
                     [[AsyncImageLoader sharedLoader]cancelLoadingImagesForTarget:cell.jobImageView];
                     cell.jobImageView.imageURL=[NSURL URLWithString:imageurl1];
                 }
+                else cell.jobImageView.image=[UIImage imageNamed:@"placeholder"];
             }
 
         }
@@ -391,7 +393,7 @@
     NSUserDefaults *mysettings=[NSUserDefaults standardUserDefaults];
     NSString *com_id=[mysettings objectForKey:CURRENTUSERID];
     [self showHudInView:self.tableView hint:@"删除中"];
-    [netAPI deleteTheJobTemplate:com_id  jobTemplate_id:selectedJobId withBlock:^(oprationResultModel *oprationModel) {
+    [netAPI deleteTheJob:com_id  job_id:selectedJobId withBlock:^(oprationResultModel *oprationModel) {
         [self hideHud];
         if ([[oprationModel getStatus]isEqualToNumber:[NSNumber numberWithInt:BASE_SUCCESS]]) {
             if (selectedCellRow>=0 || selectedCellRow<[self.dataSourceArray count]) {

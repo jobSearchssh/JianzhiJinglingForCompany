@@ -15,6 +15,7 @@
 {
     NSArray *provinces, *cities, *areas;
 }
+@property (strong, nonatomic) IBOutlet UIButton *okButton;
 
 @end
 
@@ -62,6 +63,7 @@
         self.pickerStyle = pickerStyle;
         self.locatePicker.dataSource = self;
         self.locatePicker.delegate = self;
+        self.okButton.center=CGPointMake([[UIScreen mainScreen] bounds].size.width-self.okButton.frame.size.width/2, self.okButton.center.y);
         
         //加载数据
         if (self.pickerStyle == HZAreaPickerWithStateAndCityAndDistrict) {
@@ -224,11 +226,12 @@
 
 - (void)showInView:(UIView *) view
 {
-    self.frame = CGRectMake(0, view.frame.size.height, self.frame.size.width, self.frame.size.height);
+
+    self.frame = CGRectMake(0, view.frame.size.height, [[UIScreen mainScreen] bounds].size.width, self.frame.size.height);
     [view addSubview:self];
     
     [UIView animateWithDuration:0.3 animations:^{
-        self.frame = CGRectMake(0, view.frame.size.height - self.frame.size.height, self.frame.size.width, self.frame.size.height);
+        self.frame = CGRectMake(0, view.frame.size.height - self.frame.size.height, [[UIScreen mainScreen] bounds].size.width, self.frame.size.height);
     }];
     
 }

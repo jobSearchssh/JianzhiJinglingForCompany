@@ -49,18 +49,18 @@
 
 - (id)initWithTitle:(NSString *)title setFlag:(int)getFlag action:(void(^)(RESideMenu *menu, RESideMenuItem *item))action
 {
-    return [self initWithTitle:title setFlag:getFlag setSubtitle:nil image:nil highlightedImage:nil action:action];
+    return [self initWithTitle:title setFlag:getFlag setSubtitle:nil image:nil imageUrl:nil highlightedImage:nil action:action];
 }
 
 - (id)initWithTitle:(NSString *)title setFlag:(int)getFlag setSubtitle:(NSString *)subtitle action:(void(^)(RESideMenu *menu, RESideMenuItem *item))action{
-    return [self initWithTitle:title setFlag:getFlag setSubtitle:subtitle image:nil highlightedImage:nil action:action];
+    return [self initWithTitle:title setFlag:getFlag setSubtitle:subtitle image:nil imageUrl:nil highlightedImage:nil action:action];
 }
 
 - (id)initWithTitle:(NSString *)title setFlag:(int)getFlag image:(UIImage *)image highlightedImage:(UIImage *)highlightedImage action:(void(^)(RESideMenu *menu, RESideMenuItem *item))action{
-    return [self initWithTitle:title setFlag:getFlag setSubtitle:nil image:image highlightedImage:highlightedImage action:action];
+    return [self initWithTitle:title setFlag:getFlag setSubtitle:nil image:image imageUrl:nil highlightedImage:highlightedImage action:action];
 }
 
-- (id)initWithTitle:(NSString *)title setFlag:(int)getFlag setSubtitle:(NSString *)subtitle image:(UIImage *)image highlightedImage:(UIImage *)highlightedImage action:(void(^)(RESideMenu *menu, RESideMenuItem *item))action{
+- (id)initWithTitle:(NSString *)title setFlag:(int)getFlag setSubtitle:(NSString *)subtitle image:(UIImage *)image imageUrl:(NSString*)url highlightedImage:(UIImage *)highlightedImage action:(void(^)(RESideMenu *menu, RESideMenuItem *item))action{
     self = [super init];
     if (!self)
         return nil;
@@ -71,19 +71,19 @@
     self.action = action;
     self.image = image;
     self.highlightedImage = highlightedImage;
-    
+    self.imageUrl=url;
     return self;
 }
 
-- (void)setTitle:(NSString*)title Subtitle:(NSString*)subtitle Image:(UIImage*)image{
+- (void)setTitle:(NSString*)title Subtitle:(NSString*)subtitle Url:(NSString*)url{
     self.title=title;
     self.subtitle=subtitle;
-    self.image=image;
+    self.imageUrl=url;
 }
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"<title: %@ tag: %i>", self.title, self.tag];
+    return [NSString stringWithFormat:@"<title: %@ tag: %li>", self.title, (long)self.tag];
 }
 
 @end

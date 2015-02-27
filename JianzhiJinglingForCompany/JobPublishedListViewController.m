@@ -62,7 +62,7 @@
 //    self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithImage:Nil style:UIBarButtonItemStyleBordered target:self action:@selector(publishNewJob)];
 //    [self.navigationItem.rightBarButtonItem setTitle:@"创建新职位"];
     
-    
+    self.navigationItem.title=@"我的发布";
     
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -129,8 +129,6 @@
             [alert show];
         }
     }];
-    
-    
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -145,9 +143,9 @@
     }
     
     TableViewCell2 *cell = [tableView dequeueReusableCellWithIdentifier:Cellidentifier forIndexPath:indexPath];
-    
+     cell.jobImageView.image=[UIImage imageNamed:@"placeholder"];
     [cell setRightUtilityButtons:[self rightButtons] WithButtonWidth:58.0f];
-    
+   
     cell.delegate = self;
     
     if (self.dataSourceArray!=nil) {
@@ -157,7 +155,6 @@
             cell.row=indexPath.row;
             cell.jobTitleLabel.text=[job getjobTitle];
             cell.jobAddressDetailLabel.text=[job getjobWorkAddressDetail];
-            
             cell.jobUpdateTimeLabel.text=[[job getcreated_at] timeIntervalDescription];
             cell.Job_id=[job  getjobID];
             
@@ -229,6 +226,7 @@
     jobDetailVC.viewStatus=PublishedJob;
     jobDetailVC.editButtonEnable=NO;
     jobDetailVC.hidesBottomBarWhenPushed=YES;
+    jobDetailVC.isHideBottomBtn=YES;
     jobDetailVC.publishedJob=[self.dataSourceArray objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:jobDetailVC animated:YES];
 }

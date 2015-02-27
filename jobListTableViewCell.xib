@@ -65,7 +65,7 @@
                             </mask>
                         </variation>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Pepsi.png" translatesAutoresizingMaskIntoConstraints="NO" id="JuA-SO-iT4" customClass="AsyncImageView">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder.png" translatesAutoresizingMaskIntoConstraints="NO" id="JuA-SO-iT4" customClass="AsyncImageView">
                         <rect key="frame" x="51" y="13" width="69" height="69"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="69" id="5OG-2K-OJx"/>
@@ -262,9 +262,9 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="Pepsi.png" width="140" height="140"/>
         <image name="check_out.png" width="45" height="45"/>
         <image name="icon_location.png" width="15" height="15"/>
         <image name="just.png" width="35" height="35"/>
+        <image name="placeholder.png" width="60" height="60"/>
     </resources>
 </document>

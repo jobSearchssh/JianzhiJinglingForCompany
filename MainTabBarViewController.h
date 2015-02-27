@@ -12,4 +12,5 @@
 
 
 +(MainTabBarViewController*)shareInstance;
+-(void)showLoginVC;
 @end

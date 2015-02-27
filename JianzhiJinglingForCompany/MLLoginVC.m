@@ -18,7 +18,8 @@
 #import "UIViewController+HUD.h"
 #import "UIViewController+DismissKeyboard.h"
 #import "UIViewController+ErrorHandler.h"
-@interface MLLoginVC ()<QCheckBoxDelegate,loginResult,registerResult,UIGestureRecognizerDelegate,UIAlertViewDelegate>{
+#import "RESideMenu.h"
+@interface MLLoginVC ()<QCheckBoxDelegate,loginResult,registerResult,UIGestureRecognizerDelegate,UIAlertViewDelegate,UINavigationBarDelegate>{
     
     UIButton *chooseLoginBtn;
     UIButton *chooseRegisterBtn;
@@ -33,6 +34,11 @@
 @property (strong, nonatomic) IBOutlet UIView *registerView;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UILabel *errorAlertLabel;
+- (IBAction)disMissBtnAction:(id)sender;
+
+
+@property (weak, nonatomic) IBOutlet UINavigationBar *customNavi;
+
 
 @end
 
@@ -62,16 +68,30 @@ static  MLLoginVC *thisVC=nil;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.customNavi setBarTintColor:NaviBarColor];
+//    [self.customNavi setFrame:CGRectMake(0, 0, MainScreenWidth, 64)];
+    //创建一个导航栏集合
+    UINavigationItem *navigationItem = [[UINavigationItem alloc] initWithTitle:nil];
+    
+    [navigationItem setPrompt:@""];
+    [navigationItem setTitle:@"兼职精灵企业版"];
+     UIBarButtonItem *closeButton=[[UIBarButtonItem
+                                    alloc]initWithTitle:@"返回"  style:UIBarButtonItemStylePlain target:self action:@selector(disMissBtnAction:)];
+    
+    [closeButton setTintColor:[UIColor whiteColor]];
+    
+    [navigationItem setLeftBarButtonItem:closeButton];
+    [self.customNavi pushNavigationItem:navigationItem animated:NO];
     
     
-    chooseLoginBtn=[[UIButton alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width/2, 44)];
+    chooseLoginBtn=[[UIButton alloc] initWithFrame:CGRectMake(0, 74, [[UIScreen mainScreen] bounds].size.width/2, 44)];
     chooseLoginBtn.backgroundColor=[UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1.0];
     [chooseLoginBtn setTitle:@"登录" forState:UIControlStateNormal];
     [chooseLoginBtn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
     [chooseLoginBtn addTarget:self action:@selector(chooseLogin) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:chooseLoginBtn];
     
-    chooseRegisterBtn=[[UIButton alloc] initWithFrame:CGRectMake([[UIScreen mainScreen] bounds].size.width/2, 0, [[UIScreen mainScreen] bounds].size.width/2, 44)];
+    chooseRegisterBtn=[[UIButton alloc] initWithFrame:CGRectMake([[UIScreen mainScreen] bounds].size.width/2, 74, [[UIScreen mainScreen] bounds].size.width/2, 44)];
     chooseRegisterBtn.backgroundColor=[UIColor darkGrayColor];
     [chooseRegisterBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [chooseRegisterBtn setTitle:@"注册" forState:UIControlStateNormal];
@@ -79,8 +99,8 @@ static  MLLoginVC *thisVC=nil;
     [self.view addSubview:chooseRegisterBtn];
     
     
-    self.loginView.frame=CGRectMake(0, 44, [[UIScreen mainScreen] bounds].size.width, 220);
-    self.registerView.frame=CGRectMake([[UIScreen mainScreen] bounds].size.width, 44, [[UIScreen mainScreen] bounds].size.width, 330);
+    self.loginView.frame=CGRectMake(0, 118, [[UIScreen mainScreen] bounds].size.width, 220);
+    self.registerView.frame=CGRectMake([[UIScreen mainScreen] bounds].size.width, 118, [[UIScreen mainScreen] bounds].size.width, 330);
     
     //for check box
     QCheckBox *_check1 = [[QCheckBox alloc] initWithDelegate:self];
@@ -195,6 +215,10 @@ static  MLLoginVC *thisVC=nil;
 
 - (IBAction)touchLoginBtn:(id)sender {
     
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:CURRENTUSERID]!=nil) {
+        [MBProgressHUD showError:@"重复登录" toView:self.view];
+        return;
+    }
     [self.userPassword resignFirstResponder];
     if ([inputUserAccount length]==0) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入手机号码或账户名" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
@@ -203,7 +227,6 @@ static  MLLoginVC *thisVC=nil;
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入登陆密码" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [alert show];
     }else{
-        
         if (!self.loginer) {
             self.loginer=[[MLLoginBusiness alloc]init];
             self.loginer.loginResultDelegate=self;
@@ -215,16 +238,30 @@ static  MLLoginVC *thisVC=nil;
     }
 }
 
-
+#pragma --mark 登录成功返回 delegate接口
 - (void)loginResult:(BOOL)isSucceed Feedback:(NSString*)feedback{
     [self hideHud];
     if (isSucceed) {
+        
+        NSUserDefaults *mySettingData = [NSUserDefaults standardUserDefaults];
+        if ([mySettingData objectForKey:CURRENTUSERNAME]) {
+            NSString *currentUsrName=[mySettingData objectForKey:CURRENTUSERNAME];
+            RESideMenu* _sideMenu=[RESideMenu sharedInstance];
+            NSString *Urlstring=nil;
+            if ([mySettingData objectForKey:CURRENTLOGOURL]) {
+                Urlstring=[mySettingData objectForKey:CURRENTLOGOURL];
+            }
+            [_sideMenu setTableItem:0 Title:currentUsrName Subtitle:@"点击退出" ImageUrl:Urlstring];
+        }
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"登录成功" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [alert show];
-        //登陆成功，退回ResideMenuBar
-//        [self showMenu];
         [self dismissViewControllerAnimated:YES completion:^{
-            [[NSNotificationCenter defaultCenter]postNotificationName:@"notSettingprofile" object:nil];
+            [self checkUserStatusForReSideMenu];
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"autoLoadNearData" object:nil];
+            if (![mySettingData objectForKey:CURRENTLOGOURL]) {
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"notSettingprofile" object:nil];
+                
+            }
         }];
     }
     else{
@@ -232,7 +269,7 @@ static  MLLoginVC *thisVC=nil;
         [alert show];
     }
 }
-
+#pragma --mark 注册成功返回 delegate接口
 - (void)registerResult:(BOOL)isSucceed Feedback:(NSString *)feedback{
     [self hideHud];
     if (isSucceed) {
@@ -291,28 +328,26 @@ static  MLLoginVC *thisVC=nil;
 }
 
 - (IBAction)sendMassage:(id)sender {
+    [self showHudInView:self.view hint:@"正在发送.."];
     [SMS_SDK getVerifyCodeByPhoneNumber:inputUserPhoneNumber AndZone:@"86" result:^(enum SMS_GetVerifyCodeResponseState state) {
+        [self hideHud];
         if (1==state) {
-            
             [NSThread detachNewThreadSelector:@selector(initTimer) toTarget:self withObject:nil];
+            [MBProgressHUD showSuccess:@"验证码已发送" toView:self.view];
             
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"验证码已发送" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-            [alert show];
+            verifiedPhoneNumber=inputUserPhoneNumber;
         }
         else if(0==state)
         {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"验证码获取失败" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-            [alert show];
+            [MBProgressHUD showError:@"验证码获取失败" toView:self.view];
         }
         else if (SMS_ResponseStateMaxVerifyCode==state)
         {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"验证码申请次数超限" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-            [alert show];
+            [MBProgressHUD showError:@"验证码申请次数超限" toView:self.view];
         }
         else if(SMS_ResponseStateGetVerifyCodeTooOften==state)
         {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"对不起，你的操作太频繁啦" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-            [alert show];
+           [MBProgressHUD showError:@"对不起，你的操作太频繁啦" toView:self.view];
         }
     }];
 }
@@ -334,9 +369,21 @@ static  MLLoginVC *thisVC=nil;
 {
     NSLog(@"%d",seconds);
     seconds--;
-    
+    if (seconds==0) {
+        [self performSelectorOnMainThread:@selector(showTimerWhenTimeOut) withObject:nil waitUntilDone:YES];
+    }
+    else{
     [self performSelectorOnMainThread:@selector(showTimer) withObject:nil waitUntilDone:YES];
-    
+    }
+}
+
+-(void)showTimerWhenTimeOut
+{
+    [timer invalidate];
+    [self.sendMsgButton setTitle:@"发送短信验证码" forState:UIControlStateNormal];
+    self.sendMsgButton.enabled=YES;
+    [self.sendMsgButton setBackgroundColor:[UIColor colorWithRed:23.0/255.0 green:87.0/255.0 blue:150.0/255.0 alpha:1.0]];
+    seconds=60;
 }
 
 - (void)showTimer{
@@ -370,7 +417,7 @@ static  MLLoginVC *thisVC=nil;
     }];
 }
 - (void)checkFinishedInput{
-    if ([inputUserPhoneNumber length]==11&&[inputSecurityCode length]>0&&[inputUserPassword1 isEqualToString:inputUserPassword2]&&agree) {
+    if ([inputUserPhoneNumber length]==11&&[inputSecurityCode length]>0&&[inputUserPassword1 isEqualToString:inputUserPassword2]&&agree&&[inputUserPhoneNumber isEqualToString:verifiedPhoneNumber]) {
         [self startRegisting];
     }else{
         NSString*alertString;
@@ -387,8 +434,9 @@ static  MLLoginVC *thisVC=nil;
         if (!agree){
             [alertString stringByAppendingString:@"您没有同意用户使用协议\n"];
         }
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"信息填写有误" message:alertString delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [alert show];
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"信息填写有误" message:alertString delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+//        [alert show];
+        [MBProgressHUD showError:alertString toView:self.view];
     }
     
 }
@@ -436,9 +484,15 @@ static  MLLoginVC *thisVC=nil;
 */
 
 - (IBAction)logoutBtnAction:(id)sender {
+    inputUserAccount=_userAccount.text;
+    //退出逻辑
     [MLLoginBusiness logout];
     self.userPassword.text=nil;
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您的账号已经退出成功" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
     [alert show];
+}
+
+- (IBAction)disMissBtnAction:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 @end

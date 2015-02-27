@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 
-@interface MLLoginVC : UIViewController
+@interface MLLoginVC : UIViewController<UITextFieldDelegate>
 {
     NSString *inputUserAccount;
     NSString *inputUserPassword;
@@ -17,8 +17,14 @@
     NSString *inputSecurityCode;
     NSString *inputUserPassword1;
     NSString *inputUserPassword2;
+    
+    NSString *verifiedPhoneNumber;
 }
 + (MLLoginVC*)sharedInstance;
+
+
+@property BOOL isModally;
+
 
 @property (weak, nonatomic) IBOutlet UITextField *userAccount;
 @property (weak, nonatomic) IBOutlet UITextField *userPassword;

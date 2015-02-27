@@ -46,14 +46,62 @@
 
 @implementation PersonListViewController
 @synthesize tableView=_tableView;
+
+
+#pragma --mark  单例模式写法
+/**
+ 步骤:
+ 1.一个静态变量_inastance
+ 2.重写allocWithZone, 在里面用dispatch_once, 并调用super allocWithZone
+ 3.自定义一个sharedXX, 用来获取单例. 在里面也调用dispatch_once, 实例化_instance
+ -----------可选------------
+ 4.如果要支持copy. 则(先遵守NSCopying协议)重写copyWithZone, 直接返回_instance即可.
+ 
+  当在MRC下需要覆盖一些MRC中的内存管理方法：
+ *- (id)retain.  单例中不需要增加引用计数器.return self.
+ *- (id)autorelease.  只有堆中的对象才需要.单例中不需要.return self.
+ *- (NSUInteger)retainCount.(可写可不写,防止引起误解).单例中不需要修改引用计数，返回最大的无符号整数即可.return UINT_MAX;
+ *- (oneway void)release.不需要release.直接覆盖,什么也不做.
+ 
+ */
+//储存唯一实例
 static PersonListViewController *thisVC;
+//保证init初始化化都相同
 +(PersonListViewController*)shareSingletonInstance
 {
-    if (thisVC==nil) {
+    //改写法为懒汉式写法
+//    if (thisVC==nil) {
+//        thisVC=[[self alloc]init];
+//    }
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
         thisVC=[[PersonListViewController alloc]init];
-    }
+    });
     return thisVC;
 }
+//重写allocWithZone方法，保证分配内存alloc时都相同
+//+(id)allocWithZone:(struct _NSZone *)zone
+//{
+//    static dispatch_once_t onceToken;
+//    dispatch_once(&onceToken, ^{
+//        thisVC=[super allocWithZone:zone];
+//    });
+//    return thisVC;
+//}
+
+//保证copy时都相同
+-(id)copyWithZone:(NSZone*)zone
+{
+    return thisVC;
+}
+
+
+
+
+
+
+
+#pragma --mark 其他写法
 
 -(void)segementedControlInit
 {
@@ -155,15 +203,17 @@ static PersonListViewController *thisVC;
     }
     TableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:Cellidentifier forIndexPath:indexPath];
      NSLog(@"%ld",indexPath.row);
+    //清楚复用时的数据
+    cell.usrImage.image=[UIImage imageNamed:@"placeholder"];
+    
+    //重新设置
     userModel *user=[dataArray objectAtIndex:indexPath.row];
     cell.usrNameLabel.text=[user getuserName];
     cell.usrJobReq.text=[user getuserExperience];
     cell.usrBreifIntro.text=[user getuserIntroduction];
 #warning  image 字段没有添加
-    //    cell.timeStamp.text=[[user]timeIntervalDescription];
+    cell.timeStamp.text=[[user getUpdateAt]timeIntervalDescription];
     
-//    NSUserDefaults *mysetting=[NSUserDefaults standardUserDefaults];
-//    CGPoint nowLocation=CGPointFromString([mysetting objectForKey:CURRENTLOCATOIN]);
     if (1) {
         [self startLocationService:^{
             MAMapPoint point1 = MAMapPointForCoordinate(CLLocationCoordinate2DMake([rightNowGPS getLon],[rightNowGPS getLat]));

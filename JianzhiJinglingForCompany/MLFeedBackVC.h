@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UIViewController+RESideMenu.h"
 @interface MLFeedBackVC : UIViewController
 
 + (MLFeedBackVC*)sharedInstance;

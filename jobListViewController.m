@@ -17,9 +17,9 @@
 @interface jobListViewController ()<UIActionSheetDelegate,UITableViewDataSource,UITableViewDelegate>
 {
     NSInteger cellNum;
-    NSArray *_dataSource;
+    NSMutableArray *_dataSource;
     NSInteger pageSize;
-    NSMutableArray *_selectedJobArray;
+    NSMutableDictionary *_selectedJobArray;
     MBProgressHUD *hub;
 }
 @end
@@ -49,7 +49,10 @@
         [weakSelf hideHud];
         [weakSelf.tableView footerEndRefreshing];
         if ([[jobListModel getStatus]intValue]==BASE_SUCCESS) {
-            _dataSource=[jobListModel getJobArray];
+            if (_dataSource==nil) {
+                _dataSource=[NSMutableArray array];
+            }
+            [_dataSource addObjectsFromArray:[jobListModel getJobArray]];
             cellNum+=[_dataSource count];
             [weakSelf.tableView reloadData];
         }else
@@ -81,38 +84,62 @@
 
 -(void)sendAction
 {
-    if ([_selectedJobArray count]>0) {
+    if ([[_selectedJobArray allKeys] count]>0) {
         //
         //        dispatch_group_t group=dispatch_group_create();
         //        //20s
         //        dispatch_time_t timeout=dispatch_time(DISPATCH_TIME_NOW, 20000000000);
         //        ALERT(@"邀请已发送");
+        
+        //汇总信息
         __block int progress=0;
         NSUInteger total=[_selectedJobArray count];
-        hub=[[MBProgressHUD alloc]init];
-        hub.labelText=[NSString stringWithFormat:@"发送邀请中...%d/%lu",progress,(unsigned long)total];
-        [hub show:YES];
+        [self showHudInView:self.view hint:[NSString stringWithFormat:@"发送邀请中...%d/%lu",progress,(unsigned long)total]];
+        
+        __block NSString *errorInfo=@"";
+        //用Dict的key 的唯一性， 记录失败信息，用于最后拼接
+        __block NSMutableDictionary *errorInfoDict=[NSMutableDictionary dictionary];
+        
         NSString *com_id=[[NSUserDefaults standardUserDefaults]objectForKey:CURRENTUSERID];
-        for (jobModel *job in _selectedJobArray) {
+        //指示迭代次数
+        int iteration=0;
+        for (NSIndexPath *index in _selectedJobArray) {
+            iteration++;
+            jobModel *job=[_selectedJobArray objectForKey:index];
             [netAPI inviteUserWithEnterpriseId:com_id userId:self.user_id jobId:[job getjobID] withBlock:^(oprationResultModel *oprationModel) {
                 if ([[oprationModel getStatus]intValue]==BASE_SUCCESS) {
-                    progress+=1;
-                    hub.labelText=[NSString stringWithFormat:@"发送邀请中...%d/%lu",progress,(unsigned long)total];
+                    progress++;
+                    [self showHudInView:self.view hint:[NSString stringWithFormat:@"发送邀请中...%d/%lu",progress,(unsigned long)total]];
                 }
                 else {
-                    //                        [hub show:NO];
-                    NSString *string=[NSString stringWithFormat:@"%@",[oprationModel getInfo]];
-                    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                    [MBProgressHUD showError:string toView:self.view];
-                    //                    ALERT(string);
+                    //
+                    [self hideHud];
+                    NSString *string=[NSString stringWithFormat:@"%@,",[oprationModel getInfo]];
+                    //如果改错误不存在，就返回
+                    if (![[errorInfoDict objectForKey:string] isEqualToString:@"existed"])
+                    [errorInfoDict setObject:@"existed" forKey:string];
+                    
+//                    if(![errorInfo isEqualToString:string])
+//                    errorInfo=[errorInfo stringByAppendingString:string];
                 }
-                if (progress==total) {
-                    [hub show:NO];
+                //判断是不请求都发出完了
+                if(iteration==total){
+                    [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+                if (progress==total && iteration==total) {
+                    [self hideHud];
+                    
                     [MBProgressHUD showSuccess:@"所有邀请已发送" toView:self.view];
                 }
                 else
-                {   [hub show:NO];
-                    [MBProgressHUD showSuccess:[NSString stringWithFormat:@"%d个邀请已发送",progress] toView:self.view];
+                {
+                    //总结Key,去重
+                    for (NSString *Keystring in [errorInfoDict allKeys]) {
+                        errorInfo=[errorInfo stringByAppendingString:Keystring];
+                    }
+                    NSString *info=[NSString stringWithFormat:@"%d个邀请已发送,%lu个失败,失败详情：%@",progress,(total-progress),errorInfo];
+                    ALERT(info);
+                
+                }
                 }
             }];
             
@@ -171,6 +198,7 @@
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog(@"%@",indexPath);
     BOOL nibsRegistered = NO;
     static NSString *Cellidentifier=@"jobListTableViewCell";
     if (!nibsRegistered) {
@@ -178,6 +206,24 @@
         [tableView registerNib:nib forCellReuseIdentifier:Cellidentifier];
     }
     jobListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:Cellidentifier forIndexPath:indexPath];
+    //清理选择数据 为未选中
+    cell.selectedFlag=CELLUNSELECTED;
+    cell.checkIconView.image=[UIImage imageNamed:@"check_out"];
+    cell.jobImageView.image=[UIImage imageNamed:@"placeholder"];
+    //设置选择cell
+    if ([_selectedJobArray count]>0)
+    {
+        for (NSIndexPath *index in [_selectedJobArray allKeys]) {
+            if(indexPath==index)
+            {
+                cell.selectedFlag=CELLSELECTED;
+                cell.checkIconView.image=[UIImage imageNamed:@"check"];
+            
+            }
+        }
+        
+    }
+    
     
     CGPoint nowlocation=CGPointFromString([[NSUserDefaults standardUserDefaults]objectForKey:CURRENTLOCATOIN]);
     if (_dataSource!=nil) {
@@ -234,22 +280,26 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog(@"%@",indexPath);
     jobListTableViewCell *cell=(jobListTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
     // Configure the view for the selected state
     if (_selectedJobArray==nil)
     {
-        _selectedJobArray=[NSMutableArray array];
+        _selectedJobArray=[NSMutableDictionary dictionary];
     }
     if(cell.selectedFlag==CELLSELECTED)
     {
+        //点击取消选择
         cell.checkIconView.image=[UIImage imageNamed:@"check_out"];
         cell.selectedFlag=CELLUNSELECTED;
-        [_selectedJobArray removeObject:[_dataSource objectAtIndex:indexPath.row]];
+        [_selectedJobArray removeObjectForKey:indexPath];
     }
     else if (cell.selectedFlag==CELLUNSELECTED) {
+        //点击选择
         cell.checkIconView.image=[UIImage imageNamed:@"check"];
         cell.selectedFlag=CELLSELECTED;
-        [_selectedJobArray addObject:[_dataSource objectAtIndex:indexPath.row]];
+        [_selectedJobArray setObject:[_dataSource objectAtIndex:indexPath.row] forKey:indexPath];
+        
     }
 }
 

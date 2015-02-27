@@ -37,7 +37,7 @@
 
 - (void)setBadgeString:(NSString *)badgeString{
     
-    if ([badgeString length]>0) {
+    if ([badgeString intValue]>0) {
         self.badge.badgeText = badgeString;
         self.badgeContainerView.hidden=NO;
     }else{

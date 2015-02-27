@@ -22,11 +22,12 @@
 
 #import "UIViewController+LoginManager.h"
 #import "MLLoginVC.h"
-
+#import "RESideMenu.h"
 #import "ComProfileViewController.h"
 @interface MainTabBarViewController ()
 
 @property (strong,nonatomic)NSArray  *vcArray;
+@property (strong,readonly,nonatomic)RESideMenu *sideMenu;
 
 @end
 
@@ -39,8 +40,12 @@ static MainTabBarViewController* thisVC=nil;
 +(MainTabBarViewController*)shareInstance
 {
     if (thisVC==nil) {
-        thisVC=[[MainTabBarViewController alloc]init];
+        static dispatch_once_t onceToke;
+        dispatch_once(&onceToke,^{
+            thisVC=[[super alloc]init];
+        });
     }
+   
     return thisVC;
 }
 
@@ -61,6 +66,7 @@ static MainTabBarViewController* thisVC=nil;
     [self initViewControllers];
     [self modifyTabbarItem];
     [self initReSideMenu];
+//    _sideMenu=[RESideMenu sharedInstance];
 }
 
 -(void)checkUnLoadConProfile
@@ -68,6 +74,14 @@ static MainTabBarViewController* thisVC=nil;
     if (![UIViewController isUpLoadComProfile]) {
         [self notSettingprofile];
     }
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    MLNaviViewController *a=[self.vcArray objectAtIndex:1];
+    
+    NSLog(@"%lu",(unsigned long)[self.vcArray count]);
 }
 
 -(void)initViewControllers
@@ -88,7 +102,6 @@ static MainTabBarViewController* thisVC=nil;
     
     [self addLeftBarItem:secondVC];
     MLNaviViewController *secondNaviVC=[[MLNaviViewController alloc]initWithRootViewController:secondVC];
-
     //第三个页面
     
     jobTemplateListViewController *thirdVC=[[jobTemplateListViewController alloc]init];
@@ -171,7 +184,13 @@ static MainTabBarViewController* thisVC=nil;
 
 
 
+-(void)showLoginVC
+{
+    [self presentViewController:[MLLoginVC sharedInstance] animated:YES completion:^{
+        
+    }];
 
+}
 
 
 

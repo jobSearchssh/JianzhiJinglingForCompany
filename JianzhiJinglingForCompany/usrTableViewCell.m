@@ -22,6 +22,19 @@
 -(void)setUsrAvatar:(UIImage *)image{
     self.usrAvatarOutlet.image = image;
 }
+
+-(void)setUsrAvatarWithURL:(NSString*)url{
+    if ([url length]>4) {
+        self.usrAvatarOutlet.contentMode = UIViewContentModeScaleAspectFill;
+        self.usrAvatarOutlet.clipsToBounds = YES;
+        [[AsyncImageLoader sharedLoader] cancelLoadingImagesForTarget:self.usrAvatarOutlet];
+        self.usrAvatarOutlet.imageURL=[NSURL URLWithString:url];
+    }else{
+        self.usrAvatarOutlet.image=[UIImage imageNamed:@"tourists"];
+    }
+}
+
+
 -(void)setusrAction:(NSString *)string{
     self.usrActionOutlet.text = string;
 }

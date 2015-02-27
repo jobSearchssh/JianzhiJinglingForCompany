@@ -12,6 +12,7 @@
 #import "netAPI.h"
 #import "UIViewController+HUD.h"
 #import "UIViewController+ErrorHandler.h"
+#import "UIViewController+RESideMenu.h"
 @interface ComProfileViewController ()<UIAlertViewDelegate>
 @property(nonatomic,strong)enterpriseDetailModel *thisCompany;
 @end
@@ -63,6 +64,7 @@
                 self.comImage.imageURL=[NSURL URLWithString:logoUrl];
             }
         }
+        [self checkUserStatusForReSideMenu];
     }
     else{
         self.comImage.image=[UIImage imageNamed:@"placeholder"];

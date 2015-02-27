@@ -16,8 +16,10 @@
 #pragma --mark  正则匹配非负整数
 +(BOOL)isIntNumber:(NSString*)numString
 {
-    NSString *intnumberRegex=@"^-?[1-9]\\d*$";
+    
+    NSString *intnumberRegex=@"^-?[0-9]\\d*$";
     NSPredicate  *numTest=[NSPredicate predicateWithFormat:@"SELF MATCHES %@",intnumberRegex];
+    
     return [numTest evaluateWithObject:numString];
 }
 
