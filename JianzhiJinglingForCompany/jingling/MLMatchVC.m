@@ -74,6 +74,7 @@ static  MLMatchVC *thisVC=nil;
     
     [self.navigationController.navigationBar setTitleTextAttributes:titleBarAttributes];
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.edgesForExtendedLayout=UIRectEdgeNone;

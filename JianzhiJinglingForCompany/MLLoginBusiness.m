@@ -12,6 +12,7 @@
 #import "netAPI.h"
 #import "User.h"
 
+
 @implementation MLLoginBusiness
 
 - (void)registerInBackground:(NSString*)username Password:(NSString*)pwd{
@@ -72,7 +73,7 @@
         if(loginModel!=nil)
         {
             if ([[loginModel getStatus]intValue]==STATIS_NO) {
-                [weakself registerIsSucceed:NO feedback:[loginModel getInfo]];
+                [weakself loginIsSucceed:NO feedback:[loginModel getInfo]];
                 
             }else if([[loginModel getStatus]intValue]==STATIS_OK)
             {
@@ -116,7 +117,11 @@
     if ([mySettingData objectForKey:CURRENTUSERID]) {
         [mySettingData setObject:nil forKey:CURRENTUSERNAME];
         [mySettingData setObject:nil forKey:CURRENTUSERID];
+        [mySettingData setObject:nil forKey:CURRENTINTRODUCTION];
+        [mySettingData setObject:nil  forKey:CURRENTLOGOURL];
+        [mySettingData setObject:nil  forKey:CURRENTUSERADDRESS];
         [mySettingData synchronize];
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"logoutSuccess" object:nil];
     }
 }
 

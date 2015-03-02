@@ -14,8 +14,9 @@
 #import "NSDate+Category.h"
 #import "SRRefreshView.h"
 #import "MJRefresh.h"
-
+#import "UIViewController+LoginManager.h"
 #import "jobPublicationViewController.h"
+#import "MLLoginVC.h"
 @interface jobTemplateListViewController ()<UITableViewDataSource,UITableViewDelegate,SWTableViewCellDelegate,UIAlertViewDelegate>
 {
     NSInteger cellNum;
@@ -43,6 +44,9 @@
     self.navigationItem.title=@"发布职位";
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    if (![UIViewController isLogin]) {
+        [self notLoginHandler];
+    }
     [self tableViewInit];
     
     
@@ -140,8 +144,8 @@
         [tableView registerNib:nib forCellReuseIdentifier:Cellidentifier];
     }
     TableViewCell2 *cell = [tableView dequeueReusableCellWithIdentifier:Cellidentifier forIndexPath:indexPath];
-    
-
+    //复用时，清空数据
+    cell.jobImageView.image=[UIImage imageNamed:@"placeholder"];
     
     [cell setRightUtilityButtons:[self rightButtons] WithButtonWidth:58.0f];
     
@@ -350,16 +354,23 @@
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+    
     switch (alertView.tag) {
         case 60001:
             if(buttonIndex==1)
             {
                 //提交网络请求
                 [self doDeleteReq];
-                
             }
             break;
-            
+        case 323432:
+        {
+            if (buttonIndex==1) {
+                [self presentViewController:[MLLoginVC sharedInstance] animated:YES completion:^{
+                }];
+            }
+            break;
+        }
         default:
             break;
     }
@@ -429,7 +440,7 @@
 {
     NSLog(@"cellNum from JobPublishedVC:%ld",(long)cellNum);
 //    [self.dataSourceArray removeAllObjects];
-    [self updateDataListStartAt:1 Length:cellNum];
+    [self updateDataListStartAt:1 Length:pageSize];
 }
 //上拉加载更多
 -(void)footerRefresh

@@ -19,7 +19,7 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="新石器科技有限公司" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T7J-LX-Ucs">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="欢迎使用兼职精灵企业版" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T7J-LX-Ucs">
                     <rect key="frame" x="23" y="308" width="256" height="21"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="21" id="5My-Ou-dDP"/>
@@ -29,7 +29,7 @@
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="辽宁省大连市高新园区万达广场" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XjX-W3-elr">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="您可能还未编辑自己企业的信息" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XjX-W3-elr">
                     <rect key="frame" x="23" y="337" width="243" height="21"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="243" id="Tm6-dk-JKL"/>
@@ -60,7 +60,7 @@
                         </mask>
                     </variation>
                 </imageView>
-                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" editable="NO" text="公司简介：过去20多年,华为抓住中国改革开放和ICT行业高速发展带来的历史机遇,坚持以客户为中心,以奋斗者为本,基于客户需求持续创新,赢得了客户的尊重和信赖,从一家." selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9up-W7-MmJ">
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9up-W7-MmJ">
                     <rect key="frame" x="0.0" y="366" width="600" height="234"/>
                     <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
@@ -72,6 +72,18 @@
                             <variation key="heightClass=regular-widthClass=compact" constant="200"/>
                         </constraint>
                     </constraints>
+                    <string key="text">兼职精灵是一款为您的企业量身定制的招聘应用，特点：
+找工作 大品牌
+500强企业在这里找兼职!
+
+不用搜 So Easy
+智能系统自动匹配您的要求！
+
+找兼职 合作为王
+如果只看简历就可以，要HR干嘛？多维度需求匹配，只看最合适的！
+
+精灵管家
+机智，如你的精灵管家7*24服务！</string>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                     <variation key="default">

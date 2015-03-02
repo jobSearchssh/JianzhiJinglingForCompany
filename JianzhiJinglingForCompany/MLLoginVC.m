@@ -71,12 +71,17 @@ static  MLLoginVC *thisVC=nil;
     [self.customNavi setBarTintColor:NaviBarColor];
 //    [self.customNavi setFrame:CGRectMake(0, 0, MainScreenWidth, 64)];
     //创建一个导航栏集合
+    
+    //监听登出成功接口
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(logoutSuccessAction) name:@"logoutSuccess"object:nil];
+    
+    
     UINavigationItem *navigationItem = [[UINavigationItem alloc] initWithTitle:nil];
     
     [navigationItem setPrompt:@""];
     [navigationItem setTitle:@"兼职精灵企业版"];
      UIBarButtonItem *closeButton=[[UIBarButtonItem
-                                    alloc]initWithTitle:@"返回"  style:UIBarButtonItemStylePlain target:self action:@selector(disMissBtnAction:)];
+                                    alloc]initWithTitle:@"  返回"  style:UIBarButtonItemStylePlain target:self action:@selector(disMissBtnAction:)];
     
     [closeButton setTintColor:[UIColor whiteColor]];
     
@@ -99,8 +104,8 @@ static  MLLoginVC *thisVC=nil;
     [self.view addSubview:chooseRegisterBtn];
     
     
-    self.loginView.frame=CGRectMake(0, 118, [[UIScreen mainScreen] bounds].size.width, 220);
-    self.registerView.frame=CGRectMake([[UIScreen mainScreen] bounds].size.width, 118, [[UIScreen mainScreen] bounds].size.width, 330);
+    self.loginView.frame=CGRectMake(0, 40, [[UIScreen mainScreen] bounds].size.width, 220);
+    self.registerView.frame=CGRectMake([[UIScreen mainScreen] bounds].size.width, 40, [[UIScreen mainScreen] bounds].size.width, 330);
     
     //for check box
     QCheckBox *_check1 = [[QCheckBox alloc] initWithDelegate:self];
@@ -233,8 +238,6 @@ static  MLLoginVC *thisVC=nil;
         }
         [self showHudInView:self.view hint:@"正在登陆请稍后"];
         [self.loginer loginInBackground:inputUserAccount Password:inputUserPassword];
-        //如果超时 自动hideHub
-        [self performSelector:@selector(timeout) withObject:nil afterDelay:TIMEOUT];
     }
 }
 
@@ -420,21 +423,25 @@ static  MLLoginVC *thisVC=nil;
     if ([inputUserPhoneNumber length]==11&&[inputSecurityCode length]>0&&[inputUserPassword1 isEqualToString:inputUserPassword2]&&agree&&[inputUserPhoneNumber isEqualToString:verifiedPhoneNumber]) {
         [self startRegisting];
     }else{
-        NSString*alertString;
+        NSString*alertString=@"";
         
         if (inputUserPhoneNumber.length!=11) {
-            [alertString stringByAppendingString:@"手机号码不正确\n"];
+            alertString=[alertString stringByAppendingString:@"手机号码不正确\n"];
         }
-        if ([inputSecurityCode length]==0) {
-            [alertString stringByAppendingString:@"请输入手机验证码\n"];
+        else if ([inputSecurityCode length]==0) {
+            alertString=[alertString stringByAppendingString:@"请输入手机验证码\n"];
         }
-        if (![inputUserPassword1 isEqualToString:inputUserPassword2]) {
-            [alertString stringByAppendingString:@"两次输入密码不一致\n"];
+        else if (![inputUserPassword1 isEqualToString:inputUserPassword2]) {
+            alertString=[alertString stringByAppendingString:@"两次输入密码不一致\n"];
         }
-        if (!agree){
-            [alertString stringByAppendingString:@"您没有同意用户使用协议\n"];
+        else if (!agree){
+            alertString=[alertString stringByAppendingString:@"您没有同意用户使用协议\n"];
         }
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"信息填写有误" message:alertString delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        else if (verifiedPhoneNumber==nil || ![inputUserPhoneNumber isEqualToString:verifiedPhoneNumber])
+        {
+           alertString=[alertString stringByAppendingString:@"验证码不正确或失效，请重新获取"];
+        }
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:alertString delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
 //        [alert show];
         [MBProgressHUD showError:alertString toView:self.view];
     }
@@ -494,5 +501,13 @@ static  MLLoginVC *thisVC=nil;
 
 - (IBAction)disMissBtnAction:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)logoutSuccessAction
+{
+//更新UI
+    
+
+
 }
 @end

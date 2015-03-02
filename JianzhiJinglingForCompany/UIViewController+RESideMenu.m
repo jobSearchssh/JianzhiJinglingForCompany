@@ -57,6 +57,7 @@
     {
         usrItem.title=@"未登录";
         usrItem.subtitle=@"游客";
+        [_sideMenu setTableItem:0 Title:usrItem.title Subtitle:usrItem.subtitle ImageUrl:nil];
     }
 }
 

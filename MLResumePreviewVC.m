@@ -17,6 +17,7 @@
 
 #import "NSDate+Category.h"
 #import "NSDateFormatter+Category.h"
+#import "UIViewController+LoginManager.h"
 static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 @interface MLResumePreviewVC (){
@@ -90,8 +91,9 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
-    
+    if (![UIViewController isLogin]) {
+        [self notLoginHandler];
+    }
     self.mainScrollviewOutlet.delegate=self;
     [self.navigationItem setTitle:@"简历预览"];
     
@@ -313,12 +315,14 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 #pragma --mark  添加收藏
 - (void)addToFavorite{
-    [self showHudInView:self.mainScrollviewOutlet hint:@"收藏中.."];
+   
     NSUserDefaults *myseting=[NSUserDefaults standardUserDefaults];
     NSString *com_id=[myseting objectForKey:CURRENTUSERID];
     if (self.jobUserId==nil ||com_id==nil ) {
-        ALERT(@"参数出错，请重试");
+        ALERT(@"未登录或未找到该求职者，请重试");
     }
+    else {
+    [self showHudInView:self.mainScrollviewOutlet hint:@"收藏中.."];
     [netAPI starJobUser:com_id jobUserID:self.jobUserId withBlock:^(oprationResultModel *oprationModel) {
         [self hideHud];
         if([[oprationModel getStatus] isEqualToNumber:[NSNumber numberWithInt:BASE_SUCCESS]]){
@@ -327,17 +331,16 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
             self.navigationItem.rightBarButtonItem.title=@"已收藏";
             self.rightBarBtn.enabled=NO;
 #warning 带完成收藏成功后的逻辑
-            RESideMenu *sideMenu=[RESideMenu sharedInstance];
-            //获取原来的数
-            [sideMenu setBadgeView:2 badgeText:@"1"];
+//            RESideMenu *sideMenu=[RESideMenu sharedInstance];
+//            //获取原来的数
+////            [sideMenu setBadgeView:2 badgeText:@"1"];
         }else
         {
             NSString *error=[NSString stringWithFormat:@"%@",[oprationModel getInfo]];
             ALERT(error);
         }
     }];
-    //超时自动消失
-    [self performSelector:@selector(hideHud) withObject:nil afterDelay:20];
+    }
 }
 
 -(UIImage *)compressImage:(UIImage *)imgSrc size:(int)width
@@ -438,10 +441,14 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 
 - (IBAction)invitationAction:(id)sender {
+    if (![UIViewController isLogin]) {
+        [self notLoginHandler];
+    }
+    else{
     UIActionSheet *actionSheet=[[UIActionSheet alloc]initWithTitle:@"" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"选择职位"  otherButtonTitles:@"创建新职位", nil];
     actionSheet.actionSheetStyle=UIActionSheetStyleBlackTranslucent;
     [actionSheet showInView:self.view];
-    
+    }
 }
 
 - (IBAction)showVedioAction:(id)sender {

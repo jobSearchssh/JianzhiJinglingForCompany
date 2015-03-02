@@ -1560,7 +1560,7 @@
 			name = "Optimization Code";
 			sourceTree = "<group>";
 		};
-		043759B41AA05E1800DFB4EE /* CustonCategory */ = {
+		043759B41AA05E1800DFB4EE /* CustomCategory */ = {
 			isa = PBXGroup;
 			children = (
 				04589F111A8111E300B86C0A /* UIViewController+RESideMenu.m */,
@@ -1570,7 +1570,7 @@
 				047C6C171A96D76200CCEA83 /* UIViewController+LoginManager.h */,
 				047C6C181A96D76200CCEA83 /* UIViewController+LoginManager.m */,
 			);
-			name = CustonCategory;
+			name = CustomCategory;
 			sourceTree = "<group>";
 		};
 		043759B51AA05E3A00DFB4EE /* BadgeManager */ = {
@@ -1902,7 +1902,7 @@
 				044848B51A88EC7700C05295 /* BackService */,
 				043759B31AA05B5D00DFB4EE /* Optimization Code */,
 				043759B51AA05E3A00DFB4EE /* BadgeManager */,
-				043759B41AA05E1800DFB4EE /* CustonCategory */,
+				043759B41AA05E1800DFB4EE /* CustomCategory */,
 				0421131F1A9CBCD700144F47 /* fileNameGenneratorClass */,
 				047C6C1D1A97574900CCEA83 /* vedioVC */,
 				047C6C161A96D42900CCEA83 /* legal */,
@@ -1910,6 +1910,7 @@
 				043759C91AA078C100DFB4EE /* SwCEll */,
 				047B43C71A721F010099DAA5 /* oldFile */,
 				04DC9ACE1A77B4550097DEB0 /* SecondVC */,
+				0484A9E11AA16D5D0030D2AB /* BeginningVC */,
 				047B43C31A721ED70099DAA5 /* FIrstVC */,
 				04DC9BFF1A7924B30097DEB0 /* JobPublicationListTableView */,
 				040D27221A82669D00160F71 /* JobPublishViewController */,
@@ -2229,6 +2230,14 @@
 				047C6C9F1A976D3F00CCEA83 /* HZLocation.m */,
 			);
 			name = AreaPicker;
+			sourceTree = "<group>";
+		};
+		0484A9E11AA16D5D0030D2AB /* BeginningVC */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = BeginningVC;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		049926C21A91E2770015DC2A /* MJRefresh */ = {

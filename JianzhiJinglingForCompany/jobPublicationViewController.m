@@ -223,7 +223,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     
     eduDict=@{@"不限":@"1",@"初中及以下":@"2",@"高中":@"3",@"大专":@"4",@"本科":@"5",@"硕士":@"6",@"博士及以上":@"7"};
     
-    paymentSelectedDict=@{@"面议":@"0",@"日结":@"1",@"周结":@"2",@"月结":@"3",@"项目结":@"4"};
+    paymentSelectedDict=@{@"日结":@"0",@"周结":@"1",@"月结":@"2",@"项目结":@"3"};
     
     
     //第一项
@@ -350,10 +350,10 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 {
     [super viewWillAppear:animated];
     if (self.isHideBottomBtn) {
-        self.publishBtn.hidden=YES;
+        self.publishBtn.hidden=NO;
+        self.publishBtn.enabled=NO;
         self.publishedAgainBtn.hidden=YES;
     }
-
 }
 
 -(void)initBtnViewWithBtnIndex:(NSInteger) flag
@@ -863,8 +863,8 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     //设置工资
     [self.thisJob setjobSalary:[self.salaryTextField.text intValue]];
     
-    //设置结算方式
-    [self.thisJob setjobSettlementWay:0];
+    //设置结算方式,交给选择器设置
+//    [self.thisJob setjobSettlementWay:0];
     
     //设置工作描述
     
@@ -1180,7 +1180,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 -(void)paymentPickViewInitWithTag:(NSInteger)tag
 {
-    if(paymentSelectedDict==nil) paymentSelectedDict=@{@"面议":@"0",@"日结":@"1",@"周结":@"2",@"月结":@"3",@"项目结":@"4"};
     NSArray *keywordArray=[paymentSelectedDict allKeys];
     self.datePicker=[[ZHPickView alloc]initPickviewWithArray:keywordArray isHaveNavControler:NO];
     self.datePicker.tag=tag;

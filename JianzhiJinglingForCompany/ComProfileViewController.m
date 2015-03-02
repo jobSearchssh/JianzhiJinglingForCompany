@@ -13,6 +13,8 @@
 #import "UIViewController+HUD.h"
 #import "UIViewController+ErrorHandler.h"
 #import "UIViewController+RESideMenu.h"
+#import "UIViewController+LoginManager.h"
+#import "MLLoginVC.h"
 @interface ComProfileViewController ()<UIAlertViewDelegate>
 @property(nonatomic,strong)enterpriseDetailModel *thisCompany;
 @end
@@ -41,6 +43,15 @@
         }];
     }
 }
+
+//-(void)viewWillAppear:(BOOL)animated
+//{
+//    [super viewWillAppear:animated];
+//    if (![UIViewController isLogin]) {
+//        [self notLoginHandler];
+//    }
+//}
+
 
 -(void)loadDataInView
 {
@@ -115,7 +126,9 @@
     self.comIntro.editable=NO;//禁止编辑
     
     self.comIntro.autoresizingMask= UIViewAutoresizingFlexibleHeight |UIViewAutoresizingFlexibleWidth;
-    
+    if (![UIViewController isLogin]) {
+        [self notLoginHandler];
+    }
     [self loadDataFromNet];
 }
 
@@ -138,18 +151,30 @@
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex==1) {
-        [self loadDataFromNet];
+    switch (alertView.tag) {
+        case 323432:
+        {
+            if (buttonIndex==1) {
+                [self presentViewController:[MLLoginVC sharedInstance] animated:YES completion:^{
+                }];
+            }
+            break;
+        }
+        default:
+            if (buttonIndex==1) {
+                [self loadDataFromNet];
+            }
+            break;
     }
 }
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
-
+    /*
+     #pragma mark - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+     // Get the new view controller using [segue destinationViewController].
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 @end

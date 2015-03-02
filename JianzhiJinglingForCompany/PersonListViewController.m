@@ -16,6 +16,7 @@
 #import "NSDate+Category.h"
 #import "AJLocationManager.h"
 #import "geoModel.h"
+#import "UIViewController+LoginManager.h"
 #define MyFavoriteTableViewFlag 0
 #define MyAppliedTableViewFlag 1
 #define UnhandledTableViewFlag 2
@@ -148,6 +149,9 @@ static PersonListViewController *thisVC;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    if (![UIViewController isLogin]) {
+        [self notLoginHandler];
+    }
     isfirstLoadData=YES;
     [self tableViewInit];
     [self segementedControlInit];
@@ -481,30 +485,33 @@ static PersonListViewController *thisVC;
     switch (self.segement.selectedSegmentIndex) {
         case MyFavoriteTableViewFlag:{
             NSInteger nowNum=[self getPageStartIndexWithSegmentIndex:MyFavoriteTableViewFlag];
-            if (isfirstLoadData || nowNum<1) {
-                [self updateFavorableDatafromIndex:1 Length:pageSizeNum];
-            }
-            else [self updateFavorableDatafromIndex:1 Length:nowNum];
+//            if (isfirstLoadData || nowNum<1) {
+//                [self updateFavorableDatafromIndex:1 Length:pageSizeNum];
+//            }
+//            else [self updateFavorableDatafromIndex:1 Length:nowNum];
+            [self updateFavorableDatafromIndex:1 Length:pageSizeNum];
             break;
         }
         case MyAppliedTableViewFlag:
         {
-            NSInteger nowAppliedNum=[self getPageStartIndexWithSegmentIndex:MyAppliedTableViewFlag];
-            NSInteger nowUnhandlerNum=[self getPageStartIndexWithSegmentIndex:UnhandledTableViewFlag];
-            if (isfirstLoadData || nowAppliedNum<1) {
-                [self updateUnhandledDatafromIndex:1 Length:pageSizeNum];
-            }
-            else [self updateUnhandledDatafromIndex:1 Length:(nowAppliedNum+nowUnhandlerNum)];
+//            NSInteger nowAppliedNum=[self getPageStartIndexWithSegmentIndex:MyAppliedTableViewFlag];
+//            NSInteger nowUnhandlerNum=[self getPageStartIndexWithSegmentIndex:UnhandledTableViewFlag];
+//            if (isfirstLoadData || nowAppliedNum<1) {
+//                [self updateUnhandledDatafromIndex:1 Length:pageSizeNum];
+//            }
+//            else [self updateUnhandledDatafromIndex:1 Length:(nowAppliedNum+nowUnhandlerNum)];
+            [self updateUnhandledDatafromIndex:1 Length:pageSizeNum];
             break;
         }
         case UnhandledTableViewFlag:
         {
-            NSInteger nowUnhandlerNum=[self getPageStartIndexWithSegmentIndex:UnhandledTableViewFlag];
-            NSInteger nowAppliedNum=[self getPageStartIndexWithSegmentIndex:MyAppliedTableViewFlag];
-            if (isfirstLoadData || nowUnhandlerNum<1) {
-                [self updateUnhandledDatafromIndex:1 Length:pageSizeNum];
-            }
-            else [self updateUnhandledDatafromIndex:1 Length:(nowUnhandlerNum+nowAppliedNum)];
+//            NSInteger nowUnhandlerNum=[self getPageStartIndexWithSegmentIndex:UnhandledTableViewFlag];
+//            NSInteger nowAppliedNum=[self getPageStartIndexWithSegmentIndex:MyAppliedTableViewFlag];
+//            if (isfirstLoadData || nowUnhandlerNum<1) {
+//                [self updateUnhandledDatafromIndex:1 Length:pageSizeNum];
+//            }
+//            else [self updateUnhandledDatafromIndex:1 Length:(nowUnhandlerNum+nowAppliedNum)];
+            [self updateUnhandledDatafromIndex:1 Length:pageSizeNum];
             break;
         }
             break;
@@ -586,7 +593,7 @@ static PersonListViewController *thisVC;
             [weakSelf.tableView reloadData];
         }
     }];
-    [self performSelector:@selector(hideHud) withObject:nil afterDelay:20];
+//    [self performSelector:@selector(hideHud) withObject:nil afterDelay:20];
 }
 
 
