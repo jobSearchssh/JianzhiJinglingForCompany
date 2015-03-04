@@ -68,7 +68,7 @@
     self.navigationController.navigationBar.barStyle = UIStatusBarStyleDefault;
     [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
     NSMutableDictionary *titleBarAttributes = [NSMutableDictionary dictionaryWithDictionary:[[UINavigationBar appearance] titleTextAttributes]];
-    [titleBarAttributes setValue:[UIColor whiteColor] forKey:UITextAttributeTextColor];
+    [titleBarAttributes setValue:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
     
     [self.navigationController.navigationBar setTitleTextAttributes:titleBarAttributes];
     self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"确认发送" style:UIBarButtonItemStyleBordered target:self action:@selector(sendAction)];
@@ -132,6 +132,7 @@
                 }
                 else
                 {
+                    [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
                     //总结Key,去重
                     for (NSString *Keystring in [errorInfoDict allKeys]) {
                         errorInfo=[errorInfo stringByAppendingString:Keystring];
@@ -228,7 +229,7 @@
     CGPoint nowlocation=CGPointFromString([[NSUserDefaults standardUserDefaults]objectForKey:CURRENTLOCATOIN]);
     if (_dataSource!=nil) {
         jobModel *job=[_dataSource objectAtIndex:indexPath.row];
-        cell.distanceLabel.text=[NSString stringWithFormat:@"%f",[jobModel getDistance:@[[NSNumber numberWithDouble:nowlocation.x],[NSNumber numberWithDouble:nowlocation.y]]]] ;
+        cell.distanceLabel.text=[NSString stringWithFormat:@"%.2f",[jobModel getDistance:@[[NSNumber numberWithDouble:nowlocation.x],[NSNumber numberWithDouble:nowlocation.y]]]] ;
         cell.addressLabel.text=[NSString stringWithFormat:@"%@",[job getjobWorkAddressDetail]];
         cell.jobTitleLabel.text=[NSString stringWithFormat:@"%@",[job getjobTitle]];
         NSString *imageUrl;

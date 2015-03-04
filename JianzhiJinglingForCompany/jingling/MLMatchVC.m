@@ -5,20 +5,18 @@
 //  Created by RAY on 15/1/23.
 //  Copyright (c) 2015年 麻辣工作室. All rights reserved.
 //
-
 #import "MLMatchVC.h"
 #import "RSCircaPageControl.h"
 #import "PiPeiView.h"
 #import "MBProgressHUD.h"
 #import "netAPI.h"
 #import "UIViewController+LoginManager.h"
+#import "PageSplitingManager.h"
+//static NSString *userId = @"54d76bd496d9aece6f8b4568";
 
-static NSString *userId = @"54d76bd496d9aece6f8b4568";
 
 @interface RSView : UIView
-
 @property (nonatomic, weak) UIScrollView *scrollView;
-
 @end
 
 @implementation RSView
@@ -53,7 +51,13 @@ static NSString *userId = @"54d76bd496d9aece6f8b4568";
 
 @implementation MLMatchVC
 
-
+-(PageSplitingManager*)pageManager
+{
+    if (_pageManager==nil) {
+        _pageManager=[[PageSplitingManager alloc]initWithPageSize:5];
+    }
+    return  _pageManager;
+}
 
 static  MLMatchVC *thisVC=nil;
 
@@ -70,7 +74,7 @@ static  MLMatchVC *thisVC=nil;
     self.navigationController.navigationBar.barStyle = UIStatusBarStyleDefault;
     [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
     NSMutableDictionary *titleBarAttributes = [NSMutableDictionary dictionaryWithDictionary:[[UINavigationBar appearance] titleTextAttributes]];
-    [titleBarAttributes setValue:[UIColor whiteColor] forKey:UITextAttributeTextColor];
+    [titleBarAttributes setValue:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
     
     [self.navigationController.navigationBar setTitleTextAttributes:titleBarAttributes];
 }
@@ -117,10 +121,8 @@ static  MLMatchVC *thisVC=nil;
     [childView.view setFrame:CGRectMake(0, currentY, self.scrollView.bounds.size.width, kScrollViewHeight-104)];
     
     childView.view.tag = kScrollViewTagBase;
-    
     childView.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self addChildViewController:childView];
-    
     [self.scrollView addSubview:childView.view];
     for (int i = 0; i < [recordArray count]; i++) {
         
@@ -157,8 +159,7 @@ static  MLMatchVC *thisVC=nil;
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         NSUserDefaults *mysetting=[NSUserDefaults standardUserDefaults];
         NSString *com_id=[mysetting objectForKey:CURRENTUSERID];
-        
-        [netAPI queryStarJobUsers:com_id start:1 length:5 withBlock:^(userListModel *userListModel) {
+        [netAPI queryStarJobUsers:com_id start:self.pageManager.firstStartIndex   length:self.pageManager.pageSize withBlock:^(userListModel *userListModel) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             if ([[userListModel getStatus] intValue]==BASE_SUCCESS) {
                 if ([[userListModel getuserArray]count]<1) {

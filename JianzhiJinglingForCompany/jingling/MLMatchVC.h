@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "PageSplitingManager.h"
 @interface MLMatchVC : UIViewController
 
 + (MLMatchVC*)sharedInstance;
-
+@property (nonatomic,weak)PageSplitingManager *pageManager;
 @end

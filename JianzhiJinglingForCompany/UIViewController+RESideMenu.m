@@ -18,6 +18,8 @@
 #import "MLLegalVC.h"
 #import "MLFeedBackVC.h"
 #import "JSBadgeView.h"
+#import "BadgeManager.h"
+#import "MyInvitedViewController.h"
 
 @implementation UIViewController (RESideMenu)
 -(void)addLeftBarItem:(UIViewController*)targetVC
@@ -43,9 +45,9 @@
     
     if (username!=nil)
     {
-        usrItem.title=@"点击退出";
+        usrItem.subtitle=@"点击退出";
         if ([username length]>7) {
-            usrItem.subtitle=[NSString stringWithFormat:@"%@**%@",[username substringToIndex:3],[username substringFromIndex:([username length]-3)]];
+            usrItem.title=[NSString stringWithFormat:@"%@**%@",[username substringToIndex:3],[username substringFromIndex:([username length]-3)]];
         }else
         {
           usrItem.subtitle=username;
@@ -55,12 +57,26 @@
         }
     }else
     {
-        usrItem.title=@"未登录";
-        usrItem.subtitle=@"游客";
+        usrItem.title=@"游客";
+        usrItem.subtitle=@"未登录";
         [_sideMenu setTableItem:0 Title:usrItem.title Subtitle:usrItem.subtitle ImageUrl:nil];
     }
+    
+    
 }
 
+
+//显示未读消息
+-(void)showUnreadedNum
+{
+    NSString *sNum=[BadgeManager shareSingletonInstance].messageCount;
+      RESideMenu *_sideMenu=[RESideMenu sharedInstance];
+    if ([sNum isEqual:@"0"]) {
+         [_sideMenu setBadgeView:4 badgeText:nil];
+        return;
+    }
+    [_sideMenu setBadgeView:4 badgeText:@"新消息"];
+}
 
 
 //初始化侧拉菜单
@@ -68,7 +84,7 @@
 {
     RESideMenu *_sideMenu=[RESideMenu sharedInstance];
     if (!_sideMenu) {
-        RESideMenuItem *usrItem = [[RESideMenuItem alloc] initWithTitle:@"未登录" setFlag:USRCELL setSubtitle:@"游客"image:nil imageUrl:nil highlightedImage:[UIImage imageNamed:@"avatar_round_m"] action:^(RESideMenu *menu, RESideMenuItem *item){
+        RESideMenuItem *usrItem = [[RESideMenuItem alloc] initWithTitle:@"游客" setFlag:USRCELL setSubtitle:@"未登录"image:nil imageUrl:nil highlightedImage:[UIImage imageNamed:@"avatar_round_m"] action:^(RESideMenu *menu, RESideMenuItem *item){
             NSLog(@"Item %@", item);
             [menu hide];
             MainTabBarViewController *mainTab=[MainTabBarViewController shareInstance];
@@ -115,22 +131,19 @@
         }];
         RESideMenuItem *applicationItem = [[RESideMenuItem alloc] initWithTitle:@"我的发布" setFlag:NORMALCELL image:[UIImage imageNamed:@"apply"] highlightedImage:[UIImage imageNamed:@"apply"] action:^(RESideMenu *menu, RESideMenuItem *item) {
             JobPublishedListViewController *publishedJobListVC=[[JobPublishedListViewController alloc]init];
-            
-            
             [self addLeftBarItem:publishedJobListVC];
             
             MLNaviViewController *navigationVC=[[MLNaviViewController alloc]initWithRootViewController:publishedJobListVC];
             [menu setRootViewController:navigationVC];
         }];
         
-        //        RESideMenuItem *dailymatchItem = [[RESideMenuItem alloc] initWithTitle:@"精灵匹配" setFlag:NORMALCELL image:[UIImage imageNamed:@"calendar"] highlightedImage:[UIImage imageNamed:@"calendar"] action:^(RESideMenu *menu, RESideMenuItem *item)  {
-        //            [menu hide];
-        //            MLMatchVC *forthVC=[[MLMatchVC alloc]init];
-        //
-        //            [self addLeftBarItem:forthVC];
-        //            MLNaviViewController *navigationVC=[[MLNaviViewController alloc]initWithRootViewController:forthVC];
-        //            [menu setRootViewController:navigationVC];
-        //        }];
+        RESideMenuItem *InvitationItem = [[RESideMenuItem alloc] initWithTitle:@"我的邀请" setFlag:NORMALCELL image:[UIImage imageNamed:@"catagory"] highlightedImage:[UIImage imageNamed:@"catagory"] action:^(RESideMenu *menu, RESideMenuItem *item) {
+            MyInvitedViewController *publishedJobListVC=[MyInvitedViewController shareSingletonInstance];
+            [self addLeftBarItem:publishedJobListVC];
+            
+            MLNaviViewController *navigationVC=[[MLNaviViewController alloc]initWithRootViewController:publishedJobListVC];
+            [menu setRootViewController:navigationVC];
+        }];
         
         RESideMenuItem *feedbackItem = [[RESideMenuItem alloc] initWithTitle:@"发送反馈" setFlag:NORMALCELL image:[UIImage imageNamed:@"send"] highlightedImage:[UIImage imageNamed:@"send"] action:^(RESideMenu *menu, RESideMenuItem *item) {
             MLFeedBackVC *feedBack=[MLFeedBackVC sharedInstance];
@@ -139,8 +152,6 @@
             MLNaviViewController *navigationVC=[[MLNaviViewController alloc]initWithRootViewController:feedBack];
             
             [menu setRootViewController:navigationVC];
-//            [menu hide];
-//            NSLog(@"Item %@", item);
         }];
         
         RESideMenuItem *aboutusItem = [[RESideMenuItem alloc] initWithTitle:@"声明" setFlag:NORMALCELL image:[UIImage imageNamed:@"notice"] highlightedImage:[UIImage imageNamed:@"notice"] action:^(RESideMenu *menu, RESideMenuItem *item) {
@@ -153,7 +164,7 @@
         }];
       
         //初始化方法
-        _sideMenu=[RESideMenu initInstanceWithItems:@[usrItem,backItem,savedItem, applicationItem,feedbackItem, aboutusItem]];
+        _sideMenu=[RESideMenu initInstanceWithItems:@[usrItem,backItem,savedItem, applicationItem,InvitationItem,feedbackItem, aboutusItem]];
         _sideMenu.verticalOffset = IS_WIDESCREEN ? 110 : 76;
         _sideMenu.hideStatusBarArea = [AppDelegate OSVersion] < 7;
     }
@@ -165,6 +176,7 @@
 - (void)showMenu
 {
     [self checkUserStatusForReSideMenu];
+    [self showUnreadedNum];
     RESideMenu *_sideMenu=[RESideMenu sharedInstance];
 //    [_sideMenu setBadgeView:3 badgeText:@"7"];
     [_sideMenu show];

@@ -18,8 +18,8 @@
 #import "UMFeedback.h"
 #import "baseAPP.h"
 #import "netAPI.h"
-
-
+#import "BadgeManager.h"
+#import "MLIntroduceVC.h"
 
 @interface AppDelegate ()
 @property (strong,nonatomic,readonly)MainTabBarViewController *mainTabberVC;
@@ -64,13 +64,16 @@
     
     //Resign textField if touched outside of UITextField/UITextView.
     [[IQKeyboardManager sharedManager] setShouldResignOnTouchOutside:YES];
-    
-    
-    
-    
-    // Override point for customization after application launch.
+     // Override point for customization after application launch.
+    //判断是否呈现引导页
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.rootViewController =self.mainTabberVC;
+    if((![[NSUserDefaults standardUserDefaults] objectForKey:@"launchFirstTime"])||![[[NSUserDefaults standardUserDefaults] objectForKey:@"launchFirstTime"] isEqualToString:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]]){
+        self.window.rootViewController = [[MLIntroduceVC alloc] init];
+    }
+    else{
+        self.window.rootViewController =self.mainTabberVC;
+    }
+    
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
@@ -84,9 +87,9 @@
     
     
     //友盟
-    [MobClick startWithAppkey:@"54c10ddbfd98c5b7c2000836" reportPolicy:BATCH  channelId:nil];
-    [MobClick checkUpdate:@"兼职精灵有新版本啦" cancelButtonTitle:@"无情的忽略" otherButtonTitles:@"欣然前往下载"];
-    [UMFeedback setAppkey:@"54c10ddbfd98c5b7c2000836"];
+    [MobClick startWithAppkey:@"54e344c6fd98c56d32000210" reportPolicy:BATCH  channelId:nil];
+    [MobClick checkUpdate:@"兼职精灵企业版有新版本啦" cancelButtonTitle:@"无情的忽略" otherButtonTitles:@"前往下载"];
+    [UMFeedback setAppkey:@"54e344c6fd98c56d32000210"];
     //Bmob后台服务
     [Bmob registerWithAppKey:@"feda8b57c5da4a0364a3406906f77e2d"];
     
@@ -102,6 +105,9 @@
     //开始监听，会启动一个run loop
     [self.internetReachability startNotifier];
     
+    
+    //刷新badge
+    [[BadgeManager shareSingletonInstance] refreshCount];
     return YES;
 }
 

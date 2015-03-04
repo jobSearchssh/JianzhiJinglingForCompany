@@ -10,5 +10,11 @@
 
 @interface BadgeManager : NSObject
 
+@property (nonatomic) NSString *messageCount;
+@property (nonatomic) NSString *applyCount;
+
 +(BadgeManager*)shareSingletonInstance;
+- (void)refreshCount;
+- (void)minusApplyCount;
+- (void)minusMessageCount;
 @end

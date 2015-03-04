@@ -18,17 +18,21 @@
 #import "MJRefresh.h"
 #import "UIViewController+RESideMenu.h"
 #import "MLFilterVC.h"
+
+#import "PageSplitingManager.h"
 @interface FirstCollectionViewController ()<UIAlertViewDelegate,finishFilterDelegate>
 {
     NSMutableArray *_datasource;
     NSInteger cellNum;
     NSInteger pageSize;
     geoModel *rightNowGPS;
-    BOOL isfirstLoad;
     BOOL touchRefresh;
 }
 @property (nonatomic,strong)UIBarButtonItem *searchBarItem;
 @property (nonatomic,strong)AJLocationManager *ajLocationManager;
+
+@property (nonatomic)PageSplitingManager *pageManager;
+
 @end
 
 @implementation FirstCollectionViewController
@@ -44,9 +48,17 @@ static  FirstCollectionViewController *thisVC=nil;
     return thisVC;
 }
 
+
+-(PageSplitingManager*)pageManager
+{
+    if (_pageManager == nil) {
+        _pageManager=[[PageSplitingManager alloc]initWithPageSize:20];
+    }
+    return _pageManager;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    isfirstLoad=YES;
     touchRefresh=NO;
     self.title=@"求职者";
     //设置导航栏标题颜色及返回按钮颜色
@@ -92,7 +104,7 @@ static  FirstCollectionViewController *thisVC=nil;
     [self.collectionView addFooterWithTarget:self action:@selector(footerRefresh)];
     
     cellNum=0;
-    pageSize=12;
+    pageSize=20;
     //第一次请求地址
     [self startLocationService];
 }
@@ -104,9 +116,8 @@ static  FirstCollectionViewController *thisVC=nil;
 
 -(void)autoLoadNearData
 {
-
-   //第一次请求地址
-   [self startLocationService];
+    if (cellNum!=0) return;
+    [self headerRefresh];
 }
 
 
@@ -197,18 +208,8 @@ static  FirstCollectionViewController *thisVC=nil;
         [mySettingData setObject:gpsString forKey:CURRENTLOCATOIN];
         [mySettingData synchronize];
         //请求数据
-        if (isfirstLoad) {
-            [self prepareRequestParametersStartAt:1 Length:pageSize];
-        
-        }else
-        {
-            [self prepareRequestParametersStartAt:1 Length:pageSize];
-        }
+            [self prepareRequestParametersStartAt:self.pageManager.firstStartIndex Length:self.pageManager.pageSize];
 
-//            else if(cellNum!=0)
-//        {
-//            [self prepareRequestParametersStartAt:1 Length:cellNum];
-//        }
             } error:^(NSError *error) {
         [self hideHud];
         ALERT(error.description);
@@ -247,7 +248,7 @@ static  FirstCollectionViewController *thisVC=nil;
 //            [_datasource addObjectsFromArray:[userListModel getuserArray]];
 //            cellNum=[_datasource count];
 //            [self.collectionView reloadData];
-//            isfirstLoad=NO;
+
 //        }
 //        else{
 //            UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"提示" message:[userListModel getInfo] delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:@"重试",nil];
@@ -273,11 +274,11 @@ static  FirstCollectionViewController *thisVC=nil;
                 [_datasource removeAllObjects];
                 touchRefresh=NO;
             }
+            [self.pageManager pageLoadCompleted];
             NSLog(@"queryNearestUsers info = %@",[userListModel getInfo]);
             [_datasource addObjectsFromArray:[userListModel getuserArray]];
             cellNum=[_datasource count];
             [self.collectionView reloadData];
-            isfirstLoad=NO;
         }
         else{
             
@@ -306,13 +307,13 @@ static  FirstCollectionViewController *thisVC=nil;
     CustomCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
     //resetCell image
     cell.ContentImage.image=[UIImage imageNamed:@"placeholder"];
-    
+    cell.distanceLabelWithoutUnit.text=@"";
     // Configure the cell
     if (_datasource!=nil) {
         userModel *user=[_datasource objectAtIndex:indexPath.row];
         //1.将两个经纬度点转成投影点
-        MAMapPoint point1 = MAMapPointForCoordinate(CLLocationCoordinate2DMake([rightNowGPS getLon],[rightNowGPS getLat]));
-        MAMapPoint point2 = MAMapPointForCoordinate(CLLocationCoordinate2DMake([[user getuserLocationGeo] getLon],[[user getuserLocationGeo] getLat]));
+        MAMapPoint point1 = MAMapPointForCoordinate(CLLocationCoordinate2DMake([rightNowGPS getLat],[rightNowGPS getLon]));
+        MAMapPoint point2 = MAMapPointForCoordinate(CLLocationCoordinate2DMake([[user getuserLocationGeo] getLat],[[user getuserLocationGeo] getLon]));
         //2.计算距离
         CLLocationDistance distance = MAMetersBetweenMapPoints(point1,point2);
         float kmDistance=distance/1000;
@@ -424,18 +425,15 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 //上拉刷新
 -(void)headerRefresh
 {
+    [self.pageManager resetPageSplitingManager];
     [self startLocationService];
     touchRefresh=YES;
     //    [self prepareRequestParametersStartAt:1 Length:pageSize];
-    
 }
 
 //下拉加载更多
 -(void)footerRefresh
 {
-    int b=cellNum;
-    int a=pageSize;
-    [self prepareRequestParametersStartAt:b+1 Length:(a+b)];
-    
+    [self prepareRequestParametersStartAt:[self.pageManager getNextStartAt] Length:self.pageManager.pageSize];
 }
 @end

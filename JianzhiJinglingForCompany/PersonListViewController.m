@@ -17,6 +17,9 @@
 #import "AJLocationManager.h"
 #import "geoModel.h"
 #import "UIViewController+LoginManager.h"
+
+#import "BadgeManager.h"
+
 #define MyFavoriteTableViewFlag 0
 #define MyAppliedTableViewFlag 1
 #define UnhandledTableViewFlag 2
@@ -30,13 +33,17 @@
     NSMutableArray * pageCountArray;
     
     geoModel *rightNowGPS;
-    
-    BOOL isfirstLoadData;
     NSInteger tableViewFlag;
     
     NSString *selectedUserId;
     NSIndexPath *selectedCellRow;
 }
+@property (nonatomic,strong)PageSplitingManager *page1Manager;
+
+
+@property (nonatomic,strong)PageSplitingManager *page2Manager;
+@property (nonatomic,strong)PageSplitingManager *page3Manager;
+
 @property (nonatomic,strong)NSMutableArray *faviriteDataSource;
 @property (nonatomic,strong)NSMutableArray *appliedDataSource;
 @property (nonatomic,strong)NSMutableArray *unhandledDataSource;
@@ -48,6 +55,30 @@
 @implementation PersonListViewController
 @synthesize tableView=_tableView;
 
+- (PageSplitingManager*)page3Manager
+{
+    if (_page3Manager==nil) {
+        _page3Manager=[[PageSplitingManager alloc]initWithPageSize:20];
+    }
+    return _page3Manager;
+}
+- (PageSplitingManager*)page2Manager
+{
+    if (_page2Manager==nil) {
+        _page2Manager=[[PageSplitingManager alloc]initWithPageSize:20];
+    }
+    return _page2Manager;
+}
+
+- (PageSplitingManager*)page1Manager
+{
+    if (_page1Manager==nil) {
+        _page1Manager=[[PageSplitingManager alloc]initWithPageSize:20];
+    }
+    return _page1Manager;
+}
+
+
 
 #pragma --mark  单例模式写法
 /**
@@ -58,7 +89,7 @@
  -----------可选------------
  4.如果要支持copy. 则(先遵守NSCopying协议)重写copyWithZone, 直接返回_instance即可.
  
-  当在MRC下需要覆盖一些MRC中的内存管理方法：
+ 当在MRC下需要覆盖一些MRC中的内存管理方法：
  *- (id)retain.  单例中不需要增加引用计数器.return self.
  *- (id)autorelease.  只有堆中的对象才需要.单例中不需要.return self.
  *- (NSUInteger)retainCount.(可写可不写,防止引起误解).单例中不需要修改引用计数，返回最大的无符号整数即可.return UINT_MAX;
@@ -71,9 +102,9 @@ static PersonListViewController *thisVC;
 +(PersonListViewController*)shareSingletonInstance
 {
     //改写法为懒汉式写法
-//    if (thisVC==nil) {
-//        thisVC=[[self alloc]init];
-//    }
+    //    if (thisVC==nil) {
+    //        thisVC=[[self alloc]init];
+    //    }
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         thisVC=[[PersonListViewController alloc]init];
@@ -97,11 +128,6 @@ static PersonListViewController *thisVC;
 }
 
 
-
-
-
-
-
 #pragma --mark 其他写法
 
 -(void)segementedControlInit
@@ -123,21 +149,12 @@ static PersonListViewController *thisVC;
             [self.tableView reloadData];
             break;
         case MyAppliedTableViewFlag:
-            if (isfirstLoadData) {
-                [self loadUnhandledDatafromIndex:1 Length:pageSizeNum];
-                isfirstLoadData=NO;
-                
-            }
             NSLog(@"selected:%d",1);
             tableViewFlag=MyAppliedTableViewFlag;
             [self.tableView reloadData];
             break;
         case UnhandledTableViewFlag:
             NSLog(@"selected:%d",2);
-            if (isfirstLoadData) {
-                [self loadUnhandledDatafromIndex:1 Length:pageSizeNum];
-                isfirstLoadData=NO;
-            }
             tableViewFlag=UnhandledTableViewFlag;
             [self.tableView reloadData];
             break;
@@ -152,18 +169,19 @@ static PersonListViewController *thisVC;
     if (![UIViewController isLogin]) {
         [self notLoginHandler];
     }
-    isfirstLoadData=YES;
     [self tableViewInit];
     [self segementedControlInit];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateUI) name:@"update" object:nil];
 }
 
 - (void)tableViewInit{
     pageSizeNum=10;
     //初始化pageSize大小
     pageCountArray=[NSMutableArray arrayWithObjects:@"0",@"0",@"0",nil];
+    
     [_tableView setDelegate:self];
     [_tableView setDataSource:self];
-//    _tableView.scrollEnabled=YES;
+    //    _tableView.scrollEnabled=YES;
     [_tableView addHeaderWithTarget:self action:@selector(headerRefreshing)];
     [_tableView addFooterWithTarget:self action:@selector(footerRefreshing)];
     [self loadDataWhenFirst];
@@ -181,7 +199,10 @@ static PersonListViewController *thisVC;
 
 -(void)loadDataWhenFirst
 {   [self showHudInView:self.tableView hint:@"加载中.."];
-    [self loadFavorableDatafromIndex:1 Length:pageSizeNum];
+    
+    [self loadFavorableDatafromIndex:self.page1Manager.firstStartIndex Length:self.page1Manager.pageSize];
+    [self loadAcceptedDatafromIndex:self.page2Manager.firstStartIndex Length:self.page2Manager.pageSize];
+    [self loadUnhandledDatafromIndex:self.page3Manager.firstStartIndex Length:self.page3Manager.pageSize];
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -206,9 +227,10 @@ static PersonListViewController *thisVC;
         [tableView registerNib:nib forCellReuseIdentifier:Cellidentifier];
     }
     TableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:Cellidentifier forIndexPath:indexPath];
-     NSLog(@"%ld",indexPath.row);
+    NSLog(@"%ld",indexPath.row);
     //清楚复用时的数据
     cell.usrImage.image=[UIImage imageNamed:@"placeholder"];
+    cell.distanceLabel.text=@"";
     
     //重新设置
     userModel *user=[dataArray objectAtIndex:indexPath.row];
@@ -217,26 +239,26 @@ static PersonListViewController *thisVC;
     cell.usrBreifIntro.text=[user getuserIntroduction];
 #warning  image 字段没有添加
     cell.timeStamp.text=[[user getUpdateAt]timeIntervalDescription];
-    
+    double d= [[user getuserLocationGeo] getLat];
     if (1) {
         [self startLocationService:^{
-            MAMapPoint point1 = MAMapPointForCoordinate(CLLocationCoordinate2DMake([rightNowGPS getLon],[rightNowGPS getLat]));
-            MAMapPoint point2 = MAMapPointForCoordinate(CLLocationCoordinate2DMake([[user getuserLocationGeo] getLon],[[user getuserLocationGeo] getLat]));
+            MAMapPoint point1 = MAMapPointForCoordinate(CLLocationCoordinate2DMake([rightNowGPS getLat],[rightNowGPS getLon]));
+            MAMapPoint point2 = MAMapPointForCoordinate(CLLocationCoordinate2DMake([[user getuserLocationGeo] getLat],[[user getuserLocationGeo] getLon]));
             //2.计算距离
             CLLocationDistance distance = MAMetersBetweenMapPoints(point1,point2);
             float kmDistance=distance/1000;
             cell.distanceLabel.text=[NSString stringWithFormat:@"%.2fkm",kmDistance];
         }];
     }
-//    else
-//    {
-//        MAMapPoint point1 = MAMapPointForCoordinate(CLLocationCoordinate2DMake(nowLocation.y,nowLocation.x));
-//        MAMapPoint point2 = MAMapPointForCoordinate(CLLocationCoordinate2DMake([[user getuserLocationGeo] getLon],[[user getuserLocationGeo] getLat]));
-//        //2.计算距离
-//        CLLocationDistance distance = MAMetersBetweenMapPoints(point1,point2);
-//        float kmDistance=distance/1000;
-//        cell.distanceLabel.text=[NSString stringWithFormat:@"%.2fkm",kmDistance];
-//    }
+    //    else
+    //    {
+    //        MAMapPoint point1 = MAMapPointForCoordinate(CLLocationCoordinate2DMake(nowLocation.y,nowLocation.x));
+    //        MAMapPoint point2 = MAMapPointForCoordinate(CLLocationCoordinate2DMake([[user getuserLocationGeo] getLon],[[user getuserLocationGeo] getLat]));
+    //        //2.计算距离
+    //        CLLocationDistance distance = MAMetersBetweenMapPoints(point1,point2);
+    //        float kmDistance=distance/1000;
+    //        cell.distanceLabel.text=[NSString stringWithFormat:@"%.2fkm",kmDistance];
+    //    }
     //设置头像
     NSString *imageUrl;
     NSArray *imageUrlArray=[user getImageFileURL];
@@ -329,8 +351,18 @@ static PersonListViewController *thisVC;
             person.hideAcceptBtn=YES;
             break;
         case UnhandledTableViewFlag:
+        {
             dataArray=self.unhandledDataSource;
             person.stateFlag=UnhanldedState;
+   
+//            userModel *user1=[dataArray objectAtIndex:indexPath.row];
+//            [netAPI setRecordAlreadyRead:[[NSUserDefaults standardUserDefaults]objectForKey:CURRENTUSERID] applyOrInviteId:[user1 getApply_id] type:@"1" withBlock:^(oprationResultModel *oprationModel) {
+//                
+//                if ([[oprationModel getStatus]intValue]==BASE_OK) {
+//                    [[BadgeManager shareSingletonInstance]refreshCount];
+//                }
+//            }];
+        }
             break;
         default:
             break;
@@ -449,29 +481,25 @@ static PersonListViewController *thisVC;
 //上拉加载更多
 -(void)footerRefreshing
 {
-
+    
     switch (self.segement.selectedSegmentIndex) {
         case MyFavoriteTableViewFlag:
         {
-            NSInteger nowNum=[self getPageStartIndexWithSegmentIndex:MyFavoriteTableViewFlag];
-            NSInteger startNum=nowNum+1;
-            [self loadFavorableDatafromIndex:startNum Length:pageSizeNum];
+            [self loadFavorableDatafromIndex:[self.page1Manager getNextStartAt] Length:self.page1Manager.pageSize];
         }
             break;
         case MyAppliedTableViewFlag:
         {
-
-            NSInteger nowNum=[self getPageStartIndexWithSegmentIndex:MyAppliedTableViewFlag];
-            NSInteger startNum=nowNum+1;
-            [self loadUnhandledDatafromIndex:startNum Length:pageSizeNum*2];
+            
+//            NSInteger nowNum=[self getPageStartIndexWithSegmentIndex:MyAppliedTableViewFlag];
+//            NSInteger startNum=nowNum+1;
+            [self loadAcceptedDatafromIndex:[self.page2Manager getNextStartAt] Length:self.page2Manager.pageSize];
         }
             
             break;
         case UnhandledTableViewFlag:
         {
-            NSInteger nowNum=[self getPageStartIndexWithSegmentIndex:UnhandledTableViewFlag];
-            NSInteger startNum=nowNum+1;
-            [self loadUnhandledDatafromIndex:startNum Length:pageSizeNum*2];
+            [self loadUnhandledDatafromIndex:[self.page3Manager getNextStartAt] Length:self.page3Manager.pageSize];
         }
             break;
         default:
@@ -484,34 +512,23 @@ static PersonListViewController *thisVC;
 {
     switch (self.segement.selectedSegmentIndex) {
         case MyFavoriteTableViewFlag:{
-            NSInteger nowNum=[self getPageStartIndexWithSegmentIndex:MyFavoriteTableViewFlag];
-//            if (isfirstLoadData || nowNum<1) {
-//                [self updateFavorableDatafromIndex:1 Length:pageSizeNum];
-//            }
-//            else [self updateFavorableDatafromIndex:1 Length:nowNum];
-            [self updateFavorableDatafromIndex:1 Length:pageSizeNum];
+            //重置分页控制器
+            [self.page1Manager resetPageSplitingManager];
+            [self updateFavorableDatafromIndex:self.page1Manager.firstStartIndex Length:self.page1Manager.pageSize];
             break;
         }
         case MyAppliedTableViewFlag:
         {
-//            NSInteger nowAppliedNum=[self getPageStartIndexWithSegmentIndex:MyAppliedTableViewFlag];
-//            NSInteger nowUnhandlerNum=[self getPageStartIndexWithSegmentIndex:UnhandledTableViewFlag];
-//            if (isfirstLoadData || nowAppliedNum<1) {
-//                [self updateUnhandledDatafromIndex:1 Length:pageSizeNum];
-//            }
-//            else [self updateUnhandledDatafromIndex:1 Length:(nowAppliedNum+nowUnhandlerNum)];
-            [self updateUnhandledDatafromIndex:1 Length:pageSizeNum];
+             //重置分页控制器
+            [self.page2Manager resetPageSplitingManager];
+            [self updateAcceptedDatafromIndex:self.page2Manager.firstStartIndex Length:self.page2Manager.pageSize];
             break;
         }
         case UnhandledTableViewFlag:
         {
-//            NSInteger nowUnhandlerNum=[self getPageStartIndexWithSegmentIndex:UnhandledTableViewFlag];
-//            NSInteger nowAppliedNum=[self getPageStartIndexWithSegmentIndex:MyAppliedTableViewFlag];
-//            if (isfirstLoadData || nowUnhandlerNum<1) {
-//                [self updateUnhandledDatafromIndex:1 Length:pageSizeNum];
-//            }
-//            else [self updateUnhandledDatafromIndex:1 Length:(nowUnhandlerNum+nowAppliedNum)];
-            [self updateUnhandledDatafromIndex:1 Length:pageSizeNum];
+             //重置分页控制器
+             [self.page3Manager resetPageSplitingManager];
+            [self updateUnhandledDatafromIndex:self.page3Manager.firstStartIndex  Length:self.page3Manager.pageSize];
             break;
         }
             break;
@@ -529,7 +546,6 @@ static PersonListViewController *thisVC;
         [weakSelf.tableView headerEndRefreshing];
         [weakSelf.tableView footerEndRefreshing];
         if ([[userListModel getStatus] isEqualToNumber:[NSNumber numberWithInt:BASE_SUCCESS]]) {
-            
             if (self.faviriteDataSource==nil) {
                 weakSelf.faviriteDataSource=[NSMutableArray arrayWithArray:[userListModel getuserArray]];
             }
@@ -538,6 +554,7 @@ static PersonListViewController *thisVC;
                 [weakSelf.faviriteDataSource removeAllObjects];
                 [weakSelf.faviriteDataSource addObjectsFromArray:[userListModel getuserArray]];
             }
+            [weakSelf.page1Manager pageLoadCompleted];
             [weakSelf.tableView reloadData];
             [weakSelf setPageCountArrayValue:[weakSelf.faviriteDataSource  count ]AtIndex:MyFavoriteTableViewFlag];
         }
@@ -550,25 +567,74 @@ static PersonListViewController *thisVC;
     }];
     [self performSelector:@selector(hideHud) withObject:nil afterDelay:20];
 }
--(void)updateUnhandledDatafromIndex:(int)start Length:(int)length
+
+
+
+
+
+
+
+-(void)updateAcceptedDatafromIndex:(int)start Length:(int)length
 {
     
-    if (self.unhandledDataSource==nil) {
-        self.unhandledDataSource=[NSMutableArray array];
-    }
     if (self.appliedDataSource==nil) {
         self.appliedDataSource=[NSMutableArray array];
     }
     NSUserDefaults *mySettings=[NSUserDefaults standardUserDefaults];
     NSString *com_id=[mySettings objectForKey:CURRENTUSERID];
     PersonListViewController *__weak weakSelf=self;
-    [netAPI getMyRecruitUsers:com_id start:start length:length withBlock:^(userListModel *userListModel) {
+    [netAPI getMyRecruitUsers:com_id start:start length:length withType:2 withBlock:^(userListModel *userListModel) {
         [weakSelf hideHud];
         [weakSelf.tableView headerEndRefreshing];
         [weakSelf.tableView footerEndRefreshing];
         if ([[userListModel getStatus] isEqualToNumber:[NSNumber numberWithInt:BASE_SUCCESS]]) {
             NSArray *array=[userListModel getuserArray];
             [weakSelf.appliedDataSource removeAllObjects];
+            for (userModel *user in array) {
+                NSString *usrCategory=[NSString stringWithFormat:@"%@", [user getApplyStatus]];
+                if ([usrCategory isEqualToString:@"0"]) {
+                    //未处理
+                    [weakSelf.unhandledDataSource addObject:user];
+                }
+                else if([usrCategory isEqualToString:@"2"])
+                    //已同意
+                {
+                    [weakSelf.appliedDataSource addObject:user];
+                }
+            }
+            [weakSelf.page2Manager pageLoadCompleted];
+            [weakSelf setPageCountArrayValue:[weakSelf.unhandledDataSource count] AtIndex:UnhandledTableViewFlag];
+            [weakSelf setPageCountArrayValue:[weakSelf.appliedDataSource count] AtIndex:MyAppliedTableViewFlag];
+            [weakSelf.tableView reloadData];
+        }
+        else
+        {
+            NSString *error=[NSString stringWithFormat:@"%@",[userListModel getInfo]];
+            ALERT(error);
+            [weakSelf.tableView reloadData];
+        }
+    }];
+    //    [self performSelector:@selector(hideHud) withObject:nil afterDelay:20];
+}
+
+
+
+
+-(void)updateUnhandledDatafromIndex:(int)start Length:(int)length
+{
+    
+    if (self.unhandledDataSource==nil) {
+        self.unhandledDataSource=[NSMutableArray array];
+    }
+    NSUserDefaults *mySettings=[NSUserDefaults standardUserDefaults];
+    NSString *com_id=[mySettings objectForKey:CURRENTUSERID];
+    PersonListViewController *__weak weakSelf=self;
+    [netAPI getMyRecruitUsers:com_id start:start length:length  withType:1 withBlock:^(userListModel *userListModel) {
+        [weakSelf hideHud];
+        [weakSelf.tableView headerEndRefreshing];
+        [weakSelf.tableView footerEndRefreshing];
+        if ([[userListModel getStatus] isEqualToNumber:[NSNumber numberWithInt:BASE_SUCCESS]]) {
+            NSArray *array=[userListModel getuserArray];
             [weakSelf.unhandledDataSource removeAllObjects];
             for (userModel *user in array) {
                 NSString *usrCategory=[NSString stringWithFormat:@"%@", [user getApplyStatus]];
@@ -582,6 +648,7 @@ static PersonListViewController *thisVC;
                     [weakSelf.appliedDataSource addObject:user];
                 }
             }
+            [weakSelf.page3Manager pageLoadCompleted];
             [weakSelf setPageCountArrayValue:[weakSelf.unhandledDataSource count] AtIndex:UnhandledTableViewFlag];
             [weakSelf setPageCountArrayValue:[weakSelf.appliedDataSource count] AtIndex:MyAppliedTableViewFlag];
             [weakSelf.tableView reloadData];
@@ -593,7 +660,7 @@ static PersonListViewController *thisVC;
             [weakSelf.tableView reloadData];
         }
     }];
-//    [self performSelector:@selector(hideHud) withObject:nil afterDelay:20];
+    //    [self performSelector:@selector(hideHud) withObject:nil afterDelay:20];
 }
 
 
@@ -615,6 +682,8 @@ static PersonListViewController *thisVC;
             {
                 [weakSelf.faviriteDataSource addObjectsFromArray:[userListModel getuserArray]];
             }
+            //页面滚动
+            [weakSelf.page1Manager pageLoadCompleted];
             [weakSelf.tableView reloadData];
             [weakSelf setPageCountArrayValue:[weakSelf.faviriteDataSource  count ]AtIndex:MyFavoriteTableViewFlag];
         }
@@ -629,7 +698,7 @@ static PersonListViewController *thisVC;
 }
 
 
--(void)loadUnhandledDatafromIndex:(int)start Length:(int)length
+-(void)loadAcceptedDatafromIndex:(int)start Length:(int)length
 {
     
     if (self.unhandledDataSource==nil) {
@@ -641,7 +710,7 @@ static PersonListViewController *thisVC;
     NSUserDefaults *mySettings=[NSUserDefaults standardUserDefaults];
     NSString *com_id=[mySettings objectForKey:CURRENTUSERID];
     PersonListViewController *__weak weakSelf=self;
-    [netAPI getMyRecruitUsers:com_id start:start length:length withBlock:^(userListModel *userListModel) {
+    [netAPI getMyRecruitUsers:com_id start:start length:length withType:2 withBlock:^(userListModel *userListModel) {
         [weakSelf hideHud];
         [weakSelf.tableView headerEndRefreshing];
         [weakSelf.tableView footerEndRefreshing];
@@ -659,6 +728,55 @@ static PersonListViewController *thisVC;
                     [weakSelf.appliedDataSource addObject:user];
                 }
             }
+            [weakSelf.page2Manager pageLoadCompleted];
+            [weakSelf setPageCountArrayValue:[weakSelf.unhandledDataSource count] AtIndex:UnhandledTableViewFlag];
+            [weakSelf setPageCountArrayValue:[weakSelf.appliedDataSource count] AtIndex:MyAppliedTableViewFlag];
+            [weakSelf.tableView reloadData];
+        }
+        else
+        {
+            NSString *error=[NSString stringWithFormat:@"%@",[userListModel getInfo]];
+            ALERT(error);
+            [weakSelf.tableView reloadData];
+        }
+    }];
+    [self performSelector:@selector(hideHud) withObject:nil afterDelay:20];
+}
+
+
+
+
+-(void)loadUnhandledDatafromIndex:(int)start Length:(int)length
+{
+    
+    if (self.unhandledDataSource==nil) {
+        self.unhandledDataSource=[NSMutableArray array];
+    }
+    if (self.appliedDataSource==nil) {
+        self.appliedDataSource=[NSMutableArray array];
+    }
+    NSUserDefaults *mySettings=[NSUserDefaults standardUserDefaults];
+    NSString *com_id=[mySettings objectForKey:CURRENTUSERID];
+    PersonListViewController *__weak weakSelf=self;
+    [netAPI getMyRecruitUsers:com_id start:start length:length withType:1 withBlock:^(userListModel *userListModel) {
+        [weakSelf hideHud];
+        [weakSelf.tableView headerEndRefreshing];
+        [weakSelf.tableView footerEndRefreshing];
+        if ([[userListModel getStatus] isEqualToNumber:[NSNumber numberWithInt:BASE_SUCCESS]]) {
+            NSArray *array=[userListModel getuserArray];
+            for (userModel *user in array) {
+                NSString *usrCategory=[NSString stringWithFormat:@"%@", [user getApplyStatus]];
+                if ([usrCategory isEqualToString:@"0"]) {
+                    //未处理
+                    [weakSelf.unhandledDataSource addObject:user];
+                }
+                else if([usrCategory isEqualToString:@"2"])
+                    //已同意
+                {
+                    [weakSelf.appliedDataSource addObject:user];
+                }
+            }
+            [weakSelf.page3Manager pageLoadCompleted];
             [weakSelf setPageCountArrayValue:[weakSelf.unhandledDataSource count] AtIndex:UnhandledTableViewFlag];
             [weakSelf setPageCountArrayValue:[weakSelf.appliedDataSource count] AtIndex:MyAppliedTableViewFlag];
             [weakSelf.tableView reloadData];
@@ -704,9 +822,9 @@ static PersonListViewController *thisVC;
     [ajLocationManager getLocationCoordinate:^(CLLocationCoordinate2D locationCorrrdinate) {
         [self hideHud];
         rightNowGPS=[[geoModel alloc]initWith:locationCorrrdinate.longitude lat:locationCorrrdinate.latitude];
-//        NSUserDefaults *mySettingData = [NSUserDefaults standardUserDefaults];
-//        [mySettingData setObject:rightNowGPS forKey:CURRENTLOCATOIN];
-//        [mySettingData synchronize];
+        //        NSUserDefaults *mySettingData = [NSUserDefaults standardUserDefaults];
+        //        [mySettingData setObject:rightNowGPS forKey:CURRENTLOCATOIN];
+        //        [mySettingData synchronize];
         block();
         //请求数据
     } error:^(NSError *error) {
@@ -714,7 +832,6 @@ static PersonListViewController *thisVC;
         ALERT(error.description);
     }];
 }
-
 
 -(void)createCancelFavoriteReq:(NSString*)user_id
 {
@@ -771,5 +888,12 @@ static PersonListViewController *thisVC;
             ALERT(errorDescription);
         }
     }];
+}
+
+
+-(void)updateUI
+{
+    [self headerRefreshing];
+//    [[BadgeManager shareSingletonInstance]refreshCount];
 }
 @end

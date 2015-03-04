@@ -7,11 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "PageSplitingManager.h"
 
 @interface PersonListViewController : UIViewController
 +(PersonListViewController*)shareSingletonInstance;
-
 
 
 @end

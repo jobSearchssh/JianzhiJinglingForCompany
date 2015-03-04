@@ -9,11 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "SWTableViewCell.h"
 #import "AsyncImageView.h"
+#import "JSBadgeView.h"
 @interface TableViewCell : SWTableViewCell
 
 @property (strong,nonatomic)NSString *userId;
 @property(strong,nonatomic)NSIndexPath *index;
 
+@property (strong,nonatomic)JSBadgeView *badgeView;
 
 @property (weak, nonatomic) IBOutlet UILabel *timeStamp;
 @property (weak, nonatomic) IBOutlet UILabel *distanceLabel;

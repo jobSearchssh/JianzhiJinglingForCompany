@@ -18,7 +18,9 @@
 #import "enterpriseDetailReturnModel.h"
 #import "jobListModel.h"
 #import "userListModel.h"
-
+#import "badgeModel.h"
+#import "iniviteModel.h"
+#import "inivitesListModel.h"
 @interface netAPI : NSObject
 
 typedef void (^returnBlock)(URLReturnModel *returnModel);
@@ -30,6 +32,10 @@ typedef void (^enterpriseDetailReturnBlock)(enterpriseDetailReturnModel *detailM
 typedef void (^jobListReturnBlock)(jobListModel *jobListModel);
 typedef void (^userListReturnBlock)(userListModel *userListModel);
 
+typedef void (^badgeBlock)(badgeModel *badgeModel);
+
+typedef void (^inivitesListReturnBlock)(inivitesListModel *inivitesListModel);
+
 #define STATIS_OK 0
 #define STATIS_NO 1
 
@@ -38,11 +44,16 @@ typedef void (^userListReturnBlock)(userListModel *userListModel);
 +(void)testAPIGetTestWithBlock:(NSData *)getInfo getFunction:(NSString *)function block:(returnBlock)block;
 //http://182.92.177.56:3000/postTest
 +(void)testAPIPostTestWithBlock:(NSData *)postInfo getFunction:(NSString *)function block:(returnBlock)block;
-
+//邀请者列表
++(void)queryInivitesList:(NSString *)enterprise_id start:(int)start length:(int)length withBlock:(inivitesListReturnBlock)inivitesListBlock;
 
 //enterprise登录
 //用户名，密码，回调block
 +(void)enterpriseLogin:(NSString *)name usrPassword:(NSString *)password withBlock:(loginReturnBlock)loginBlock;
+
+
+//重置用户密码
++(void)usrResetPassword:(NSString *)name usrPassword:(NSString *)password withBlock:(operationReturnBlock)oprationReturnBlock;
 
 //enterprise注册
 //用户名，密码，回调block
@@ -72,6 +83,10 @@ typedef void (^userListReturnBlock)(userListModel *userListModel);
 //关注人列表
 +(void)queryStarJobUsers:(NSString *)enterprise_id start:(int)start length:(int)length withBlock:(userListReturnBlock)userListBlock;
 
+//获取邀请列表
++(void)queryInvitedJobUsers:(NSString *)enterprise_id start:(int)start length:(int)length withBlock:(userListReturnBlock)userListBlock;
+
+
 //附近的人
 +(void)queryNearestUsers:(NSString *)enterprise_id start:(int)start length:(int)length lon:(double)lon lat:(double)lat withBlock:(userListReturnBlock)userListBlock;
 //一定距离内的人
@@ -80,6 +95,10 @@ typedef void (^userListReturnBlock)(userListModel *userListModel);
 //申请我职位的人
 +(void)getMyRecruitUsers:(NSString*)enterprise_id start:(int)start length:(int)length withBlock:(userListReturnBlock)userListBlock;
 
+/**
+ 申请我职位的人(新接口)
+**/
+ +(void)getMyRecruitUsers:(NSString*)enterprise_id start:(int)start length:(int)length withType:(int)type withBlock:(userListReturnBlock)userListReturnBlock;
 //创建职位模板
 +(void)createJobTemplate:(createJobModel *)jobmodel withBlock:(operationReturnBlock)operationBlock;
 
@@ -88,6 +107,9 @@ typedef void (^userListReturnBlock)(userListModel *userListModel);
 
 //删除一条发布的职位
 +(void)deleteTheJob:(NSString *)enterprise_id job_id:(NSString *)job_id withBlock:(operationReturnBlock)oprationReturnBlock;
+
+//删除邀请；
++(void)cancelInvitedUser:(NSString*)enterprise_id invite_id:(NSString*)userId withBlock:(operationReturnBlock)oprationReturnBlock;
 
 //删除一条职位模板
 +(void)deleteTheJobTemplate:(NSString *)enterprise_id jobTemplate_id:(NSString *)jobTemplate_id withBlock:(operationReturnBlock)oprationReturnBlock;
@@ -100,6 +122,12 @@ typedef void (^userListReturnBlock)(userListModel *userListModel);
 
 //邀请求职者
 +(void)inviteUserWithEnterpriseId:(NSString*)enterprise_id userId:(NSString*)userId jobId:(NSString*)jobId withBlock:(operationReturnBlock)oprationReturnBlock;
+
+//获取未读消息数
++(void)getNotReadMessageNum:(NSString*)userId withBlock:(badgeBlock)badgeReturnBlock;
++(void)setRecordAlreadyRead:(NSString*)userId applyOrInviteId:(NSString*)applyOrInviteId type:(NSString*)type withBlock:(operationReturnBlock)oprationReturnBlock;
+
+
 +(void)test;
 
 

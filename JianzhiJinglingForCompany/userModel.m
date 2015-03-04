@@ -43,6 +43,12 @@
             userIdentityCardNum=[dictionary objectForKey:@"userIdentityCardNum"];
             
             NSArray *tempImageFileURL = [dictionary objectForKey:@"ImageFileURL"];
+            NSNumber *enterpriseInviteIsReadNum=[dictionary objectForKey:@"enterpriseInviteIsRead"];
+            if ([enterpriseInviteIsReadNum intValue]==1) {
+                enterpriseInviteIsRead=@"true";
+            }else enterpriseInviteIsRead=@"false";
+            
+            invite_id=[dictionary objectForKey:@"invite_id"];
             if (tempImageFileURL != Nil) {
                 ImageFileURL = [[NSMutableArray alloc]initWithArray:tempImageFileURL];
             }else{
@@ -148,6 +154,12 @@
                     beiyong4 = [dictionary objectForKey:@"beiyong4"];
                     userHeight = [dictionary objectForKey:@"userHeight"];
                     userGender = [dictionary objectForKey:@"userGender"];
+                    NSNumber *enterpriseInviteIsReadNum=[dictionary objectForKey:@"enterpriseInviteIsRead"];
+                    if ([enterpriseInviteIsReadNum intValue]==1) {
+                        enterpriseInviteIsRead=@"true";
+                    }else enterpriseInviteIsRead=@"false";
+
+                    invite_id=[dictionary objectForKey:@"invite_id"];
                     NSString *updateAtString=[dictionary objectForKey:@"updated_at"];
                     NSString *createAtString=[dictionary objectForKey:@"created_at"];
                     NSNumber *applyStatusNum=[dictionary objectForKey:@"applyStatus"];
@@ -429,6 +441,16 @@
 {
 
     return createAt;
+}
+
+
+-(NSString *)getEnterpriseInviteIsRead{
+
+    return enterpriseInviteIsRead;
+}
+-(NSString *)getInvite_id
+{
+    return invite_id;
 }
 
 

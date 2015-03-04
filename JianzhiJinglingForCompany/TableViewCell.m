@@ -10,6 +10,16 @@
 
 @implementation TableViewCell
 
+-(JSBadgeView *)badgeView
+{
+    if (_badgeView==nil) {
+        JSBadgeView *badgeView=[[JSBadgeView alloc]initWithParentView:self.usrImage alignment:JSBadgeViewAlignmentTopRight];
+        badgeView.badgeText=nil;
+        _badgeView=badgeView;
+
+    }
+    return _badgeView;
+}
 //- (void)awakeFromNib {
 //    // Initialization code
 //}

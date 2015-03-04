@@ -107,7 +107,17 @@
 
 }
 
-
+#pragma --mark 找回密码
+- (void)resetPasswordInBackground:(NSString*)username Password:(NSString*)pwd{
+    
+    [netAPI usrResetPassword:username usrPassword:pwd withBlock:^(oprationResultModel *oprationResultModel) {
+        if ([oprationResultModel.getStatus intValue]==0) {
+            [self.resetResultDelegate resetPassword:YES Feedback:@"修改成功"];
+        }else{
+            [self.resetResultDelegate resetPassword:NO Feedback:oprationResultModel.getInfo];
+        }
+    }];
+}
 
 
 + (void)logout{

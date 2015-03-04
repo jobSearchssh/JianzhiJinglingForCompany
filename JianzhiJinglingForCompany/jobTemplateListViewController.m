@@ -17,6 +17,8 @@
 #import "UIViewController+LoginManager.h"
 #import "jobPublicationViewController.h"
 #import "MLLoginVC.h"
+#import "MLNaviViewController.h"
+#import "PageSplitingManager.h"
 @interface jobTemplateListViewController ()<UITableViewDataSource,UITableViewDelegate,SWTableViewCellDelegate,UIAlertViewDelegate>
 {
     NSInteger cellNum;
@@ -28,7 +30,7 @@
 
 @property (strong,nonatomic)NSMutableArray *dataSourceArray;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-
+@property (strong,nonatomic)PageSplitingManager *pageManager;
 @end
 
 @implementation jobTemplateListViewController
@@ -36,6 +38,14 @@
 
 #pragma --mark  getter
 
+-(PageSplitingManager*)pageManager
+{
+  if(_pageManager==nil)
+  {
+      _pageManager=[[PageSplitingManager alloc]initWithPageSize:10];
+  }
+    return _pageManager;
+}
 
 - (void)viewDidLoad {
     self.edgesForExtendedLayout=UIRectEdgeNone;
@@ -68,7 +78,7 @@
     _tableView.scrollEnabled=YES;
     [_tableView addHeaderWithTarget:self action:@selector(headerRefresh)];
     [_tableView addFooterWithTarget:self action:@selector(footerRefresh)];
-    [self downloadDataListStartAt:1 Length:pageSize];
+    [self downloadDataListStartAt:self.pageManager.firstStartIndex  Length:self.pageManager.pageSize];
 }
 
 -(void)updateDataListStartAt:(int)start Length:(int)length
@@ -88,6 +98,7 @@
                 weakSelf.dataSourceArray=[NSMutableArray arrayWithArray:[jobListModel getJobArray]];
             }else [weakSelf.dataSourceArray addObjectsFromArray:[jobListModel getJobArray]];
             [weakSelf hideHud];
+            [weakSelf.pageManager pageLoadCompleted];
             [weakSelf.tableView reloadData];
             pageNum+=1;
             cellNum=[self.dataSourceArray count];
@@ -118,6 +129,8 @@
             if (weakSelf.dataSourceArray==nil) {
                 weakSelf.dataSourceArray=[NSMutableArray arrayWithArray:[jobListModel getJobArray]];
             }else [weakSelf.dataSourceArray addObjectsFromArray:[jobListModel getJobArray]];
+            
+            [weakSelf.pageManager pageLoadCompleted];
             [weakSelf hideHud];
             [weakSelf.tableView reloadData];
             pageNum+=1;
@@ -146,7 +159,7 @@
     TableViewCell2 *cell = [tableView dequeueReusableCellWithIdentifier:Cellidentifier forIndexPath:indexPath];
     //复用时，清空数据
     cell.jobImageView.image=[UIImage imageNamed:@"placeholder"];
-    
+
     [cell setRightUtilityButtons:[self rightButtons] WithButtonWidth:58.0f];
     
     cell.delegate = self;
@@ -366,7 +379,9 @@
         case 323432:
         {
             if (buttonIndex==1) {
-                [self presentViewController:[MLLoginVC sharedInstance] animated:YES completion:^{
+                MLNaviViewController *navi=[[MLNaviViewController alloc]initWithRootViewController:[MLLoginVC sharedInstance]];
+                [self presentViewController:navi animated:YES completion:^{
+                    
                 }];
             }
             break;
@@ -440,13 +455,14 @@
 {
     NSLog(@"cellNum from JobPublishedVC:%ld",(long)cellNum);
 //    [self.dataSourceArray removeAllObjects];
-    [self updateDataListStartAt:1 Length:pageSize];
+    [self.pageManager resetPageSplitingManager];
+    [self updateDataListStartAt:self.pageManager.firstStartIndex Length:self.pageManager.pageSize];
 }
 //上拉加载更多
 -(void)footerRefresh
 {
-   
-    [self downloadDataListStartAt:cellNum+1 Length:pageSize];
+
+    [self downloadDataListStartAt:[self.pageManager getNextStartAt] Length:self.pageManager.pageSize];
 
 }
 @end

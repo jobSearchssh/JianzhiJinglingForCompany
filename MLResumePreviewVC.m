@@ -11,10 +11,10 @@
 #import "jobListViewController.h"
 #import "jobPublicationViewController.h"
 #import "netAPI.h"
-
+#import "BadgeManager.h"
 #import "UIViewController+HUD.h"
 #import "RESideMenu.h"
-
+#import "AsyncImageView.h"
 #import "NSDate+Category.h"
 #import "NSDateFormatter+Category.h"
 #import "UIViewController+LoginManager.h"
@@ -37,6 +37,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 @property (strong, nonatomic) IBOutlet UIView *usrinfo1Outlet;
 //第三项
 @property (strong, nonatomic) IBOutlet UIView *usrinfo2Outlet;
+@property (weak, nonatomic) IBOutlet AsyncImageView *userImage;
 @property (weak, nonatomic) IBOutlet UILabel *usrNameOutlet;
 @property (weak, nonatomic) IBOutlet UIImageView *sexOutlet;
 @property (weak, nonatomic) IBOutlet UILabel *ageOutlet;
@@ -155,6 +156,24 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     //    [self.usrinfo1Outlet setFrame:CGRectMake(0,self.coverflowOutlet.frame.size.height,[UIScreen mainScreen].bounds.size.width,110)];
     //    [self.mainScrollviewOutlet addSubview:self.usrinfo1Outlet];
     //第三项
+    NSString *imageUrl;
+    NSArray *imageUrlArray=[userModel getImageFileURL];
+    if ([imageUrlArray count]>0) {
+        NSString *url1=[imageUrlArray firstObject];
+        if ([url1 length]>4) {
+            if ([[url1 substringToIndex:4] isEqualToString:@"http"])
+                imageUrl=url1;
+        }
+        
+        if ([imageUrl length]>4) {
+           self.userImage.contentMode = UIViewContentModeScaleAspectFill;
+            self.userImage.clipsToBounds = YES;
+            [[AsyncImageLoader sharedLoader] cancelLoadingImagesForTarget:self.userImage];
+            self.userImage.imageURL=[NSURL URLWithString:imageUrl];
+        }else{
+            self.userImage.image=[UIImage imageNamed:@"placeholder"];
+        }
+    }
     //用户名字
     NSString *usrname = [userModel getuserName];
     [self.usrNameOutlet setNumberOfLines:0];
@@ -203,7 +222,20 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     [self.locationOutlet setFrame:CGRectMake(self.locationOutlet.frame.origin.x,
                                              self.locationOutlet.frame.origin.y, locationOutletlabelsize.width, locationOutletlabelsize.height)];
     [self.locationOutlet setText:usrLoaction];
-    NSString *usrintention = @"咨询经理、设计师、客服、文员、其他、临时工";
+    
+    const NSDictionary *TYPESELECTEDDICT=@{@"模特/礼仪":@"0", @"促销/导购":@"1", @"销售":@"2" ,@"传单派发":@"3" ,@"安保":@"4" ,@"钟点工":@"5", @"法律事务":@"6", @"服务员":@"7" ,@"婚庆":@"8", @"配送/快递":@"9", @"化妆":@"10", @"护工/保姆":@"11", @"演出":@"12", @"问卷调查":@"13", @"志愿者":@"14" ,@"网络营销":@"15" ,@"导游":@"16", @"游戏代练":@"17", @"家教":@"18", @"软件/网站开发":@"19", @"会计":@"20", @"平面设计/制作":@"21", @"翻译":@"22", @"装修":@"23", @"影视制作":@"24", @"搬家":@"25", @"其他":@"26"};
+    
+    //设置工作类型
+    NSMutableDictionary *typeForReanlysis=[NSMutableDictionary dictionary];
+    NSArray *keyword=[TYPESELECTEDDICT allKeys];
+    for (NSString *value in keyword) {
+        [typeForReanlysis setObject:value forKey:[TYPESELECTEDDICT objectForKey:value]];
+    }
+    NSString *usrintention=@"";
+    for (int i=0; i<[[userModel getuserHopeJobType] count]; i++) {
+        usrintention = [usrintention stringByAppendingString:[typeForReanlysis objectForKey: [NSString stringWithFormat:@"%@",[[userModel getuserHopeJobType]objectAtIndex:i]]]];
+    }
+    
     [self.intentionOutlet setNumberOfLines:0];
     [self.intentionOutlet setLineBreakMode:NSLineBreakByWordWrapping];
     CGSize intentionOutletlabelsize = [usrLoaction sizeWithFont:[self.intentionOutlet font] constrainedToSize:CGSizeMake(self.intentionOutlet.frame.size.width,2000) lineBreakMode:NSLineBreakByWordWrapping];
@@ -507,6 +539,8 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
             self.refuseBtn.enabled=NO;
             self.acceptBtn.enabled=NO;
             //修改前页代码
+          [[BadgeManager shareSingletonInstance]minusApplyCount];
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"update" object:nil];
         }else
         {
             NSString *error=[NSString stringWithFormat:@"%@",[oprationModel getInfo]];
@@ -527,6 +561,8 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
             ALERT(@"成功");
             self.refuseBtn.enabled=NO;
             self.acceptBtn.enabled=NO;
+            [[BadgeManager shareSingletonInstance]minusApplyCount];
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"update" object:nil];
         }else
         {
             NSString *error=[NSString stringWithFormat:@"%@",[oprationModel getInfo]];

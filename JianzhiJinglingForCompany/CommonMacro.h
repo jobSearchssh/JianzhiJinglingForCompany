@@ -33,7 +33,6 @@
 #define ALERT(msg) [[[UIAlertView alloc] initWithTitle:nil message:msg delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil] show]
 
 
-
 //NSUserDefaults  中的字段
 #define CURRENTUSERNAME   @"currentUserName"
 #define CURRENTUSERID  @"currentUserObjectId"

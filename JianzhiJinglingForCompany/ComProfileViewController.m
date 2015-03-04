@@ -15,6 +15,7 @@
 #import "UIViewController+RESideMenu.h"
 #import "UIViewController+LoginManager.h"
 #import "MLLoginVC.h"
+#import "MLNaviViewController.h"
 @interface ComProfileViewController ()<UIAlertViewDelegate>
 @property(nonatomic,strong)enterpriseDetailModel *thisCompany;
 @end
@@ -155,7 +156,9 @@
         case 323432:
         {
             if (buttonIndex==1) {
-                [self presentViewController:[MLLoginVC sharedInstance] animated:YES completion:^{
+                MLNaviViewController *navi=[[MLNaviViewController alloc]initWithRootViewController:[MLLoginVC sharedInstance]];
+                [self presentViewController:navi animated:YES completion:^{
+                    
                 }];
             }
             break;

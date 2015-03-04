@@ -24,6 +24,8 @@
 #import "MLLoginVC.h"
 #import "RESideMenu.h"
 #import "ComProfileViewController.h"
+
+#import "BadgeManager.h"
 @interface MainTabBarViewController ()
 
 @property (strong,nonatomic)NSArray  *vcArray;
@@ -45,28 +47,33 @@ static MainTabBarViewController* thisVC=nil;
             thisVC=[[super alloc]init];
         });
     }
-   
+    
     return thisVC;
 }
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    [self.tabBar setBackgroundColor:TabBarColor];
+    //    [self.tabBar setBackgroundColor:TabBarColor];
     // Do any additional setup after loading the view from its nib.
     //设置颜色
     if (![UIViewController isLogin]) {
         [self notLoginHandler];
-//        MLLoginVC *viewController = [MLLoginVC sharedInstance];
-//        [self presentViewController:viewController animated:YES completion:nil];
+        //        MLLoginVC *viewController = [MLLoginVC sharedInstance];
+        //        [self presentViewController:viewController animated:YES completion:nil];
     }
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(checkUnLoadConProfile) name:@"checkUnLoadConProfile" object:nil];
+    
+    [[BadgeManager shareSingletonInstance] addObserver:self forKeyPath:@"applyCount" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:NULL];
+    
+    
+    
     [self.tabBar setBarTintColor:TabBarColor];
     [self initViewControllers];
     [self modifyTabbarItem];
     [self initReSideMenu];
-//    _sideMenu=[RESideMenu sharedInstance];
+    //    _sideMenu=[RESideMenu sharedInstance];
 }
 
 -(void)checkUnLoadConProfile
@@ -96,7 +103,7 @@ static MainTabBarViewController* thisVC=nil;
     
     [self addLeftBarItem:firstVC];
     
-        MLNaviViewController *firstNavi=[[MLNaviViewController alloc]initWithRootViewController:firstVC];
+    MLNaviViewController *firstNavi=[[MLNaviViewController alloc]initWithRootViewController:firstVC];
     //第二个页面
     PersonListViewController *secondVC=[[PersonListViewController alloc]init];
     
@@ -112,17 +119,17 @@ static MainTabBarViewController* thisVC=nil;
     
     //第四个页面
     
-     MLMatchVC *forthVC=[[MLMatchVC alloc]init];
+    MLMatchVC *forthVC=[[MLMatchVC alloc]init];
     
     [self addLeftBarItem:forthVC];
     
     MLNaviViewController *forthNaviVC=[[MLNaviViewController alloc]initWithRootViewController:forthVC];
     
     //第五个页面
-     ComProfileViewController *fifthVC=[[ComProfileViewController alloc]init];
+    ComProfileViewController *fifthVC=[[ComProfileViewController alloc]init];
     
     [self addLeftBarItem:fifthVC];
-     MLNaviViewController *fifthNaviVC=[[MLNaviViewController alloc]initWithRootViewController:fifthVC];
+    MLNaviViewController *fifthNaviVC=[[MLNaviViewController alloc]initWithRootViewController:fifthVC];
     
     self.viewControllers=@[firstNavi,secondNaviVC,thirdNaviVC,forthNaviVC,fifthNaviVC];
     
@@ -131,7 +138,7 @@ static MainTabBarViewController* thisVC=nil;
 
 -(void)modifyTabbarItem
 {
-
+    
     UITabBar *tabBar=self.tabBar;
     tabBar.tintColor=[UIColor whiteColor];
     
@@ -156,24 +163,24 @@ static MainTabBarViewController* thisVC=nil;
     tabBarItem5.title=@"更多";
     tabBarItem5.image=[UIImage imageNamed:@"moreTabbar"];
     
-//    [[self.tabBar.items objectAtIndex:0] setFinishedSelectedImage:[[UIImage imageNamed:@"name"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"name"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-//    
-//   
-//    //
-//    [[self.tabBar.items objectAtIndex:1] setFinishedSelectedImage:[[UIImage imageNamed:@"letter"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"letter"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-//    
-//    [[self.tabBar.items objectAtIndex:1] setFinishedSelectedImage:[[UIImage imageNamed:@"letter"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"letter"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-//    
-//    [[self.tabBar.items objectAtIndex:1] setFinishedSelectedImage:[[UIImage imageNamed:@"notice"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"notice"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-//    
-//     [[self.tabBar.items objectAtIndex:1] setFinishedSelectedImage:[[UIImage imageNamed:@"letter"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"letter"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    //    [[self.tabBar.items objectAtIndex:0] setFinishedSelectedImage:[[UIImage imageNamed:@"name"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"name"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    //
+    //
+    //    //
+    //    [[self.tabBar.items objectAtIndex:1] setFinishedSelectedImage:[[UIImage imageNamed:@"letter"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"letter"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    //
+    //    [[self.tabBar.items objectAtIndex:1] setFinishedSelectedImage:[[UIImage imageNamed:@"letter"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"letter"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    //
+    //    [[self.tabBar.items objectAtIndex:1] setFinishedSelectedImage:[[UIImage imageNamed:@"notice"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"notice"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    //
+    //     [[self.tabBar.items objectAtIndex:1] setFinishedSelectedImage:[[UIImage imageNamed:@"letter"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"letter"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     
 }
 
 
 - (void)viewWillLayoutSubviews{
     
-//    [self.tabBar setSelectedImageTintColor: [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0]];
+    //    [self.tabBar setSelectedImageTintColor: [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0]];
 }
 
 
@@ -186,22 +193,34 @@ static MainTabBarViewController* thisVC=nil;
 
 -(void)showLoginVC
 {
-    [self presentViewController:[MLLoginVC sharedInstance] animated:YES completion:^{
+    MLNaviViewController *navi=[[MLNaviViewController alloc]initWithRootViewController:[MLLoginVC sharedInstance]];
+    [self presentViewController:navi animated:YES completion:^{
         
     }];
-
 }
 
-
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
+    
+    UITabBarItem *tabBarItem1=[self.tabBar.items objectAtIndex:1];
+    if ([keyPath isEqual:@"applyCount"]) {
+        BadgeManager *bn=[BadgeManager shareSingletonInstance];
+        if ([bn.applyCount intValue]>0)
+        {
+            [tabBarItem1 setBadgeValue:[NSString stringWithFormat:@" ",bn.applyCount]];
+        }
+        else
+            tabBarItem1.badgeValue=nil;
+    }
+}
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

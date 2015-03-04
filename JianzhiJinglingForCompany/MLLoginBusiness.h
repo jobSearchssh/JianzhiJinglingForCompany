@@ -19,6 +19,10 @@
 - (void)registerResult:(BOOL)isSucceed Feedback:(NSString*)feedback;
 @end
 
+@protocol resetPasswordResult <NSObject>
+@required
+- (void)resetPassword:(BOOL)isSucceed Feedback:(NSString*)feedback;
+@end
 
 @interface MLLoginBusiness : NSObject
 
@@ -26,10 +30,15 @@
 
 @property(nonatomic,weak) id<registerResult> registerResultDelegate;
 
+@property(nonatomic,weak) id<resetPasswordResult> resetResultDelegate;
+
 - (void)loginInBackground:(NSString*) username Password:(NSString*)pwd;
 
 + (void)logout;
 
 - (void)registerInBackground:(NSString*)username Password:(NSString*)pwd;
+
+
+- (void)resetPasswordInBackground:(NSString*)username Password:(NSString*)pwd;
 
 @end

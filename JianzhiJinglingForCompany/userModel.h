@@ -49,6 +49,9 @@
     NSDate *updateAt;
     NSDate *createAt;
     
+    //新增标记已读未读字段;
+    NSString *enterpriseInviteIsRead;
+    NSString *invite_id;
 }
 
 -(userModel *)initWithData:(NSData *)mainData;
@@ -134,6 +137,12 @@
 
 -(NSString*)getuserIdentityCardNum;
 -(void)setuserIdentityCardNum:(NSString*)num;
+
+
+-(NSString *)getEnterpriseInviteIsRead;
+-(NSString *)getInvite_id;
+
+
 
 
 -(NSString*)getApplyStatus;

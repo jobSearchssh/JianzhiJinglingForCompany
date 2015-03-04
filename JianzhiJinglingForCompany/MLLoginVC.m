@@ -19,6 +19,7 @@
 #import "UIViewController+DismissKeyboard.h"
 #import "UIViewController+ErrorHandler.h"
 #import "RESideMenu.h"
+#import "forgetPasswordVC.h"
 @interface MLLoginVC ()<QCheckBoxDelegate,loginResult,registerResult,UIGestureRecognizerDelegate,UIAlertViewDelegate,UINavigationBarDelegate>{
     
     UIButton *chooseLoginBtn;
@@ -37,8 +38,7 @@
 - (IBAction)disMissBtnAction:(id)sender;
 
 
-@property (weak, nonatomic) IBOutlet UINavigationBar *customNavi;
-
+- (IBAction)FindBackPSWAction:(id)sender;
 
 @end
 
@@ -60,6 +60,7 @@ static  MLLoginVC *thisVC=nil;
         thisVC=[[MLLoginVC alloc]init];
         thisVC.loginer=[[MLLoginBusiness alloc]init];
         thisVC.loginer.loginResultDelegate=thisVC;
+        thisVC.loginer.registerResultDelegate=thisVC;
     }
     return thisVC;
 }
@@ -68,35 +69,30 @@ static  MLLoginVC *thisVC=nil;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.customNavi setBarTintColor:NaviBarColor];
-//    [self.customNavi setFrame:CGRectMake(0, 0, MainScreenWidth, 64)];
-    //创建一个导航栏集合
     
     //监听登出成功接口
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(logoutSuccessAction) name:@"logoutSuccess"object:nil];
     
     
-    UINavigationItem *navigationItem = [[UINavigationItem alloc] initWithTitle:nil];
+//    UINavigationItem *navigationItem = [[UINavigationItem alloc] initWithTitle:nil];
     
-    [navigationItem setPrompt:@""];
-    [navigationItem setTitle:@"兼职精灵企业版"];
+    [self.navigationItem setTitle:@"兼职精灵企业版"];
      UIBarButtonItem *closeButton=[[UIBarButtonItem
                                     alloc]initWithTitle:@"  返回"  style:UIBarButtonItemStylePlain target:self action:@selector(disMissBtnAction:)];
     
     [closeButton setTintColor:[UIColor whiteColor]];
     
-    [navigationItem setLeftBarButtonItem:closeButton];
-    [self.customNavi pushNavigationItem:navigationItem animated:NO];
+    [self.navigationItem setLeftBarButtonItem:closeButton];
     
     
-    chooseLoginBtn=[[UIButton alloc] initWithFrame:CGRectMake(0, 74, [[UIScreen mainScreen] bounds].size.width/2, 44)];
+    chooseLoginBtn=[[UIButton alloc] initWithFrame:CGRectMake(0, 64, [[UIScreen mainScreen] bounds].size.width/2, 44)];
     chooseLoginBtn.backgroundColor=[UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1.0];
     [chooseLoginBtn setTitle:@"登录" forState:UIControlStateNormal];
     [chooseLoginBtn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
     [chooseLoginBtn addTarget:self action:@selector(chooseLogin) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:chooseLoginBtn];
     
-    chooseRegisterBtn=[[UIButton alloc] initWithFrame:CGRectMake([[UIScreen mainScreen] bounds].size.width/2, 74, [[UIScreen mainScreen] bounds].size.width/2, 44)];
+    chooseRegisterBtn=[[UIButton alloc] initWithFrame:CGRectMake([[UIScreen mainScreen] bounds].size.width/2, 64, [[UIScreen mainScreen] bounds].size.width/2, 44)];
     chooseRegisterBtn.backgroundColor=[UIColor darkGrayColor];
     [chooseRegisterBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [chooseRegisterBtn setTitle:@"注册" forState:UIControlStateNormal];
@@ -240,6 +236,7 @@ static  MLLoginVC *thisVC=nil;
         [self.loginer loginInBackground:inputUserAccount Password:inputUserPassword];
     }
 }
+
 
 #pragma --mark 登录成功返回 delegate接口
 - (void)loginResult:(BOOL)isSucceed Feedback:(NSString*)feedback{
@@ -509,5 +506,10 @@ static  MLLoginVC *thisVC=nil;
     
 
 
+}
+- (IBAction)FindBackPSWAction:(id)sender {
+    
+    forgetPasswordVC *vc=[[forgetPasswordVC alloc]init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 @end
