@@ -20,7 +20,7 @@
 #import "netAPI.h"
 #import "BadgeManager.h"
 #import "MLIntroduceVC.h"
-
+#import "fileUtil.h"
 @interface AppDelegate ()
 @property (strong,nonatomic,readonly)MainTabBarViewController *mainTabberVC;
 
@@ -64,7 +64,7 @@
     
     //Resign textField if touched outside of UITextField/UITextView.
     [[IQKeyboardManager sharedManager] setShouldResignOnTouchOutside:YES];
-     // Override point for customization after application launch.
+    // Override point for customization after application launch.
     //判断是否呈现引导页
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     if((![[NSUserDefaults standardUserDefaults] objectForKey:@"launchFirstTime"])||![[[NSUserDefaults standardUserDefaults] objectForKey:@"launchFirstTime"] isEqualToString:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]]){
@@ -105,12 +105,13 @@
     //开始监听，会启动一个run loop
     [self.internetReachability startNotifier];
     
-    
     //刷新badge
     [[BadgeManager shareSingletonInstance] refreshCount];
+    
+    //创建缓存文件夹
+    [fileUtil createPicFolder];
     return YES;
 }
-
 
 
 -(void)reachabilityChanged:(NSNotification *)note

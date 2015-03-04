@@ -20,6 +20,8 @@
 #import "UIViewController+ErrorHandler.h"
 #import "RESideMenu.h"
 #import "forgetPasswordVC.h"
+#import "MLLegalVC.h"
+#import "BadgeManager.h"
 @interface MLLoginVC ()<QCheckBoxDelegate,loginResult,registerResult,UIGestureRecognizerDelegate,UIAlertViewDelegate,UINavigationBarDelegate>{
     
     UIButton *chooseLoginBtn;
@@ -27,6 +29,7 @@
     BOOL agree;
     BOOL autoLogin;
     
+    BOOL isPushWhenInRegistrationState;
     NSTimer *timer;
     int seconds;
 }
@@ -137,21 +140,24 @@ static  MLLoginVC *thisVC=nil;
     self.errorAlertLabel.hidden=YES;
     self.sendMsgButton.enabled=NO;
     
-    [self.sendMsgButton setBackgroundColor:[UIColor lightGrayColor]];
+    [self.sendMsgButtonLabel setBackgroundColor:[UIColor lightGrayColor]];
     
 }
 
--(void)viewDidAppear:(BOOL)animated
+-(void)viewWillAppear:(BOOL)animated
 {
-    [super viewDidAppear:animated];
+    [super viewWillAppear:animated];
     [self checkLoginStatus];
+    if (isPushWhenInRegistrationState) {
+        [self chooseRegister];
+    }
 }
 
 -(void)checkLoginStatus
 {
     //检查登陆模式、和自动填充
     NSUserDefaults *mySettingData = [NSUserDefaults standardUserDefaults];
-    NSString *username=[mySettingData objectForKey:@"currentUserName"];
+    NSString *username=[mySettingData objectForKey:CURRENTUSERNAME];
     if (username!=nil) {
         self.loginButton.hidden=NO;
         self.logoutBtn.hidden=YES;
@@ -257,7 +263,9 @@ static  MLLoginVC *thisVC=nil;
         [alert show];
         [self dismissViewControllerAnimated:YES completion:^{
             [self checkUserStatusForReSideMenu];
+    
             [[NSNotificationCenter defaultCenter]postNotificationName:@"autoLoadNearData" object:nil];
+            [[BadgeManager shareSingletonInstance]refreshCount];
             if (![mySettingData objectForKey:CURRENTLOGOURL]) {
                 [[NSNotificationCenter defaultCenter]postNotificationName:@"notSettingprofile" object:nil];
                 
@@ -288,12 +296,12 @@ static  MLLoginVC *thisVC=nil;
     {
         inputUserPhoneNumber=_phoneNumber.text;
         self.sendMsgButton.enabled=YES;
-        [self.sendMsgButton setBackgroundColor:[UIColor colorWithRed:23.0/255.0 green:87.0/255.0 blue:150.0/255.0 alpha:1.0]];
+        [self.sendMsgButtonLabel setBackgroundColor:[UIColor colorWithRed:23.0/255.0 green:87.0/255.0 blue:150.0/255.0 alpha:1.0]];
         
     }else{
         inputUserPhoneNumber=nil;
         self.sendMsgButton.enabled=NO;
-        [self.sendMsgButton setBackgroundColor:[UIColor lightGrayColor]];
+        [self.sendMsgButtonLabel setBackgroundColor:[UIColor lightGrayColor]];
     }
 }
 
@@ -354,9 +362,9 @@ static  MLLoginVC *thisVC=nil;
 
 -(void)initTimer
 {
-    [self.sendMsgButton setTitle:[NSString stringWithFormat:@"%d秒",60] forState:UIControlStateNormal];
+    [self.sendMsgButtonLabel setText:[NSString stringWithFormat:@"%d秒",60] ];
     self.sendMsgButton.enabled=NO;
-    [self.sendMsgButton setBackgroundColor:[UIColor lightGrayColor]];
+    [self.sendMsgButtonLabel setBackgroundColor:[UIColor lightGrayColor]];
     NSTimeInterval timeInterval =1.0 ;
     //定时器
     timer = [NSTimer scheduledTimerWithTimeInterval:timeInterval target:self selector:@selector(handleMaxShowTimer:) userInfo:nil repeats:YES];
@@ -380,19 +388,19 @@ static  MLLoginVC *thisVC=nil;
 -(void)showTimerWhenTimeOut
 {
     [timer invalidate];
-    [self.sendMsgButton setTitle:@"发送短信验证码" forState:UIControlStateNormal];
+    [self.sendMsgButtonLabel setText:@"发送短信验证码"];
     self.sendMsgButton.enabled=YES;
-    [self.sendMsgButton setBackgroundColor:[UIColor colorWithRed:23.0/255.0 green:87.0/255.0 blue:150.0/255.0 alpha:1.0]];
+    [self.sendMsgButtonLabel setBackgroundColor:[UIColor colorWithRed:23.0/255.0 green:87.0/255.0 blue:150.0/255.0 alpha:1.0]];
     seconds=60;
 }
 
 - (void)showTimer{
-    [self.sendMsgButton setTitle:[NSString stringWithFormat:@"%d秒",seconds] forState:UIControlStateNormal];
+    [self.sendMsgButtonLabel setText:[NSString stringWithFormat:@"%d秒",seconds] ];
     if (seconds==0) {
         [timer invalidate];
-        [self.sendMsgButton setTitle:@"发送短信验证码" forState:UIControlStateNormal];
+        [self.sendMsgButtonLabel setText:@"发送短信验证码"];
         self.sendMsgButton.enabled=YES;
-        [self.sendMsgButton setBackgroundColor:[UIColor colorWithRed:23.0/255.0 green:87.0/255.0 blue:150.0/255.0 alpha:1.0]];
+        [self.sendMsgButtonLabel setBackgroundColor:[UIColor colorWithRed:23.0/255.0 green:87.0/255.0 blue:150.0/255.0 alpha:1.0]];
         seconds=60;
     }
 }
@@ -454,8 +462,8 @@ static  MLLoginVC *thisVC=nil;
         case LogoutAlertViewTag:
             if(buttonIndex==0)
             {
-                self.logoutBtn.hidden=NO;
-                self.loginButton.hidden=YES;
+//                self.logoutBtn.hidden=NO;
+//                self.loginButton.hidden=YES;
             
             }
             if (buttonIndex==1) {
@@ -496,6 +504,13 @@ static  MLLoginVC *thisVC=nil;
     [alert show];
 }
 
+- (IBAction)readLegalStatementAction:(id)sender {
+    isPushWhenInRegistrationState=YES;
+    MLLegalVC *VC=[MLLegalVC sharedInstance];
+    VC.edgesForExtendedLayout=UIRectEdgeNone;
+    [self.navigationController pushViewController:VC animated:YES];
+}
+
 - (IBAction)disMissBtnAction:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -503,7 +518,7 @@ static  MLLoginVC *thisVC=nil;
 -(void)logoutSuccessAction
 {
 //更新UI
-    
+
 
 
 }

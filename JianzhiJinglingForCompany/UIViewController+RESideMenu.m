@@ -71,11 +71,12 @@
 {
     NSString *sNum=[BadgeManager shareSingletonInstance].messageCount;
       RESideMenu *_sideMenu=[RESideMenu sharedInstance];
-    if ([sNum isEqual:@"0"]) {
+    if ([sNum isEqual:@"0"]|| sNum==nil) {
          [_sideMenu setBadgeView:4 badgeText:nil];
         return;
+    }else{
+    [_sideMenu setBadgeView:4 badgeText:sNum];
     }
-    [_sideMenu setBadgeView:4 badgeText:@"新消息"];
 }
 
 
@@ -92,14 +93,6 @@
             [menu setRootViewController:mainTab];
             
             [mainTab showLoginVC];
-            
-//            MLLoginVC *viewController = [MLLoginVC sharedInstance];
-//            [self addLeftBarItem:viewController];
-//            MLNaviViewController *navigationController = [[MLNaviViewController alloc] initWithRootViewController:viewController];
-//            navigationController.navigationBar.translucent = NO;
-//            navigationController.tabBarController.tabBar.translucent = NO;
-//            navigationController.toolbar.translucent = NO;
-//            [menu setRootViewController:navigationController];
         }];
         
         //        RESideMenuItem *searchItem = [[RESideMenuItem alloc] initWithTitle:@"搜索" setFlag:NORMALCELL image:[UIImage imageNamed:@"search"] highlightedImage:[UIImage imageNamed:@"search"] action:^(RESideMenu *menu, RESideMenuItem *item) {

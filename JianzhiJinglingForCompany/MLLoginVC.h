@@ -42,6 +42,8 @@
 
 - (IBAction)logoutBtnAction:(id)sender;
 
+- (IBAction)readLegalStatementAction:(id)sender;
 
+@property (weak, nonatomic) IBOutlet UILabel *sendMsgButtonLabel;
 @property (weak, nonatomic) IBOutlet UIButton *sendMsgButton;
 @end

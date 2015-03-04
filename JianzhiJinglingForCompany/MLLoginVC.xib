@@ -10,13 +10,14 @@
                 <outlet property="errorAlertLabel" destination="JpK-Ay-gbz" id="jnb-zE-GNq"/>
                 <outlet property="loginButton" destination="aqj-dV-utd" id="1kt-ZZ-UO9"/>
                 <outlet property="loginView" destination="qvT-2l-fLE" id="4Xp-lD-90b"/>
-                <outlet property="logoutBtn" destination="SDp-fb-UD4" id="47S-l3-nzy"/>
+                <outlet property="logoutBtn" destination="SDp-fb-UD4" id="Z2o-Hl-YlA"/>
                 <outlet property="phoneNumber" destination="mgy-eh-N2T" id="Yku-g5-ubz"/>
                 <outlet property="registerButton" destination="MGm-TW-sBP" id="2xH-B1-P08"/>
                 <outlet property="registerView" destination="AlJ-Tf-CRZ" id="Swc-Ig-vgC"/>
                 <outlet property="scrollView" destination="hKW-7x-SZ6" id="vCS-f0-T0t"/>
                 <outlet property="securityCode" destination="ElG-1c-kj9" id="q4r-RM-2og"/>
                 <outlet property="sendMsgButton" destination="qP9-pL-jh0" id="uEx-yN-WfZ"/>
+                <outlet property="sendMsgButtonLabel" destination="Ike-Nm-n8N" id="Zu9-Vs-KeA"/>
                 <outlet property="userAccount" destination="j3Q-Eg-DV3" id="Xpc-vW-R9T"/>
                 <outlet property="userPassword" destination="QpQ-Fy-yaW" id="D7v-9J-MI9"/>
                 <outlet property="userPassword1" destination="Ow7-xk-oaD" id="tjl-OQ-xP7"/>
@@ -233,7 +234,7 @@
                         <action selector="touchLoginBtn:" destination="-1" eventType="touchUpInside" id="F5q-kf-kQZ"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SDp-fb-UD4">
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SDp-fb-UD4">
                     <rect key="frame" x="35" y="278" width="250" height="40"/>
                     <color key="backgroundColor" red="1" green="0.32457997966680607" blue="0.31342653849482327" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
@@ -258,8 +259,7 @@
                         </mask>
                     </variation>
                     <connections>
-                        <action selector="logoutBtnAction:" destination="-1" eventType="touchUpInside" id="QNt-ML-rBj"/>
-                        <action selector="touchLoginBtn:" destination="-1" eventType="touchUpInside" id="Kes-ej-YTK"/>
+                        <action selector="logoutBtnAction:" destination="-1" eventType="touchUpInside" id="GGV-ux-lyg"/>
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gu4-ir-bhQ">
@@ -342,33 +342,33 @@
                     <exclude reference="Gu4-ir-bhQ"/>
                 </mask>
                 <mask key="constraints">
-                    <exclude reference="HH9-Yh-9rL"/>
-                    <exclude reference="nZV-P5-dBi"/>
-                    <exclude reference="vS1-ff-f85"/>
+                    <exclude reference="U8i-mL-Qre"/>
+                    <exclude reference="hsV-xO-fez"/>
+                    <exclude reference="uOx-Js-pgZ"/>
                     <exclude reference="AdP-B6-b26"/>
                     <exclude reference="nBV-bo-UT3"/>
-                    <exclude reference="DCy-FH-bCn"/>
-                    <exclude reference="HbI-0T-Iux"/>
-                    <exclude reference="umC-fx-SkR"/>
+                    <exclude reference="YuO-Zy-JEH"/>
+                    <exclude reference="Z9j-cQ-scO"/>
                     <exclude reference="9LP-Rp-vJt"/>
                     <exclude reference="cha-Ec-uAX"/>
                     <exclude reference="mu9-Th-Drr"/>
-                    <exclude reference="hsV-xO-fez"/>
-                    <exclude reference="uOx-Js-pgZ"/>
+                    <exclude reference="HH9-Yh-9rL"/>
+                    <exclude reference="nZV-P5-dBi"/>
+                    <exclude reference="vS1-ff-f85"/>
+                    <exclude reference="DCy-FH-bCn"/>
+                    <exclude reference="HbI-0T-Iux"/>
+                    <exclude reference="umC-fx-SkR"/>
                     <exclude reference="31F-KS-Sz9"/>
                     <exclude reference="f4c-ak-xNH"/>
                     <exclude reference="fft-iV-TsR"/>
-                    <exclude reference="YuO-Zy-JEH"/>
-                    <exclude reference="Z9j-cQ-scO"/>
-                    <exclude reference="5ss-At-fZB"/>
-                    <exclude reference="XUj-2B-B8a"/>
-                    <exclude reference="aY9-b8-Pvx"/>
-                    <exclude reference="f3T-QM-YHr"/>
                     <exclude reference="8mu-51-6iL"/>
                     <exclude reference="AfQ-JQ-bIF"/>
                     <exclude reference="UVQ-4A-3Cc"/>
                     <exclude reference="qfb-dp-h60"/>
-                    <exclude reference="U8i-mL-Qre"/>
+                    <exclude reference="5ss-At-fZB"/>
+                    <exclude reference="XUj-2B-B8a"/>
+                    <exclude reference="aY9-b8-Pvx"/>
+                    <exclude reference="f3T-QM-YHr"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
@@ -385,33 +385,33 @@
                     <include reference="Gu4-ir-bhQ"/>
                 </mask>
                 <mask key="constraints">
-                    <include reference="HH9-Yh-9rL"/>
-                    <include reference="nZV-P5-dBi"/>
-                    <include reference="vS1-ff-f85"/>
+                    <include reference="U8i-mL-Qre"/>
+                    <include reference="hsV-xO-fez"/>
+                    <include reference="uOx-Js-pgZ"/>
                     <include reference="AdP-B6-b26"/>
                     <include reference="nBV-bo-UT3"/>
-                    <include reference="DCy-FH-bCn"/>
-                    <include reference="HbI-0T-Iux"/>
-                    <include reference="umC-fx-SkR"/>
+                    <include reference="YuO-Zy-JEH"/>
+                    <include reference="Z9j-cQ-scO"/>
                     <include reference="9LP-Rp-vJt"/>
                     <include reference="cha-Ec-uAX"/>
                     <include reference="mu9-Th-Drr"/>
-                    <include reference="hsV-xO-fez"/>
-                    <include reference="uOx-Js-pgZ"/>
+                    <include reference="HH9-Yh-9rL"/>
+                    <include reference="nZV-P5-dBi"/>
+                    <include reference="vS1-ff-f85"/>
+                    <include reference="DCy-FH-bCn"/>
+                    <include reference="HbI-0T-Iux"/>
+                    <include reference="umC-fx-SkR"/>
                     <include reference="31F-KS-Sz9"/>
                     <include reference="f4c-ak-xNH"/>
                     <include reference="fft-iV-TsR"/>
-                    <include reference="YuO-Zy-JEH"/>
-                    <include reference="Z9j-cQ-scO"/>
-                    <include reference="5ss-At-fZB"/>
-                    <include reference="XUj-2B-B8a"/>
-                    <include reference="aY9-b8-Pvx"/>
-                    <include reference="f3T-QM-YHr"/>
                     <include reference="8mu-51-6iL"/>
                     <include reference="AfQ-JQ-bIF"/>
                     <include reference="UVQ-4A-3Cc"/>
                     <include reference="qfb-dp-h60"/>
-                    <include reference="U8i-mL-Qre"/>
+                    <include reference="5ss-At-fZB"/>
+                    <include reference="XUj-2B-B8a"/>
+                    <include reference="aY9-b8-Pvx"/>
+                    <include reference="f3T-QM-YHr"/>
                 </mask>
             </variation>
             <point key="canvasLocation" x="719" y="147"/>
@@ -551,15 +551,25 @@
                         <action selector="touchRegister:" destination="-1" eventType="touchUpInside" id="OEj-Ow-GWF"/>
                     </connections>
                 </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="发送短信验证码" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ike-Nm-n8N">
+                    <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                    <color key="backgroundColor" red="0.002398306935" green="0.31120660109999998" blue="0.72099447510000003" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                    <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                        <rect key="frame" x="193" y="56" width="107" height="40"/>
+                    </variation>
+                </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qP9-pL-jh0">
                     <rect key="frame" x="35" y="278" width="250" height="40"/>
-                    <color key="backgroundColor" red="0.002398306935" green="0.31120660109999998" blue="0.72099447510000003" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="hqU-CH-1Sq"/>
                         <constraint firstAttribute="width" constant="107" id="yAM-kU-T1B"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
-                    <state key="normal" title="发送短信验证码">
+                    <state key="normal">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -666,6 +676,9 @@
                             <include reference="szL-hW-eLr"/>
                         </mask>
                     </variation>
+                    <connections>
+                        <action selector="readLegalStatementAction:" destination="-1" eventType="touchUpInside" id="i1A-xc-WbY"/>
+                    </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="两次输入密码不一致" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JpK-Ay-gbz">
                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
@@ -751,6 +764,7 @@
                     <exclude reference="mgy-eh-N2T"/>
                     <exclude reference="ElG-1c-kj9"/>
                     <exclude reference="MGm-TW-sBP"/>
+                    <exclude reference="Ike-Nm-n8N"/>
                     <exclude reference="qP9-pL-jh0"/>
                     <exclude reference="Ow7-xk-oaD"/>
                     <exclude reference="OUY-V3-7FO"/>
@@ -805,6 +819,7 @@
                     <include reference="mgy-eh-N2T"/>
                     <include reference="ElG-1c-kj9"/>
                     <include reference="MGm-TW-sBP"/>
+                    <include reference="Ike-Nm-n8N"/>
                     <include reference="qP9-pL-jh0"/>
                     <include reference="Ow7-xk-oaD"/>
                     <include reference="OUY-V3-7FO"/>
@@ -850,7 +865,7 @@
                     <include reference="ZCS-fV-7kv"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="719" y="777"/>
+            <point key="canvasLocation" x="709" y="771"/>
         </view>
     </objects>
     <resources>

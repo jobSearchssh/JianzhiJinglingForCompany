@@ -20,6 +20,7 @@
 #import "BadgeManager.h"
 #import "iniviteModel.h"
 #import "jobModel.h"
+#import "PageSplitingManager.h"
 @interface MyInvitedViewController ()<UITableViewDataSource,UITableViewDelegate,SWTableViewCellDelegate>
 {
     NSInteger pageSizeNum;
@@ -32,7 +33,7 @@
 }
 @property (strong,nonatomic)NSMutableArray *datasourceArray;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-
+@property (strong,nonatomic)PageSplitingManager *pageManager;
 @end
 
 @implementation MyInvitedViewController
@@ -45,6 +46,14 @@ static MyInvitedViewController *thisVC;
     }
     return thisVC;
 }
+-(PageSplitingManager*)pageManager
+{
+    if (_pageManager == nil) {
+        _pageManager=[[PageSplitingManager alloc]initWithPageSize:10];
+    }
+    return _pageManager;
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -77,19 +86,19 @@ static MyInvitedViewController *thisVC;
 
 - (void)headerRefreshing
 {
+    [self.pageManager resetPageSplitingManager];
     touchRefresh=YES;
-    [self loadDatafromIndex:1 Length:pageSizeNum];
-    
+    [self loadDatafromIndex:self.pageManager.firstStartIndex   Length:self.pageManager.pageSize];
 }
 
 
 - (void)footerRefreshing{
     if (cellNum!=0) {
-        [self loadDatafromIndex:(1+cellNum) Length:pageSizeNum];
+        [self loadDatafromIndex:[self.pageManager getNextStartAt] Length:self.pageManager.pageSize];
     }
     else {
         touchRefresh=YES;
-        [self loadDatafromIndex:1 Length:pageSizeNum];
+        [self loadDatafromIndex:self.pageManager.firstStartIndex    Length:self.pageManager.pageSize];
     }
 }
 
@@ -112,6 +121,8 @@ static MyInvitedViewController *thisVC;
                     [weakSelf.datasourceArray removeAllObjects];
                     touchRefresh=NO;
                 }
+                [[BadgeManager shareSingletonInstance]refreshCount];
+                [weakSelf.pageManager pageLoadCompleted];
                 [weakSelf.datasourceArray addObjectsFromArray:[inivitesListModel getinivitesArray]];
                 cellNum=[weakSelf.datasourceArray count];
                 [weakSelf.tableView reloadData];
@@ -270,7 +281,7 @@ static MyInvitedViewController *thisVC;
             NSLog(@"%@",[oprationModel getInfo]);
             
         }];
-        cell.badgeView=nil;
+        cell.badgeView.badgeText=nil;
     }
     
     

@@ -278,10 +278,10 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     
     //第四项
     [self.jobInfo4View setFrame:CGRectMake(0,self.jobInfo3View.frame.origin.y+self.jobInfo3View.frame.size.height,[UIScreen mainScreen].bounds.size.width,660)];
-//    self.dropDownList1= [[DropDownListView alloc] initWithFrame:CGRectMake(0,0,MainScreenWidth, 40) dataSource:self delegate:self];
-//    self.dropDownList1.backgroundColor=[UIColor lightGrayColor];
-//    self.dropDownList1.mSuperView = self.jobInfo4View;
-//    [self.jobInfo4View addSubview:self.dropDownList1];
+    //    self.dropDownList1= [[DropDownListView alloc] initWithFrame:CGRectMake(0,0,MainScreenWidth, 40) dataSource:self delegate:self];
+    //    self.dropDownList1.backgroundColor=[UIColor lightGrayColor];
+    //    self.dropDownList1.mSuperView = self.jobInfo4View;
+    //    [self.jobInfo4View addSubview:self.dropDownList1];
     
     
     [self.mainScrollView addSubview:self.jobInfo4View];
@@ -289,16 +289,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     
     //添加照片ScrollView
     addedPicArray =[[NSMutableArray alloc]init];
-    //添加图片
-//    imageButton *btnPic=[[imageButton alloc]initWithFrame:CGRectMake(INSETS, INSETS, PIC_WIDTH, PIC_HEIGHT)];
-//    [btnPic setBackgroundImage:[UIImage imageNamed:@"resume_add"] forState:UIControlStateNormal];
-//    [addedPicArray addObject:btnPic];
-//    [self.picScrollView addSubview:btnPic];
-//    [btnPic addTarget:self action:@selector(addJobPicAction) forControlEvents:UIControlEventTouchUpInside];
-//    [self refreshScrollView];
-
-    
-    
     
     //添加照片项
     imageAddFlag=NO;
@@ -308,7 +298,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     //设置最终长度
     [self.mainScrollView setContentSize:CGSizeMake(0,self.jobInfo6View.frame.origin.y+self.jobInfo6View.frame.size.height+150)];
     
-   
+    
     //添加PickView 响应时间
     _radio_male = [[QRadioButton alloc] initWithDelegate:self groupId:@"groupId1"];
     _radio_male.frame = CGRectMake(self.genderLabel.frame.origin.x+self.genderLabel.frame.size.width+10, self.genderLabel.frame.origin.y-10, 50, 40);
@@ -316,7 +306,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     [_radio_male setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
     [_radio_male.titleLabel setFont:[UIFont boldSystemFontOfSize:13.0f]];
     [self.jobInfo4View addSubview:_radio_male];
-//    [_radio1 setChecked:YES];
+    //    [_radio1 setChecked:YES];
     
     _radio_female = [[QRadioButton alloc] initWithDelegate:self groupId:@"groupId1"];
     _radio_female.frame = CGRectMake(_radio_male.frame.origin.x+_radio_male.frame.size.width, self.genderLabel.frame.origin.y-10, 50, 40);
@@ -358,14 +348,14 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 -(void)initBtnViewWithBtnIndex:(NSInteger) flag
 {
-//    //第五个buttonView
-//    
-//    [self.publishBtnView setFrame:CGRectMake(0,self.jobInfo6View.frame.origin.y+50+self.jobInfo6View.frame.size.height,[UIScreen mainScreen].bounds.size.width,self.publishBtn.frame.size.height)];
-//    
-//    [self.mainScrollView addSubview:self.publishBtnView];
-//    
-//    //设置最终长度
-//    [self.mainScrollView setContentSize:CGSizeMake(0,self.publishBtnView.frame.origin.y+self.publishBtnView.frame.size.height)];
+    //    //第五个buttonView
+    //
+    //    [self.publishBtnView setFrame:CGRectMake(0,self.jobInfo6View.frame.origin.y+50+self.jobInfo6View.frame.size.height,[UIScreen mainScreen].bounds.size.width,self.publishBtn.frame.size.height)];
+    //
+    //    [self.mainScrollView addSubview:self.publishBtnView];
+    //
+    //    //设置最终长度
+    //    [self.mainScrollView setContentSize:CGSizeMake(0,self.publishBtnView.frame.origin.y+self.publishBtnView.frame.size.height)];
     if (flag==1) {
         self.publishBtn.hidden=YES;
         self.publishedAgainBtn.hidden=NO;
@@ -376,7 +366,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         self.publishBtn.hidden=NO;
         self.publishedAgainBtn.hidden=YES;
     }
-
+    
 }
 
 - (void)viewWillLayoutSubviews{
@@ -386,7 +376,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     NSMutableDictionary *titleBarAttributes = [NSMutableDictionary dictionaryWithDictionary:[[UINavigationBar appearance] titleTextAttributes]];
     [titleBarAttributes setValue:[UIColor whiteColor] forKey:UITextAttributeTextColor];
     [self.navigationController.navigationBar setTitleTextAttributes:titleBarAttributes];
-
+    
     //layoutRadioButton
     _radio_male.frame = CGRectMake(self.genderLabel.frame.origin.x+self.genderLabel.frame.size.width+10, self.genderLabel.frame.origin.y-10, 50, 40);
     _radio_female.frame = CGRectMake(_radio_male.frame.origin.x+_radio_male.frame.size.width, self.genderLabel.frame.origin.y-10, 50, 40);
@@ -454,7 +444,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     NSMutableDictionary *paymentForReanlysis=[NSMutableDictionary dictionary];
     NSArray *keyword1=[paymentSelectedDict allKeys];
     for (NSString *value in keyword1) {
-       [paymentForReanlysis setObject:value forKey:[paymentSelectedDict objectForKey:value]];
+        [paymentForReanlysis setObject:value forKey:[paymentSelectedDict objectForKey:value]];
     }
     NSMutableDictionary *eduForReanlysis=[NSMutableDictionary dictionary];
     NSArray *keyword2=[eduDict allKeys];
@@ -496,7 +486,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     if ([[job getjobGenderReq] isEqualToNumber:[NSNumber numberWithInt:0]])
     {//男
         [_radio_male setChecked:TRUE];
-      
+        
     }
     else if([[job getjobGenderReq] isEqualToNumber:[NSNumber numberWithInt:1]])
     {//女
@@ -526,7 +516,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     
     //设置学历
     self.eduTitleLabel.text=[eduForReanlysis objectForKey:
-    [NSString stringWithFormat:@"%@",[job getjobDegreeReq]]];
+                             [NSString stringWithFormat:@"%@",[job getjobDegreeReq]]];
     eduString=[eduForReanlysis objectForKey:
                [NSString stringWithFormat:@"%@",[job getjobDegreeReq]]];
     
@@ -548,20 +538,20 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     {
         url1=[job getjobEnterpriseLogoURL];
     }
-        if ([url1 length]>4) {
-            if ([[url1 substringToIndex:4] isEqualToString:@"http"])
-                imageUrl=url1;
-        }
-        if ([imageUrl length]>4) {
-            self.logoImageView.contentMode = UIViewContentModeScaleAspectFill;
-            self.logoImageView.clipsToBounds = YES;
-            [[AsyncImageLoader sharedLoader] cancelLoadingImagesForTarget:self.logoImageView];
-            self.logoImageView.imageURL=[NSURL URLWithString:imageUrl];
-            imageAddFlag=YES;
-            [self.thisJob setjobEnterpriseImageURL:imageUrl];
-        }else{
-           self.logoImageView.image=[UIImage imageNamed:@"placeholder"];
-        }
+    if ([url1 length]>4) {
+        if ([[url1 substringToIndex:4] isEqualToString:@"http"])
+            imageUrl=url1;
+    }
+    if ([imageUrl length]>4) {
+        self.logoImageView.contentMode = UIViewContentModeScaleAspectFill;
+        self.logoImageView.clipsToBounds = YES;
+        [[AsyncImageLoader sharedLoader] cancelLoadingImagesForTarget:self.logoImageView];
+        self.logoImageView.imageURL=[NSURL URLWithString:imageUrl];
+        imageAddFlag=YES;
+        [self.thisJob setjobEnterpriseImageURL:imageUrl];
+    }else{
+        self.logoImageView.image=[UIImage imageNamed:@"placeholder"];
+    }
     
     //后台设置
     //    [self.thisJob setjobEnterpriseName:@"IBM"];
@@ -737,7 +727,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         ALERT(@"身高请输入数字,请仔细检查");
         return flag;
     }
-
+    
     
     if(self.eduTitleLabel.text==nil || eduString==nil)
     {
@@ -770,7 +760,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     }
     
     if (self.jobDescriptTextField.text==nil) {
-         ALERT(@"请输入工作描述");
+        ALERT(@"请输入工作描述");
         return flag;
     }
     if (!workPlaceFlag) {
@@ -814,7 +804,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     }
     //设置title
     [self.thisJob setjobTitle:self.jobTitleTextField.text];
-
+    
     //设置时间
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     NSTimeZone *timeZone = [NSTimeZone localTimeZone];
@@ -824,7 +814,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     {
         NSLog(@"%@",self.beginTimeLabel.text);
         NSDate *dateTime = [formatter dateFromString:self.beginTimeLabel.text];
-
+        
         [self.thisJob setjobBeginTime:dateTime];
     }
     else
@@ -834,7 +824,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     
     if (self.endTimeLabel.text) {
         
-         NSLog(@"%@",self.endTimeLabel.text);
+        NSLog(@"%@",self.endTimeLabel.text);
         
         NSDate *endDateTime = [formatter dateFromString:self.endTimeLabel.text];
         [newJob setjobEndTime:endDateTime];
@@ -852,7 +842,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     
     
     //设置工作类型 交给选择器设置
-//    [self.thisJob setjobType:0];
+    //    [self.thisJob setjobType:0];
     
     //设置工作地点，交给定位设置
     
@@ -864,7 +854,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     [self.thisJob setjobSalary:[self.salaryTextField.text intValue]];
     
     //设置结算方式,交给选择器设置
-//    [self.thisJob setjobSettlementWay:0];
+    //    [self.thisJob setjobSettlementWay:0];
     
     //设置工作描述
     
@@ -894,14 +884,14 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     [self.thisJob setjobWorkAddressDetail:self.addressTextField.text];
     
     
-
+    
     
     //后台设置
     if (!imageAddFlag) {
         [self.thisJob setjobEnterpriseImageURL:@"null"];
     }
     
-//    [self.thisJob setjobEnterpriseName:@"IBM"];
+    //    [self.thisJob setjobEnterpriseName:@"IBM"];
     [self.thisJob setjobEnterpriseName:[mysettings objectForKey:CURRENTUSERNAME]];
     
     [self.thisJob setjobEnterpriseIndustry:0];
@@ -914,18 +904,18 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     [self.thisJob setjobEnterpriseLogoURL:[mysettings objectForKey:CURRENTLOGOURL]];
     
     //    [self.thisJob setjobEnterpriseName:[mysettings objectForKey:CURRENTUSERREALNAME]];
-//    [self.thisJob setjobEnterpriseIntroduction:[mysettings objectForKey:CURRENTINTRODUCTION]];
+    //    [self.thisJob setjobEnterpriseIntroduction:[mysettings objectForKey:CURRENTINTRODUCTION]];
     
-//    NSString *comLogoUrl=[mysettings objectForKey:CURRENTLOGOURL];
-//    [self.thisJob setjobEnterpriseLogoURL:comLogoUrl];
-
+    //    NSString *comLogoUrl=[mysettings objectForKey:CURRENTLOGOURL];
+    //    [self.thisJob setjobEnterpriseLogoURL:comLogoUrl];
+    
     //jobImage
     //    [self.thisJob setjobEnterpriseImageURL:@"a"];
     
-//    if ([self.thisJob getIsOK]!=DATAOK) {
-////        NSString *error=[self.thisJob notOKResult:[self.thisJob getIsOK]];
-////        ALERT(error);
-//    }
+    //    if ([self.thisJob getIsOK]!=DATAOK) {
+    ////        NSString *error=[self.thisJob notOKResult:[self.thisJob getIsOK]];
+    ////        ALERT(error);
+    //    }
     if(0);
     else{
         if (1==flag) {
@@ -935,10 +925,10 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
             [alert show];
         }
         else{
-        NSLog(@"BaseString: %@",[self.thisJob getBaseString]);
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:[self.thisJob getBaseString] delegate:self cancelButtonTitle:@"再看看" otherButtonTitles:@"发布职位模板", nil];
-        alert.tag=12300;
-        [alert show];
+            NSLog(@"BaseString: %@",[self.thisJob getBaseString]);
+            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:[self.thisJob getBaseString] delegate:self cancelButtonTitle:@"再看看" otherButtonTitles:@"发布职位模板", nil];
+            alert.tag=12300;
+            [alert show];
         }
     }
     
@@ -986,10 +976,10 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
             ALERT(errorString);
         }
     }];
-
-
-
-
+    
+    
+    
+    
 }
 #pragma --mark  alertView delegate
 
@@ -1013,10 +1003,10 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
                 //确认发布
                 [self doPublishJob];
             }
-        
+            
             break;
         }
-          case 123400:
+        case 123400:
         {
             
             if (buttonIndex==1) {
@@ -1089,12 +1079,12 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 {
     
     //设置默认显示的时间
-//    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    //    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDate *now;
-//    NSDateComponents *comps = [[NSDateComponents alloc] init];
-//    NSInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit;
+    //    NSDateComponents *comps = [[NSDateComponents alloc] init];
+    //    NSInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit;
     now=[NSDate date];
-//    comps = [calendar components:unitFlags fromDate:now];
+    //    comps = [calendar components:unitFlags fromDate:now];
     self.datePicker=[[ZHPickView alloc]initDatePickWithDate:now datePickerMode:UIDatePickerModeDate isHaveNavControler:NO];
     self.datePicker.tag=tag;
     self.datePicker.delegate=self;
@@ -1235,7 +1225,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     [self cancelLocatePicker];
     self.locatePicker = [[HZAreaPickerView alloc] initWithStyle:HZAreaPickerWithStateAndCityAndDistrict delegate:self];
     self.locatePicker.autoresizingMask=UIViewAutoresizingFlexibleWidth;
-
+    
     
     [self.locatePicker showInView:self.view];
 }
@@ -1392,7 +1382,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     actionSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
     actionSheet.tag = 0;
     [actionSheet showInView:self.view];
-
+    
 }
 
 //action
@@ -1478,36 +1468,36 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         [alterTittle show];
     }else{
         //添加图片
-//        imageButton *btnPic=[[imageButton alloc]initWithFrame:CGRectMake(-PIC_WIDTH, INSETS, PIC_WIDTH, PIC_HEIGHT)];
-//        btnPic.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-//        btnPic.titleLabel.font = [UIFont systemFontOfSize:13];
-//        UIImage *darkTemp = [temp rt_darkenWithLevel:0.5f];
-//        [btnPic setBackgroundImage:darkTemp forState:UIControlStateNormal];
-//        [btnPic setFrame:CGRectMake(-PIC_WIDTH, INSETS, PIC_WIDTH, PIC_HEIGHT)];
-//        [addedPicArray addObject:btnPic];
-//        [btnPic setRestorationIdentifier:[NSString stringWithFormat:@"%lu",(unsigned long)addedPicArray.count-1]];
-//        [btnPic addTarget:self action:@selector(deletePicAction:) forControlEvents:UIControlEventTouchUpInside];
-//        [btnPic setStatus:uplaoding];
-//        [self.picScrollView addSubview:btnPic];
-//        
-//        for (imageButton *btn in addedPicArray) {
-//            CABasicAnimation *positionAnim=[CABasicAnimation animationWithKeyPath:@"position"];
-//            [positionAnim setFromValue:[NSValue valueWithCGPoint:CGPointMake(btn.center.x, btn.center.y)]];
-//            [positionAnim setToValue:[NSValue valueWithCGPoint:CGPointMake(btn.center.x+INSETS+PIC_WIDTH, btn.center.y)]];
-//            [positionAnim setDelegate:self];
-//            [positionAnim setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
-//            [positionAnim setDuration:0.25f];
-//            [btn.layer addAnimation:positionAnim forKey:nil];
-//            
-//            [btn setCenter:CGPointMake(btn.center.x+INSETS+PIC_WIDTH, btn.center.y)];
-//        }
-//        [self refreshScrollView];
+        //        imageButton *btnPic=[[imageButton alloc]initWithFrame:CGRectMake(-PIC_WIDTH, INSETS, PIC_WIDTH, PIC_HEIGHT)];
+        //        btnPic.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+        //        btnPic.titleLabel.font = [UIFont systemFontOfSize:13];
+        //        UIImage *darkTemp = [temp rt_darkenWithLevel:0.5f];
+        //        [btnPic setBackgroundImage:darkTemp forState:UIControlStateNormal];
+        //        [btnPic setFrame:CGRectMake(-PIC_WIDTH, INSETS, PIC_WIDTH, PIC_HEIGHT)];
+        //        [addedPicArray addObject:btnPic];
+        //        [btnPic setRestorationIdentifier:[NSString stringWithFormat:@"%lu",(unsigned long)addedPicArray.count-1]];
+        //        [btnPic addTarget:self action:@selector(deletePicAction:) forControlEvents:UIControlEventTouchUpInside];
+        //        [btnPic setStatus:uplaoding];
+        //        [self.picScrollView addSubview:btnPic];
+        //
+        //        for (imageButton *btn in addedPicArray) {
+        //            CABasicAnimation *positionAnim=[CABasicAnimation animationWithKeyPath:@"position"];
+        //            [positionAnim setFromValue:[NSValue valueWithCGPoint:CGPointMake(btn.center.x, btn.center.y)]];
+        //            [positionAnim setToValue:[NSValue valueWithCGPoint:CGPointMake(btn.center.x+INSETS+PIC_WIDTH, btn.center.y)]];
+        //            [positionAnim setDelegate:self];
+        //            [positionAnim setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
+        //            [positionAnim setDuration:0.25f];
+        //            [btn.layer addAnimation:positionAnim forKey:nil];
+        //
+        //            [btn setCenter:CGPointMake(btn.center.x+INSETS+PIC_WIDTH, btn.center.y)];
+        //        }
+        //        [self refreshScrollView];
         
-//        if ([addedPicArray count]>1)
-//        {
-//            ALERT(@"请选择一张图片");
-//            return;
-//        }
+        //        if ([addedPicArray count]>1)
+        //        {
+        //            ALERT(@"请选择一张图片");
+        //            return;
+        //        }
         self.logoImageView.image=temp;
         //上传图片
         [BmobFile filesUploadBatchWithPaths:@[fileTempPath]
@@ -1515,7 +1505,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
                                   dispatch_async(dispatch_get_main_queue(), ^{
                                       [self showHudInView:self.view hint:[NSString stringWithFormat:@"上传:%ld％",(long)(progress*100)]];
                                       if (progress==1) {
-                                         [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+                                          [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
                                       }
                                   });
                               } resultBlock:^(NSArray *array, BOOL isSuccessful, NSError *error) {
@@ -1528,20 +1518,20 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
                                           if (imageTemp != Nil) {
                                               dispatch_async(dispatch_get_main_queue(), ^{
                                                   
-                                                      [self.thisJob setjobEnterpriseImageURL:imageTemp];
+                                                  [self.thisJob setjobEnterpriseImageURL:imageTemp];
                                                   [MBProgressHUD showError:@"上传成功" toView:self.view];
                                               });
                                           }else{
                                               [self hideHud];
                                               dispatch_async(dispatch_get_main_queue(), ^{
-                                                   [self.thisJob setjobEnterpriseImageURL:@"null"];
+                                                  [self.thisJob setjobEnterpriseImageURL:@"null"];
                                                   [MBProgressHUD showError:@"上传失败" toView:self.view];
                                               });
                                           }
                                       }
                                   }else{
                                       dispatch_async(dispatch_get_main_queue(), ^{
-                                           [self.thisJob setjobEnterpriseImageURL:@"null"];
+                                          [self.thisJob setjobEnterpriseImageURL:@"null"];
                                           [MBProgressHUD showError:@"上传失败" toView:self.view];
                                       });
                                   }
@@ -1637,7 +1627,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     NSString *addr=[NSString stringWithFormat:@"%@ %@ %@",province,city,district];
     [self.jobPlaceLabel setTitle:addr forState:UIControlStateNormal];
     if (province==nil && city!=nil) {
-       [self.thisJob setjobWorkProvince:city];
+        [self.thisJob setjobWorkProvince:city];
     }
     else if (city==nil && province!=nil) {
         [self.thisJob setjobWorkCity:province];
@@ -1695,7 +1685,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 }
 
 - (IBAction)publisedAgainAction:(id)sender {
-//    ALERT(@"再次发布");
+    //    ALERT(@"再次发布");
     if ([self checkFromBeforeUpLoad]) {
         [self preparePublish:1];
     }

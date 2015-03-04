@@ -894,6 +894,6 @@ static PersonListViewController *thisVC;
 -(void)updateUI
 {
     [self headerRefreshing];
-//    [[BadgeManager shareSingletonInstance]refreshCount];
+    [[BadgeManager shareSingletonInstance]refreshCount];
 }
 @end

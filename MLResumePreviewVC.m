@@ -52,7 +52,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 @property (strong, nonatomic) IBOutlet UIView *usrinfo3Outet;
 @property (weak, nonatomic) IBOutlet UILabel *workexperienceOutlet;
 @property (weak, nonatomic) IBOutlet UILabel *userIntroductionOutlet;
-
+@property (weak, nonatomic) IBOutlet UILabel *userEduLabel;
 //最后一项
 @property (strong, nonatomic) IBOutlet UIView *userInfoBtnView;
 @property (weak, nonatomic) IBOutlet UIButton *inviteBtn;
@@ -63,6 +63,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 @property (strong, nonatomic) IBOutlet UIView *userInfor7View;
 @property (weak, nonatomic) IBOutlet UIButton *acceptBtn;
 @property (weak, nonatomic) IBOutlet UIButton *refuseBtn;
+
 
 @property (weak, nonatomic) IBOutlet UIButton *sendMessage;
 - (IBAction)refuseAction:(id)sender;
@@ -286,6 +287,18 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     [self.selectfreeCollectionOutlet reloadData];
     
     //第五项
+    
+    
+    NSString *edu=[userModel getuserSchool];
+    NSString *eduFormat=[edu stringByReplacingOccurrencesOfString:@"\\n" withString:@" \r\n" ];
+    [self.userEduLabel setNumberOfLines:0];
+    [self.userEduLabel setLineBreakMode:NSLineBreakByWordWrapping];
+    
+     CGSize testEduLabelsize = [eduFormat sizeWithFont:[self.userEduLabel font] constrainedToSize:CGSizeMake(self.userEduLabel.frame.size.width,2000) lineBreakMode:NSLineBreakByWordWrapping];
+    [self.userEduLabel setFrame:CGRectMake(self.userEduLabel.frame.origin.x,
+                                                     self.userEduLabel.frame.origin.y, testEduLabelsize.width,
+                                                     testEduLabelsize.height)];
+    [self.userEduLabel setText:eduFormat];
     
     NSString *intro = [userModel getuserIntroduction];
     NSString  *testintroFormat = [intro stringByReplacingOccurrencesOfString:@"\\n" withString:@" \r\n" ];
