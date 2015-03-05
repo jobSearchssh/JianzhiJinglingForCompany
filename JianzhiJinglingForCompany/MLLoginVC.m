@@ -140,14 +140,15 @@ static  MLLoginVC *thisVC=nil;
     self.errorAlertLabel.hidden=YES;
     self.sendMsgButton.enabled=NO;
     
-    [self.sendMsgButtonLabel setBackgroundColor:[UIColor lightGrayColor]];
+    self.sendMsgButtonLabel.backgroundColor=[UIColor clearColor];
+    self.sendMsgButtonLabel.backgroundColor =[UIColor lightGrayColor];
     
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self checkLoginStatus];
+//    [self checkLoginStatus];
     if (isPushWhenInRegistrationState) {
         [self chooseRegister];
     }

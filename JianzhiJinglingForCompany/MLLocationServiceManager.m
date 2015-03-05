@@ -49,10 +49,8 @@ static MLLocationServiceManager* thisInstance;
     }];
 }
 
-
 -(void)startLocationServiceWithCompleteBlock:(void(^)(void))block
 {
-
     AJLocationManager *ajLocationManager=[AJLocationManager shareLocation];
     [ajLocationManager getLocationCoordinate:^(CLLocationCoordinate2D locationCorrrdinate) {
         
@@ -67,8 +65,6 @@ static MLLocationServiceManager* thisInstance;
         ALERT(error.description);
         //定位失败一切，位置服务相关的都停止
     }];
-
-
 }
 
 @end

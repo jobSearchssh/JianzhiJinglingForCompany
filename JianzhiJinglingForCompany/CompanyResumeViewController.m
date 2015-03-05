@@ -29,7 +29,7 @@ static NSString *scrollindentify = @"scrollviewdown";
 
 
 @interface CompanyResumeViewController ()
-<AKPickerViewDataSource, AKPickerViewDelegate,UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIAlertViewDelegate,UIActionSheetDelegate,AMapSearchDelegate>{
+<AKPickerViewDataSource, AKPickerViewDelegate,UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIAlertViewDelegate,UIActionSheetDelegate,AMapSearchDelegate,MAMapViewDelegate>{
     NSMutableArray *addedPicArray;
     NSArray *selectfreetimetitleArray;
     NSArray *selectfreetimepicArray;
@@ -47,7 +47,7 @@ static NSString *scrollindentify = @"scrollviewdown";
     BOOL wantedUpdateLocation;
     geoModel *newGeo;
 }
-
+@property (strong,nonatomic)AMapSearchAPI *search;
 
 @property(strong,nonatomic)enterpriseDetailModel *newenterprise;
 
@@ -88,6 +88,18 @@ static NSString *scrollindentify = @"scrollviewdown";
 @end
 
 @implementation CompanyResumeViewController
+
+-(AMapSearchAPI*)search
+{
+    if (_search==nil) {
+        //初始化检索对象
+        [MAMapServices sharedServices].apiKey=@"7940ad72b6cad048cd56b9eef4495d81";
+        _search = [[AMapSearchAPI alloc] initWithSearchKey:@"7940ad72b6cad048cd56b9eef4495d81" Delegate:self];
+        _search.delegate=self;
+    }
+    return _search;
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -765,9 +777,7 @@ static NSString *scrollindentify = @"scrollviewdown";
         newGeo=[[geoModel alloc]initWith:p2.x lat:p2.y];
         
         //初始化检索对象
-        [MAMapServices sharedServices].apiKey=@"7940ad72b6cad048cd56b9eef4495d81";
-        AMapSearchAPI *search = [[AMapSearchAPI alloc] initWithSearchKey:@"7940ad72b6cad048cd56b9eef4495d81" Delegate:self];
-        search.delegate=self;
+   
         //构造AMapReGeocodeSearchRequest对象，location为必选项，radius为可选项
         AMapReGeocodeSearchRequest *regeoRequest = [[AMapReGeocodeSearchRequest alloc] init];
         regeoRequest.searchType = AMapSearchType_ReGeocode;
@@ -779,7 +789,7 @@ static NSString *scrollindentify = @"scrollviewdown";
         regeoRequest.requireExtension = YES;
         ;
         //发起逆地理编码
-        [search AMapReGoecodeSearch: regeoRequest];
+        [self.search AMapReGoecodeSearch: regeoRequest];
     } Error:^{
         [self hideHud];
         [MBProgressHUD showError:@"定位失败，使用默认位置" toView:self.view];

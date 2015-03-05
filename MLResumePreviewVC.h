@@ -30,5 +30,7 @@
 @property BOOL hideRightBarButton;
 
 @property BOOL hideAcceptBtn;
+
+@property BOOL isShowPhone;
 @property (weak,nonatomic)id<handleActionDelegate> delegate;
 @end

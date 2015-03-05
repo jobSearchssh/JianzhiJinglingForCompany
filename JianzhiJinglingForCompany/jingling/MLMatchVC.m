@@ -33,20 +33,23 @@
 @end
 
 
-@interface MLMatchVC ()<UIScrollViewDelegate>
+@interface MLMatchVC ()<UIScrollViewDelegate,childViewDelegate>
 {
     int kScrollViewHeight;
     int kScrollViewContentHeight;
     int kScrollViewTagBase;
     
     NSMutableArray *recordArray;
+     NSMutableArray *childViewArray;
+    
+    BOOL isLoadSusseed;
     
 }
 
 @property (nonatomic, strong) RSView *clipView;
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) RSCircaPageControl *pageControl;
-
+@property (nonatomic,strong)PageSplitingManager *pageManager;
 @end
 
 @implementation MLMatchVC
@@ -82,11 +85,19 @@ static  MLMatchVC *thisVC=nil;
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.edgesForExtendedLayout=UIRectEdgeNone;
+    
+     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(autoLoadData) name:@"autoLoadNearData" object:nil];
+
+    self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithImage:Nil style:UIBarButtonItemStyleBordered target:self action:@selector(refresh)];
+    [self.navigationItem.rightBarButtonItem setTitle:@"今日刷新"];
+    
+    
     kScrollViewHeight = [[UIScreen mainScreen]bounds].size.height;
     kScrollViewContentHeight=kScrollViewHeight;
     kScrollViewTagBase=kScrollViewHeight;
     
     recordArray=[[NSMutableArray alloc]init];
+     childViewArray=[[NSMutableArray alloc]init];
     
     self.clipView = [[RSView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
     self.clipView.clipsToBounds = YES;
@@ -111,11 +122,21 @@ static  MLMatchVC *thisVC=nil;
     [self.pageControl setCurrentPage:0 usingScroller:NO];
     [self.view addSubview:self.pageControl];
     
+    
+    
     [self initData];
 }
 
+
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+}
+
+
 - (void)refreshScrollView{
-    
+    if ([recordArray count]>0) {
     CGFloat currentY = 0;
     PiPeiView* childView=[[PiPeiView alloc]init];
     [childView.view setFrame:CGRectMake(0, currentY, self.scrollView.bounds.size.width, kScrollViewHeight-104)];
@@ -127,7 +148,7 @@ static  MLMatchVC *thisVC=nil;
     for (int i = 0; i < [recordArray count]; i++) {
         
         PiPeiView* childView=[[PiPeiView alloc]init];
-        
+        childView.childViewDelegate=self;
         [self addChildViewController:childView];
         
         [childView.view setFrame:CGRectMake(0, currentY, self.scrollView.bounds.size.width, kScrollViewHeight-44)];
@@ -141,25 +162,30 @@ static  MLMatchVC *thisVC=nil;
         if (_userModel) {
             
             childView.userModel=_userModel;
-            //            childView.index=i;
+            childView.index=i;
+            
+            
             [childView initData];
         }
         [self.scrollView addSubview:childView.view];
+        [childViewArray addObject:childView.view];
         currentY += kScrollViewHeight;
     }
     
     self.scrollView.contentSize = CGSizeMake(self.scrollView.contentSize.width, currentY);
+    }
 }
 
 - (void)initData{
     if (![UIViewController isLogin]) {
         [self notLoginHandler];
+        return;
     }
     else{
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         NSUserDefaults *mysetting=[NSUserDefaults standardUserDefaults];
         NSString *com_id=[mysetting objectForKey:CURRENTUSERID];
-        [netAPI queryStarJobUsers:com_id start:self.pageManager.firstStartIndex   length:self.pageManager.pageSize withBlock:^(userListModel *userListModel) {
+        [netAPI getjinglingMatch:com_id start:[self.pageManager getNextStartAt] length:self.pageManager.pageSize  withBlock:^(userListModel *userListModel) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             if ([[userListModel getStatus] intValue]==BASE_SUCCESS) {
                 if ([[userListModel getuserArray]count]<1) {
@@ -170,6 +196,8 @@ static  MLMatchVC *thisVC=nil;
                     for (userModel *user in [userListModel getuserArray]) {
                         [recordArray addObject:user];
                     }
+                    isLoadSusseed=YES;
+                    [self.pageManager pageLoadCompleted];
                     [self refreshScrollView];
                 }
                 
@@ -180,8 +208,6 @@ static  MLMatchVC *thisVC=nil;
             }
         }];
     }
-    //recordArray
-    
     [self refreshScrollView];
 }
 
@@ -209,6 +235,55 @@ static  MLMatchVC *thisVC=nil;
     // Dispose of any resources that can be recreated.
 }
 
+
+-(void)refresh
+{
+    if (isLoadSusseed) {
+        ALERT(@"今日刷新次数已到，请明日再来~！");
+    }
+    else
+    {
+        [self.pageManager resetPageSplitingManager];
+        [self initData];
+    }
+}
+- (void)deleteJob:(int)index{
+    
+    if (index>=0&&index<[recordArray count]) {
+        
+        [[childViewArray objectAtIndex:index] removeFromSuperview];
+        
+        for (int i=index+1;i<[recordArray count];i++ ) {
+            UIView *currentView=[childViewArray objectAtIndex:i];
+            
+            [UIView animateWithDuration:0.2 animations:^{
+                [currentView setCenter:CGPointMake(currentView.center.x, currentView.center.y-kScrollViewHeight)];
+            }];
+        }
+        self.scrollView.contentSize = CGSizeMake(self.scrollView.contentSize.width, self.scrollView.contentSize.height-kScrollViewHeight);
+        
+//        //删除匹配的职位
+//        NSUserDefaults *myData = [NSUserDefaults standardUserDefaults];
+//        NSString *currentUserObjectId=[myData objectForKey:@"currentUserObjectId"];
+//        
+//        userModel *_usrModel=[recordArray objectAtIndex:index];
+//        
+//        if (_usrModel.getjobID&&[currentUserObjectId length]>0) {
+//            [netAPI deleteMatchJob:_jobModel.getjobID userId:currentUserObjectId withBlock:^(oprationResultModel *oprationResultModel) {
+//                if ([oprationResultModel.getStatus intValue]==0) {
+//                    NSLog(@"删除成功");
+//                }
+//            }];
+//        }
+    }
+}
+
+
+-(void)autoLoadData
+{
+    [self.pageManager resetPageSplitingManager];
+    [self initData];
+}
 /*
  #pragma mark - Navigation
  

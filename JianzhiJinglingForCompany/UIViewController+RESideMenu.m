@@ -88,10 +88,11 @@
         RESideMenuItem *usrItem = [[RESideMenuItem alloc] initWithTitle:@"游客" setFlag:USRCELL setSubtitle:@"未登录"image:nil imageUrl:nil highlightedImage:[UIImage imageNamed:@"avatar_round_m"] action:^(RESideMenu *menu, RESideMenuItem *item){
             NSLog(@"Item %@", item);
             [menu hide];
+            
+            
             MainTabBarViewController *mainTab=[MainTabBarViewController shareInstance];
-            
             [menu setRootViewController:mainTab];
-            
+                  
             [mainTab showLoginVC];
         }];
         

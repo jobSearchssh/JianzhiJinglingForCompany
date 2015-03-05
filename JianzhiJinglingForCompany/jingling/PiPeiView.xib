@@ -46,7 +46,7 @@
                         </mask>
                     </variation>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="王小丫" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t78-IF-uBC">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t78-IF-uBC">
                     <rect key="frame" x="93" y="10" width="171" height="21"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="21" id="J9v-ub-3SN"/>
@@ -65,7 +65,7 @@
                         </mask>
                     </variation>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_location.png" translatesAutoresizingMaskIntoConstraints="NO" id="QY5-gV-TY1">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="QY5-gV-TY1">
                     <rect key="frame" x="93" y="71" width="15" height="15"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="15" id="Jyn-ZG-GyZ"/>
@@ -84,7 +84,7 @@
                         </mask>
                     </variation>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3.5千米" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HrF-79-S0w">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HrF-79-S0w">
                     <rect key="frame" x="110" y="66" width="58" height="26"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="70" id="bzu-vl-zKN"/>
@@ -106,7 +106,7 @@
                         </mask>
                     </variation>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user.png" translatesAutoresizingMaskIntoConstraints="NO" id="4w7-od-Vdz">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4w7-od-Vdz">
                     <rect key="frame" x="8" y="14" width="69" height="69"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="69" id="Ehs-aY-ZzY"/>
@@ -144,7 +144,7 @@
                         </mask>
                     </variation>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="自我介绍：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6DF-e8-FmE">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6DF-e8-FmE">
                     <rect key="frame" x="195" y="100" width="111" height="26"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="69" id="B9X-QI-pm4"/>
@@ -166,13 +166,12 @@
                         </mask>
                     </variation>
                 </label>
-                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aHQ-nG-Zf9">
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aHQ-nG-Zf9">
                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                    <color key="backgroundColor" red="0.88235294117647056" green="0.88235294117647056" blue="0.88235294117647056" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.94117647058823528" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="232" id="Oav-SJ-uWJ"/>
                     </constraints>
-                    <string key="text">1.根据现有编制及业务发展需求，协调、统计各部门的招聘需求，编制年度人员招聘计划； 2.开发、维护、评估、分析各招聘渠道； 3.建立和完善公司的招聘流程和招聘体系； 4.利用各种招聘渠道发布招聘广告，寻求招聘机构； 5.执行招聘、甄选、面试、选择、安置工作； 6.建立后备人才选拔方案和人才储备机制。</string>
                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -187,7 +186,7 @@
                         </mask>
                     </variation>
                 </textView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="工作经验：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h8O-W0-jsZ">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h8O-W0-jsZ">
                     <rect key="frame" x="195" y="100" width="111" height="26"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="69" id="hsX-PV-eBZ"/>
@@ -209,7 +208,7 @@
                         </mask>
                     </variation>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="just.png" translatesAutoresizingMaskIntoConstraints="NO" id="ao5-Ou-qMx">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ao5-Ou-qMx">
                     <rect key="frame" x="234" y="71" width="15" height="15"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="15" id="hvX-9j-IFC"/>
@@ -228,7 +227,7 @@
                         </mask>
                     </variation>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2小时前" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8xs-GY-cCY">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8xs-GY-cCY">
                     <rect key="frame" x="251" y="66" width="53" height="26"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="26" id="vCr-1x-7Ec"/>
@@ -247,7 +246,7 @@
                         </mask>
                     </variation>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="resume_phone.png" translatesAutoresizingMaskIntoConstraints="NO" id="Erg-Gx-iEy">
+                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="resume_phone.png" translatesAutoresizingMaskIntoConstraints="NO" id="Erg-Gx-iEy">
                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="20" id="Ek0-5j-BXq"/>
@@ -266,7 +265,7 @@
                         </mask>
                     </variation>
                 </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="resume_female.png" translatesAutoresizingMaskIntoConstraints="NO" id="EHU-FA-jkp">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EHU-FA-jkp">
                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="20" id="fxI-bb-oMb"/>
@@ -285,7 +284,7 @@
                         </mask>
                     </variation>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="辽宁省大连市高新园区万达广场B座1202" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LmU-H9-GAg">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LmU-H9-GAg">
                     <rect key="frame" x="93" y="31" width="211" height="36"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="36" id="vXc-ax-Mpl"/>
@@ -304,7 +303,7 @@
                         </mask>
                     </variation>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20岁" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vx4-Fd-ScI">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vx4-Fd-ScI">
                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="21" id="09M-W2-D9u"/>
@@ -328,13 +327,12 @@
                         </mask>
                     </variation>
                 </label>
-                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xbw-Ky-2Rk">
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xbw-Ky-2Rk">
                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                    <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.94117647058823528" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="232" id="P8V-f1-Mhz"/>
                     </constraints>
-                    <string key="text">1.根据现有编制及业务发展需求，协调、统计各部门的招聘需求，编制年度人员招聘计划； 2.开发、维护、评估、分析各招聘渠道； 3.建立和完善公司的招聘流程和招聘体系； 4.利用各种招聘渠道发布招聘广告，寻求招聘机构； 5.执行招聘、甄选、面试、选择、安置工作； 6.建立后备人才选拔方案和人才储备机制。</string>
                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -349,29 +347,7 @@
                         </mask>
                     </variation>
                 </textView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="求职意向：咨询经理、设计是、客服" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x0A-uz-cd6">
-                    <rect key="frame" x="195" y="100" width="111" height="26"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="171" id="ZbQ-5m-npG"/>
-                        <constraint firstAttribute="height" constant="26" id="nJK-DB-0e2"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                    <nil key="highlightedColor"/>
-                    <variation key="default">
-                        <mask key="constraints">
-                            <exclude reference="ZbQ-5m-npG"/>
-                            <exclude reference="nJK-DB-0e2"/>
-                        </mask>
-                    </variation>
-                    <variation key="heightClass=regular-widthClass=compact">
-                        <mask key="constraints">
-                            <exclude reference="ZbQ-5m-npG"/>
-                            <include reference="nJK-DB-0e2"/>
-                        </mask>
-                    </variation>
-                </label>
-                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kgE-q5-jso">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kgE-q5-jso">
                     <rect key="frame" x="185" y="236" width="40" height="40"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="0ba-9x-Qun"/>
@@ -421,7 +397,7 @@
                         <action selector="apply:" destination="-1" eventType="touchUpInside" id="HEb-8D-zfj"/>
                     </connections>
                 </button>
-                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="忽略" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XMa-kc-sH3">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="忽略" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XMa-kc-sH3">
                     <rect key="frame" x="184" y="278" width="42" height="20"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="42" id="Dqp-Zl-063"/>
@@ -472,7 +448,7 @@
                         <constraint firstAttribute="height" constant="50" id="J0a-9T-dIE"/>
                         <constraint firstAttribute="width" constant="98" id="fdl-r5-FXF"/>
                     </constraints>
-                    <state key="normal" title="观看视频">
+                    <state key="normal" title="视频介绍">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -492,6 +468,28 @@
                         <action selector="showPersonalVedio:" destination="-1" eventType="touchUpInside" id="yLi-Ht-Vgf"/>
                     </connections>
                 </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x0A-uz-cd6">
+                    <rect key="frame" x="195" y="100" width="111" height="26"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="171" id="ZbQ-5m-npG"/>
+                        <constraint firstAttribute="height" constant="26" id="nJK-DB-0e2"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="ZbQ-5m-npG"/>
+                            <exclude reference="nJK-DB-0e2"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=regular-widthClass=compact">
+                        <mask key="constraints">
+                            <exclude reference="ZbQ-5m-npG"/>
+                            <include reference="nJK-DB-0e2"/>
+                        </mask>
+                    </variation>
+                </label>
             </subviews>
             <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
@@ -592,12 +590,12 @@
                     <exclude reference="LmU-H9-GAg"/>
                     <exclude reference="Vx4-Fd-ScI"/>
                     <exclude reference="Xbw-Ky-2Rk"/>
-                    <exclude reference="x0A-uz-cd6"/>
                     <exclude reference="kgE-q5-jso"/>
                     <exclude reference="UJW-RF-eFF"/>
                     <exclude reference="XMa-kc-sH3"/>
                     <exclude reference="ocw-RS-84O"/>
                     <exclude reference="4dg-sS-HPw"/>
+                    <exclude reference="x0A-uz-cd6"/>
                 </mask>
                 <mask key="constraints">
                     <exclude reference="ZRp-t5-XmB"/>
@@ -680,12 +678,12 @@
                     <include reference="LmU-H9-GAg"/>
                     <include reference="Vx4-Fd-ScI"/>
                     <include reference="Xbw-Ky-2Rk"/>
-                    <include reference="x0A-uz-cd6"/>
                     <include reference="kgE-q5-jso"/>
                     <include reference="UJW-RF-eFF"/>
                     <include reference="XMa-kc-sH3"/>
                     <include reference="ocw-RS-84O"/>
                     <include reference="4dg-sS-HPw"/>
+                    <include reference="x0A-uz-cd6"/>
                 </mask>
                 <mask key="constraints">
                     <include reference="ZRp-t5-XmB"/>
@@ -802,12 +800,8 @@
     <resources>
         <image name="agreeInvite.png" width="40" height="40"/>
         <image name="cellBackground1.png" width="100" height="100"/>
-        <image name="icon_location.png" width="15" height="15"/>
         <image name="ignoreInvite.png" width="40" height="40"/>
-        <image name="just.png" width="35" height="35"/>
         <image name="percent.png" width="40" height="40"/>
-        <image name="resume_female.png" width="32" height="32"/>
         <image name="resume_phone.png" width="46" height="46"/>
-        <image name="user.png" width="140" height="140"/>
     </resources>
 </document>

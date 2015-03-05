@@ -11,5 +11,5 @@
 @interface MLMatchVC : UIViewController
 
 + (MLMatchVC*)sharedInstance;
-@property (nonatomic,weak)PageSplitingManager *pageManager;
+
 @end

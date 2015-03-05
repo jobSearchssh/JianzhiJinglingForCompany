@@ -86,6 +86,10 @@ static MyInvitedViewController *thisVC;
 
 - (void)headerRefreshing
 {
+    if (![UIViewController isLogin]) {
+        [self notLoginHandler];
+        return;
+    }
     [self.pageManager resetPageSplitingManager];
     touchRefresh=YES;
     [self loadDatafromIndex:self.pageManager.firstStartIndex   Length:self.pageManager.pageSize];
@@ -93,6 +97,10 @@ static MyInvitedViewController *thisVC;
 
 
 - (void)footerRefreshing{
+    if (![UIViewController isLogin]) {
+        [self notLoginHandler];
+        return;
+    }
     if (cellNum!=0) {
         [self loadDatafromIndex:[self.pageManager getNextStartAt] Length:self.pageManager.pageSize];
     }
@@ -196,7 +204,7 @@ static MyInvitedViewController *thisVC;
     }
     
     cell.usrBreifIntro.text=handlerString;
-#warning  image 字段没有添加
+
     cell.timeStamp.text=[[user getUpdateAt]timeIntervalDescription];
     
     NSString *locationString= [[NSUserDefaults standardUserDefaults] objectForKey:CURRENTLOCATOIN];
@@ -296,6 +304,9 @@ static MyInvitedViewController *thisVC;
     person.hidesBottomBarWhenPushed=YES;
     person.stateFlag=UnhanldedState;
     person.hideAcceptBtn=YES;
+    
+    if ([[invitation getinviteStatus]intValue]==2) person.isShowPhone=YES;
+    
     [self.navigationController pushViewController:person animated:YES];
     [self performSelector:@selector(deselect) withObject:nil afterDelay:2.0];
 }

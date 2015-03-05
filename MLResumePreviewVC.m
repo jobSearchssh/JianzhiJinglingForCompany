@@ -18,6 +18,7 @@
 #import "NSDate+Category.h"
 #import "NSDateFormatter+Category.h"
 #import "UIViewController+LoginManager.h"
+#import "previewVedioVC.h"
 static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 @interface MLResumePreviewVC (){
@@ -26,6 +27,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     NSArray *selectfreetimepicArray;
     bool selectFreeData[21];
     CGFloat freecellwidth;
+    
 }
 
 
@@ -42,6 +44,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 @property (weak, nonatomic) IBOutlet UIImageView *sexOutlet;
 @property (weak, nonatomic) IBOutlet UILabel *ageOutlet;
 @property (weak, nonatomic) IBOutlet UILabel *locationOutlet;
+@property (weak, nonatomic) IBOutlet UIImageView *phoneLogo;
 @property (weak, nonatomic) IBOutlet UILabel *intentionOutlet;
 @property (weak, nonatomic) IBOutlet UILabel *phoneOutlet;
 
@@ -167,7 +170,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         }
         
         if ([imageUrl length]>4) {
-           self.userImage.contentMode = UIViewContentModeScaleAspectFill;
+            self.userImage.contentMode = UIViewContentModeScaleAspectFill;
             self.userImage.clipsToBounds = YES;
             [[AsyncImageLoader sharedLoader] cancelLoadingImagesForTarget:self.userImage];
             self.userImage.imageURL=[NSURL URLWithString:imageUrl];
@@ -214,7 +217,10 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         self.ageOutlet.text = @"未知年龄";
     }
     //电话
-    self.phoneOutlet.text = [userModel getuserPhone];
+    if (self.isShowPhone) {
+          self.phoneLogo.hidden=NO;
+          self.phoneOutlet.text = [userModel getuserPhone];
+    }
     //位置
     NSString *usrLoaction = [NSString stringWithFormat:@"%@%@%@",[userModel getuserProvince],[userModel getuserCity],[userModel getuserDistrict]];
     [self.locationOutlet setNumberOfLines:0];
@@ -294,10 +300,10 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     [self.userEduLabel setNumberOfLines:0];
     [self.userEduLabel setLineBreakMode:NSLineBreakByWordWrapping];
     
-     CGSize testEduLabelsize = [eduFormat sizeWithFont:[self.userEduLabel font] constrainedToSize:CGSizeMake(self.userEduLabel.frame.size.width,2000) lineBreakMode:NSLineBreakByWordWrapping];
+    CGSize testEduLabelsize = [eduFormat sizeWithFont:[self.userEduLabel font] constrainedToSize:CGSizeMake(self.userEduLabel.frame.size.width,2000) lineBreakMode:NSLineBreakByWordWrapping];
     [self.userEduLabel setFrame:CGRectMake(self.userEduLabel.frame.origin.x,
-                                                     self.userEduLabel.frame.origin.y, testEduLabelsize.width,
-                                                     testEduLabelsize.height)];
+                                           self.userEduLabel.frame.origin.y, testEduLabelsize.width,
+                                           testEduLabelsize.height)];
     [self.userEduLabel setText:eduFormat];
     
     NSString *intro = [userModel getuserIntroduction];
@@ -360,31 +366,35 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 #pragma --mark  添加收藏
 - (void)addToFavorite{
-   
-    NSUserDefaults *myseting=[NSUserDefaults standardUserDefaults];
-    NSString *com_id=[myseting objectForKey:CURRENTUSERID];
-    if (self.jobUserId==nil ||com_id==nil ) {
-        ALERT(@"未登录或未找到该求职者，请重试");
+    if (![UIViewController isLogin]) {
+        [self notLoginHandler];
     }
-    else {
-    [self showHudInView:self.mainScrollviewOutlet hint:@"收藏中.."];
-    [netAPI starJobUser:com_id jobUserID:self.jobUserId withBlock:^(oprationResultModel *oprationModel) {
-        [self hideHud];
-        if([[oprationModel getStatus] isEqualToNumber:[NSNumber numberWithInt:BASE_SUCCESS]]){
-            
-            ALERT(@"收藏成功，可前往“关注的人”查看");
-            self.navigationItem.rightBarButtonItem.title=@"已收藏";
-            self.rightBarBtn.enabled=NO;
-#warning 带完成收藏成功后的逻辑
-//            RESideMenu *sideMenu=[RESideMenu sharedInstance];
-//            //获取原来的数
-////            [sideMenu setBadgeView:2 badgeText:@"1"];
-        }else
-        {
-            NSString *error=[NSString stringWithFormat:@"%@",[oprationModel getInfo]];
-            ALERT(error);
+    else{
+        NSUserDefaults *myseting=[NSUserDefaults standardUserDefaults];
+        NSString *com_id=[myseting objectForKey:CURRENTUSERID];
+        if (self.jobUserId==nil ||com_id==nil ) {
+            ALERT(@"未找到该求职者，请重试");
         }
-    }];
+        else {
+            [self showHudInView:self.mainScrollviewOutlet hint:@"收藏中.."];
+            [netAPI starJobUser:com_id jobUserID:self.jobUserId withBlock:^(oprationResultModel *oprationModel) {
+                [self hideHud];
+                if([[oprationModel getStatus] isEqualToNumber:[NSNumber numberWithInt:BASE_SUCCESS]]){
+                    
+                    ALERT(@"收藏成功，可前往“关注的人”查看");
+                    self.navigationItem.rightBarButtonItem.title=@"已收藏";
+                    self.rightBarBtn.enabled=NO;
+#warning 带完成收藏成功后的逻辑
+                    //            RESideMenu *sideMenu=[RESideMenu sharedInstance];
+                    //            //获取原来的数
+                    ////            [sideMenu setBadgeView:2 badgeText:@"1"];
+                }else
+                {
+                    NSString *error=[NSString stringWithFormat:@"%@",[oprationModel getInfo]];
+                    ALERT(error);
+                }
+            }];
+        }
     }
 }
 
@@ -490,14 +500,23 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         [self notLoginHandler];
     }
     else{
-    UIActionSheet *actionSheet=[[UIActionSheet alloc]initWithTitle:@"" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"选择职位"  otherButtonTitles:@"创建新职位", nil];
-    actionSheet.actionSheetStyle=UIActionSheetStyleBlackTranslucent;
-    [actionSheet showInView:self.view];
+        UIActionSheet *actionSheet=[[UIActionSheet alloc]initWithTitle:@"" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"选择职位"  otherButtonTitles:@"创建新职位", nil];
+        actionSheet.actionSheetStyle=UIActionSheetStyleBlackTranslucent;
+        [actionSheet showInView:self.view];
     }
 }
 
 - (IBAction)showVedioAction:(id)sender {
-    ALERT(@"该用户没有视频");
+    if ([[self.thisUser getuserVideoURL]length]<4 ) {
+         ALERT(@"该用户没有视频");
+        return;
+    }
+    previewVedioVC *vc = [[previewVedioVC alloc]init];
+    vc.vedioPath = [self.thisUser getuserVideoURL];
+    vc.type = [NSNumber numberWithInt:preview];
+    vc.title = @"我的视频介绍";
+    [self.navigationController pushViewController:vc animated:YES];
+    
 }
 
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -506,13 +525,13 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         jobListViewController *joblistForChoice=[[jobListViewController alloc]init];
         joblistForChoice.user_id=[self.thisUser getjob_user_id];
         [self.navigationController pushViewController:joblistForChoice animated:YES];
-//        [actionSheet dismissWithClickedButtonIndex:nil animated:YES];
+        //        [actionSheet dismissWithClickedButtonIndex:nil animated:YES];
         
     }else if (buttonIndex == 1) {
         
         jobPublicationViewController *newJobVC=[[jobPublicationViewController alloc]init];
         [self.navigationController pushViewController:newJobVC animated:YES];
-//        [actionSheet dismissWithClickedButtonIndex:nil animated:YES];
+        //        [actionSheet dismissWithClickedButtonIndex:nil animated:YES];
         
     }else if(buttonIndex == 2) {
         
@@ -523,20 +542,12 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         
         
     }
-    
 }
 - (void)actionSheetCancel:(UIActionSheet *)actionSheet{
-    
 }
 -(void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex{
-    
-    
-    
 }
 -(void)actionSheet:(UIActionSheet *)actionSheet willDismissWithButtonIndex:(NSInteger)buttonIndex{
-    
-    
-    
 }
 - (IBAction)refuseAction:(id)sender {
     
@@ -552,8 +563,9 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
             self.refuseBtn.enabled=NO;
             self.acceptBtn.enabled=NO;
             //修改前页代码
-          [[BadgeManager shareSingletonInstance]minusApplyCount];
+            [[BadgeManager shareSingletonInstance]minusApplyCount];
             [[NSNotificationCenter defaultCenter]postNotificationName:@"update" object:nil];
+             [self.navigationController popToRootViewControllerAnimated:YES];
         }else
         {
             NSString *error=[NSString stringWithFormat:@"%@",[oprationModel getInfo]];
@@ -576,6 +588,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
             self.acceptBtn.enabled=NO;
             [[BadgeManager shareSingletonInstance]minusApplyCount];
             [[NSNotificationCenter defaultCenter]postNotificationName:@"update" object:nil];
+            [self.navigationController popToRootViewControllerAnimated:YES];
         }else
         {
             NSString *error=[NSString stringWithFormat:@"%@",[oprationModel getInfo]];

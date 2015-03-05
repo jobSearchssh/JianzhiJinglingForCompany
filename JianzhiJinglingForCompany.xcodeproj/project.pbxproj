@@ -68,6 +68,32 @@
 		044849101A8A05E800C05295 /* IQButtonBarArrowLeft@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0448490C1A8A05E800C05295 /* IQButtonBarArrowLeft@2x.png */; };
 		044849111A8A05E800C05295 /* IQButtonBarArrowRight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0448490D1A8A05E800C05295 /* IQButtonBarArrowRight@2x.png */; };
 		044849121A8A05E800C05295 /* IQKeyboardManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0448490F1A8A05E800C05295 /* IQKeyboardManager.m */; };
+		044AE2E51AA7065500CB6B74 /* LoginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 044AE2E41AA7065500CB6B74 /* LoginManager.m */; };
+		044AE2F01AA760E800CB6B74 /* previewVedioVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 044AE2ED1AA760E800CB6B74 /* previewVedioVC.m */; };
+		044AE2F11AA760E800CB6B74 /* previewVedioVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 044AE2EE1AA760E800CB6B74 /* previewVedioVC.xib */; };
+		044AE30D1AA763BF00CB6B74 /* ALAirplayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 044AE2F51AA763BF00CB6B74 /* ALAirplayView.m */; };
+		044AE30E1AA763BF00CB6B74 /* ALButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 044AE2F71AA763BF00CB6B74 /* ALButton.m */; };
+		044AE30F1AA763BF00CB6B74 /* ALMoviePlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 044AE2F91AA763BF00CB6B74 /* ALMoviePlayerController.m */; };
+		044AE3101AA763BF00CB6B74 /* ALMoviePlayerControls.m in Sources */ = {isa = PBXBuildFile; fileRef = 044AE2FB1AA763BF00CB6B74 /* ALMoviePlayerControls.m */; };
+		044AE3111AA763BF00CB6B74 /* movieBackward.png in Resources */ = {isa = PBXBuildFile; fileRef = 044AE2FD1AA763BF00CB6B74 /* movieBackward.png */; };
+		044AE3121AA763BF00CB6B74 /* movieBackward@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 044AE2FE1AA763BF00CB6B74 /* movieBackward@2x.png */; };
+		044AE3131AA763BF00CB6B74 /* movieBackwardSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 044AE2FF1AA763BF00CB6B74 /* movieBackwardSelected.png */; };
+		044AE3141AA763BF00CB6B74 /* movieBackwardSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 044AE3001AA763BF00CB6B74 /* movieBackwardSelected@2x.png */; };
+		044AE3151AA763BF00CB6B74 /* movieEndFullscreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 044AE3011AA763BF00CB6B74 /* movieEndFullscreen.png */; };
+		044AE3161AA763BF00CB6B74 /* movieEndFullscreen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 044AE3021AA763BF00CB6B74 /* movieEndFullscreen@2x.png */; };
+		044AE3171AA763BF00CB6B74 /* movieForward.png in Resources */ = {isa = PBXBuildFile; fileRef = 044AE3031AA763BF00CB6B74 /* movieForward.png */; };
+		044AE3181AA763BF00CB6B74 /* movieForward@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 044AE3041AA763BF00CB6B74 /* movieForward@2x.png */; };
+		044AE3191AA763BF00CB6B74 /* movieForwardSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 044AE3051AA763BF00CB6B74 /* movieForwardSelected.png */; };
+		044AE31A1AA763BF00CB6B74 /* movieForwardSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 044AE3061AA763BF00CB6B74 /* movieForwardSelected@2x.png */; };
+		044AE31B1AA763BF00CB6B74 /* movieFullscreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 044AE3071AA763BF00CB6B74 /* movieFullscreen.png */; };
+		044AE31C1AA763BF00CB6B74 /* movieFullscreen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 044AE3081AA763BF00CB6B74 /* movieFullscreen@2x.png */; };
+		044AE31D1AA763BF00CB6B74 /* moviePause.png in Resources */ = {isa = PBXBuildFile; fileRef = 044AE3091AA763BF00CB6B74 /* moviePause.png */; };
+		044AE31E1AA763BF00CB6B74 /* moviePause@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 044AE30A1AA763BF00CB6B74 /* moviePause@2x.png */; };
+		044AE31F1AA763BF00CB6B74 /* moviePlay.png in Resources */ = {isa = PBXBuildFile; fileRef = 044AE30B1AA763BF00CB6B74 /* moviePlay.png */; };
+		044AE3201AA763BF00CB6B74 /* moviePlay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 044AE30C1AA763BF00CB6B74 /* moviePlay@2x.png */; };
+		044AE3271AA763E700CB6B74 /* MDRadialProgressLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 044AE3221AA763E700CB6B74 /* MDRadialProgressLabel.m */; };
+		044AE3281AA763E700CB6B74 /* MDRadialProgressTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 044AE3241AA763E700CB6B74 /* MDRadialProgressTheme.m */; };
+		044AE3291AA763E700CB6B74 /* MDRadialProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 044AE3261AA763E700CB6B74 /* MDRadialProgressView.m */; };
 		04589EF71A80F86B00B86C0A /* AccelerationAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 04589EE11A80F86B00B86C0A /* AccelerationAnimation.m */; };
 		04589EF81A80F86B00B86C0A /* Evaluate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04589EE31A80F86B00B86C0A /* Evaluate.m */; };
 		04589EF91A80F86B00B86C0A /* loginTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04589EE51A80F86B00B86C0A /* loginTableViewCell.m */; };
@@ -782,6 +808,42 @@
 		0448490D1A8A05E800C05295 /* IQButtonBarArrowRight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IQButtonBarArrowRight@2x.png"; sourceTree = "<group>"; };
 		0448490E1A8A05E800C05295 /* IQKeyboardManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQKeyboardManager.h; sourceTree = "<group>"; };
 		0448490F1A8A05E800C05295 /* IQKeyboardManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQKeyboardManager.m; sourceTree = "<group>"; };
+		044AE2E31AA7065500CB6B74 /* LoginManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginManager.h; sourceTree = "<group>"; };
+		044AE2E41AA7065500CB6B74 /* LoginManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginManager.m; sourceTree = "<group>"; };
+		044AE2EC1AA760E800CB6B74 /* previewVedioVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = previewVedioVC.h; sourceTree = "<group>"; };
+		044AE2ED1AA760E800CB6B74 /* previewVedioVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = previewVedioVC.m; sourceTree = "<group>"; };
+		044AE2EE1AA760E800CB6B74 /* previewVedioVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = previewVedioVC.xib; sourceTree = "<group>"; };
+		044AE2EF1AA760E800CB6B74 /* geturlProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = geturlProtocol.h; sourceTree = "<group>"; };
+		044AE2F41AA763BF00CB6B74 /* ALAirplayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALAirplayView.h; sourceTree = "<group>"; };
+		044AE2F51AA763BF00CB6B74 /* ALAirplayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALAirplayView.m; sourceTree = "<group>"; };
+		044AE2F61AA763BF00CB6B74 /* ALButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALButton.h; sourceTree = "<group>"; };
+		044AE2F71AA763BF00CB6B74 /* ALButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALButton.m; sourceTree = "<group>"; };
+		044AE2F81AA763BF00CB6B74 /* ALMoviePlayerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALMoviePlayerController.h; sourceTree = "<group>"; };
+		044AE2F91AA763BF00CB6B74 /* ALMoviePlayerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALMoviePlayerController.m; sourceTree = "<group>"; };
+		044AE2FA1AA763BF00CB6B74 /* ALMoviePlayerControls.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALMoviePlayerControls.h; sourceTree = "<group>"; };
+		044AE2FB1AA763BF00CB6B74 /* ALMoviePlayerControls.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALMoviePlayerControls.m; sourceTree = "<group>"; };
+		044AE2FD1AA763BF00CB6B74 /* movieBackward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = movieBackward.png; sourceTree = "<group>"; };
+		044AE2FE1AA763BF00CB6B74 /* movieBackward@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "movieBackward@2x.png"; sourceTree = "<group>"; };
+		044AE2FF1AA763BF00CB6B74 /* movieBackwardSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = movieBackwardSelected.png; sourceTree = "<group>"; };
+		044AE3001AA763BF00CB6B74 /* movieBackwardSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "movieBackwardSelected@2x.png"; sourceTree = "<group>"; };
+		044AE3011AA763BF00CB6B74 /* movieEndFullscreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = movieEndFullscreen.png; sourceTree = "<group>"; };
+		044AE3021AA763BF00CB6B74 /* movieEndFullscreen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "movieEndFullscreen@2x.png"; sourceTree = "<group>"; };
+		044AE3031AA763BF00CB6B74 /* movieForward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = movieForward.png; sourceTree = "<group>"; };
+		044AE3041AA763BF00CB6B74 /* movieForward@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "movieForward@2x.png"; sourceTree = "<group>"; };
+		044AE3051AA763BF00CB6B74 /* movieForwardSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = movieForwardSelected.png; sourceTree = "<group>"; };
+		044AE3061AA763BF00CB6B74 /* movieForwardSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "movieForwardSelected@2x.png"; sourceTree = "<group>"; };
+		044AE3071AA763BF00CB6B74 /* movieFullscreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = movieFullscreen.png; sourceTree = "<group>"; };
+		044AE3081AA763BF00CB6B74 /* movieFullscreen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "movieFullscreen@2x.png"; sourceTree = "<group>"; };
+		044AE3091AA763BF00CB6B74 /* moviePause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = moviePause.png; sourceTree = "<group>"; };
+		044AE30A1AA763BF00CB6B74 /* moviePause@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "moviePause@2x.png"; sourceTree = "<group>"; };
+		044AE30B1AA763BF00CB6B74 /* moviePlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = moviePlay.png; sourceTree = "<group>"; };
+		044AE30C1AA763BF00CB6B74 /* moviePlay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "moviePlay@2x.png"; sourceTree = "<group>"; };
+		044AE3211AA763E700CB6B74 /* MDRadialProgressLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDRadialProgressLabel.h; sourceTree = "<group>"; };
+		044AE3221AA763E700CB6B74 /* MDRadialProgressLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDRadialProgressLabel.m; sourceTree = "<group>"; };
+		044AE3231AA763E700CB6B74 /* MDRadialProgressTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDRadialProgressTheme.h; sourceTree = "<group>"; };
+		044AE3241AA763E700CB6B74 /* MDRadialProgressTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDRadialProgressTheme.m; sourceTree = "<group>"; };
+		044AE3251AA763E700CB6B74 /* MDRadialProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDRadialProgressView.h; sourceTree = "<group>"; };
+		044AE3261AA763E700CB6B74 /* MDRadialProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDRadialProgressView.m; sourceTree = "<group>"; };
 		04589EE01A80F86B00B86C0A /* AccelerationAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccelerationAnimation.h; sourceTree = "<group>"; };
 		04589EE11A80F86B00B86C0A /* AccelerationAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccelerationAnimation.m; sourceTree = "<group>"; };
 		04589EE21A80F86B00B86C0A /* Evaluate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Evaluate.h; sourceTree = "<group>"; };
@@ -1588,6 +1650,8 @@
 				047C6C961A976AF700CCEA83 /* MLLocationServiceManager.m */,
 				04A1586D1AA698560054CC87 /* PageSplitingManager.h */,
 				04A1586E1AA698560054CC87 /* PageSplitingManager.m */,
+				044AE2E31AA7065500CB6B74 /* LoginManager.h */,
+				044AE2E41AA7065500CB6B74 /* LoginManager.m */,
 			);
 			name = "Optimization Code";
 			sourceTree = "<group>";
@@ -1810,6 +1874,112 @@
 			name = IQKeyBoardManager;
 			sourceTree = "<group>";
 		};
+		044AE2E71AA75FC100CB6B74 /* TabbarMenuVCConllection */ = {
+			isa = PBXGroup;
+			children = (
+				047B43C31A721ED70099DAA5 /* FIrstVC */,
+				044AE2E91AA7600900CB6B74 /* Message */,
+				044AE2E81AA75FF100CB6B74 /* JobPubList */,
+				040D27231A8266E000160F71 /* JingLingMatchVC */,
+				04DC9B621A786C490097DEB0 /* CompanyResumeVC */,
+			);
+			name = TabbarMenuVCConllection;
+			sourceTree = "<group>";
+		};
+		044AE2E81AA75FF100CB6B74 /* JobPubList */ = {
+			isa = PBXGroup;
+			children = (
+				049926BD1A917A1A0015DC2A /* jobTemplateListViewController.h */,
+				049926BE1A917A1A0015DC2A /* jobTemplateListViewController.m */,
+				049926BF1A917A1A0015DC2A /* jobTemplateListViewController.xib */,
+			);
+			name = JobPubList;
+			sourceTree = "<group>";
+		};
+		044AE2E91AA7600900CB6B74 /* Message */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Message;
+			sourceTree = "<group>";
+		};
+		044AE2EA1AA7602F00CB6B74 /* RESideMenuVCCollection */ = {
+			isa = PBXGroup;
+			children = (
+				04DC9BFF1A7924B30097DEB0 /* JobPublicationListTableView */,
+				046699BA1AA5950F00B65144 /* MyInvitationVC */,
+				04DC9BE81A789DF10097DEB0 /* PersonListVC */,
+				047C6C161A96D42900CCEA83 /* legal */,
+				047C6BFF1A96D3AC00CCEA83 /* feedback */,
+			);
+			name = RESideMenuVCCollection;
+			sourceTree = "<group>";
+		};
+		044AE2EB1AA7609400CB6B74 /* CUSTOMVC */ = {
+			isa = PBXGroup;
+			children = (
+				046699A31AA55F5800B65144 /* GuideViewController */,
+				04DC9ACE1A77B4550097DEB0 /* SecondVC */,
+				047B43FC1A725D2A0099DAA5 /* UserProfile */,
+				040D27221A82669D00160F71 /* JobPublishViewController */,
+				04DC99A61A778A4F0097DEB0 /* Login&egister */,
+			);
+			name = CUSTOMVC;
+			sourceTree = "<group>";
+		};
+		044AE2F21AA763B000CB6B74 /* Class */ = {
+			isa = PBXGroup;
+			children = (
+				044AE3211AA763E700CB6B74 /* MDRadialProgressLabel.h */,
+				044AE3221AA763E700CB6B74 /* MDRadialProgressLabel.m */,
+				044AE3231AA763E700CB6B74 /* MDRadialProgressTheme.h */,
+				044AE3241AA763E700CB6B74 /* MDRadialProgressTheme.m */,
+				044AE3251AA763E700CB6B74 /* MDRadialProgressView.h */,
+				044AE3261AA763E700CB6B74 /* MDRadialProgressView.m */,
+				044AE2F31AA763BF00CB6B74 /* ALMoviePlayerController */,
+			);
+			name = Class;
+			sourceTree = "<group>";
+		};
+		044AE2F31AA763BF00CB6B74 /* ALMoviePlayerController */ = {
+			isa = PBXGroup;
+			children = (
+				044AE2F41AA763BF00CB6B74 /* ALAirplayView.h */,
+				044AE2F51AA763BF00CB6B74 /* ALAirplayView.m */,
+				044AE2F61AA763BF00CB6B74 /* ALButton.h */,
+				044AE2F71AA763BF00CB6B74 /* ALButton.m */,
+				044AE2F81AA763BF00CB6B74 /* ALMoviePlayerController.h */,
+				044AE2F91AA763BF00CB6B74 /* ALMoviePlayerController.m */,
+				044AE2FA1AA763BF00CB6B74 /* ALMoviePlayerControls.h */,
+				044AE2FB1AA763BF00CB6B74 /* ALMoviePlayerControls.m */,
+				044AE2FC1AA763BF00CB6B74 /* Images */,
+			);
+			path = ALMoviePlayerController;
+			sourceTree = "<group>";
+		};
+		044AE2FC1AA763BF00CB6B74 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				044AE2FD1AA763BF00CB6B74 /* movieBackward.png */,
+				044AE2FE1AA763BF00CB6B74 /* movieBackward@2x.png */,
+				044AE2FF1AA763BF00CB6B74 /* movieBackwardSelected.png */,
+				044AE3001AA763BF00CB6B74 /* movieBackwardSelected@2x.png */,
+				044AE3011AA763BF00CB6B74 /* movieEndFullscreen.png */,
+				044AE3021AA763BF00CB6B74 /* movieEndFullscreen@2x.png */,
+				044AE3031AA763BF00CB6B74 /* movieForward.png */,
+				044AE3041AA763BF00CB6B74 /* movieForward@2x.png */,
+				044AE3051AA763BF00CB6B74 /* movieForwardSelected.png */,
+				044AE3061AA763BF00CB6B74 /* movieForwardSelected@2x.png */,
+				044AE3071AA763BF00CB6B74 /* movieFullscreen.png */,
+				044AE3081AA763BF00CB6B74 /* movieFullscreen@2x.png */,
+				044AE3091AA763BF00CB6B74 /* moviePause.png */,
+				044AE30A1AA763BF00CB6B74 /* moviePause@2x.png */,
+				044AE30B1AA763BF00CB6B74 /* moviePlay.png */,
+				044AE30C1AA763BF00CB6B74 /* moviePlay@2x.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
 		04589EDF1A80F85900B86C0A /* RESideMenu */ = {
 			isa = PBXGroup;
 			children = (
@@ -1963,36 +2133,25 @@
 		047B431F1A71ECB00099DAA5 /* JianzhiJinglingForCompany */ = {
 			isa = PBXGroup;
 			children = (
+				044AE2EB1AA7609400CB6B74 /* CUSTOMVC */,
+				044AE2EA1AA7602F00CB6B74 /* RESideMenuVCCollection */,
+				044AE2E71AA75FC100CB6B74 /* TabbarMenuVCConllection */,
+				043759B41AA05E1800DFB4EE /* CustomCategory */,
 				047B43251A71ECB00099DAA5 /* AppDelegate.m */,
 				047B43241A71ECB00099DAA5 /* AppDelegate.h */,
 				047AA4811A7A892400A3B278 /* MainTabBarViewController.h */,
 				047AA4821A7A892400A3B278 /* MainTabBarViewController.m */,
 				047AA48B1A7B1E6D00A3B278 /* MLNaviViewController.h */,
 				047AA48C1A7B1E6D00A3B278 /* MLNaviViewController.m */,
+				047B43201A71ECB00099DAA5 /* Supporting Files */,
 				047B43301A71ECB00099DAA5 /* Images.xcassets */,
 				047B43321A71ECB00099DAA5 /* LaunchScreen.xib */,
-				047B43201A71ECB00099DAA5 /* Supporting Files */,
-				043759B41AA05E1800DFB4EE /* CustomCategory */,
-				044848B51A88EC7700C05295 /* BackService */,
-				046699A31AA55F5800B65144 /* GuideViewController */,
-				046699BA1AA5950F00B65144 /* MyInvitationVC */,
 				043759B31AA05B5D00DFB4EE /* Optimization Code */,
+				044848B51A88EC7700C05295 /* BackService */,
 				043759B51AA05E3A00DFB4EE /* BadgeManager */,
 				0421131F1A9CBCD700144F47 /* fileNameGenneratorClass */,
 				047C6C1D1A97574900CCEA83 /* vedioVC */,
-				047C6C161A96D42900CCEA83 /* legal */,
-				047C6BFF1A96D3AC00CCEA83 /* feedback */,
-				043759C91AA078C100DFB4EE /* SwCEll */,
 				047B43C71A721F010099DAA5 /* oldFile */,
-				04DC9ACE1A77B4550097DEB0 /* SecondVC */,
-				0484A9E11AA16D5D0030D2AB /* BeginningVC */,
-				047B43C31A721ED70099DAA5 /* FIrstVC */,
-				04DC9BFF1A7924B30097DEB0 /* JobPublicationListTableView */,
-				040D27221A82669D00160F71 /* JobPublishViewController */,
-				040D27231A8266E000160F71 /* JingLingMatchVC */,
-				04DC9B621A786C490097DEB0 /* CompanyResumeVC */,
-				04DC9BE81A789DF10097DEB0 /* PersonListVC */,
-				04DC99A61A778A4F0097DEB0 /* Login&egister */,
 				047B44031A72929A0099DAA5 /* 3rd Party */,
 			);
 			path = JianzhiJinglingForCompany;
@@ -2165,7 +2324,6 @@
 				043759BB1AA0700500DFB4EE /* SearchVC */,
 				04DC97511A75ED090097DEB0 /* FirstCollectionViewController.h */,
 				04DC97521A75ED090097DEB0 /* FirstCollectionViewController.m */,
-				047B43FC1A725D2A0099DAA5 /* Profile */,
 				04DC9BDA1A787B6E0097DEB0 /* jobListVC */,
 				047B43F61A7230F10099DAA5 /* Class */,
 			);
@@ -2195,7 +2353,7 @@
 			name = Class;
 			sourceTree = "<group>";
 		};
-		047B43FC1A725D2A0099DAA5 /* Profile */ = {
+		047B43FC1A725D2A0099DAA5 /* UserProfile */ = {
 			isa = PBXGroup;
 			children = (
 				04DC9B701A786DE20097DEB0 /* MLResumePreviewVC.h */,
@@ -2204,12 +2362,14 @@
 				04DC9B6F1A786DD80097DEB0 /* NewClass */,
 				04DC97541A7635C90097DEB0 /* OldClass */,
 			);
-			name = Profile;
+			name = UserProfile;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		047B44031A72929A0099DAA5 /* 3rd Party */ = {
 			isa = PBXGroup;
 			children = (
+				043759C91AA078C100DFB4EE /* SwCEll */,
 				047C6C981A976D3300CCEA83 /* AreaPicker */,
 				047C6C0D1A96D41000CCEA83 /* AsyncImageView */,
 				049926C21A91E2770015DC2A /* MJRefresh */,
@@ -2285,6 +2445,11 @@
 		047C6C1D1A97574900CCEA83 /* vedioVC */ = {
 			isa = PBXGroup;
 			children = (
+				044AE2F21AA763B000CB6B74 /* Class */,
+				044AE2EC1AA760E800CB6B74 /* previewVedioVC.h */,
+				044AE2ED1AA760E800CB6B74 /* previewVedioVC.m */,
+				044AE2EE1AA760E800CB6B74 /* previewVedioVC.xib */,
+				044AE2EF1AA760E800CB6B74 /* geturlProtocol.h */,
 			);
 			name = vedioVC;
 			sourceTree = "<group>";
@@ -2301,14 +2466,6 @@
 				047C6C9F1A976D3F00CCEA83 /* HZLocation.m */,
 			);
 			name = AreaPicker;
-			sourceTree = "<group>";
-		};
-		0484A9E11AA16D5D0030D2AB /* BeginningVC */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = BeginningVC;
-			path = ..;
 			sourceTree = "<group>";
 		};
 		049926C21A91E2770015DC2A /* MJRefresh */ = {
@@ -3210,9 +3367,6 @@
 		04DC9BFF1A7924B30097DEB0 /* JobPublicationListTableView */ = {
 			isa = PBXGroup;
 			children = (
-				049926BD1A917A1A0015DC2A /* jobTemplateListViewController.h */,
-				049926BE1A917A1A0015DC2A /* jobTemplateListViewController.m */,
-				049926BF1A917A1A0015DC2A /* jobTemplateListViewController.xib */,
 				047AA4751A7A30A400A3B278 /* NEW */,
 			);
 			name = JobPublicationListTableView;
@@ -3339,6 +3493,7 @@
 				04DC997A1A77802E0097DEB0 /* M.png in Resources */,
 				04DC98651A768CB80097DEB0 /* 7.png in Resources */,
 				04DC996F1A77802E0097DEB0 /* accept@3x.png in Resources */,
+				044AE31B1AA763BF00CB6B74 /* movieFullscreen.png in Resources */,
 				04DC9AAA1A77962E0097DEB0 /* MLLoginVC.xib in Resources */,
 				04DC9A461A778EEB0097DEB0 /* apply.png in Resources */,
 				04DC98531A768CB80097DEB0 /* mark2.png in Resources */,
@@ -3352,6 +3507,7 @@
 				04DC9A681A778EEB0097DEB0 /* logout@2x.png in Resources */,
 				04DC986B1A768CB80097DEB0 /* img1.png in Resources */,
 				047B43961A71ECE20099DAA5 /* accept@2x.png in Resources */,
+				044AE31E1AA763BF00CB6B74 /* moviePause@2x.png in Resources */,
 				04DC97681A7684150097DEB0 /* profileImageView.xib in Resources */,
 				04DC9B6C1A786C970097DEB0 /* radio_unchecked@2x.png in Resources */,
 				04DC9A6C1A778EEB0097DEB0 /* mainItem@3x.png in Resources */,
@@ -3367,6 +3523,7 @@
 				04DC98561A768CB80097DEB0 /* box1.9.png in Resources */,
 				04DC9A551A778EEB0097DEB0 /* collection.png in Resources */,
 				04DC999C1A77802E0097DEB0 /* tourists.png in Resources */,
+				044AE3161AA763BF00CB6B74 /* movieEndFullscreen@2x.png in Resources */,
 				04DC998F1A77802E0097DEB0 /* edit1.png in Resources */,
 				04DC99211A77802E0097DEB0 /* back.png in Resources */,
 				04DC99901A77802E0097DEB0 /* just.png in Resources */,
@@ -3381,9 +3538,11 @@
 				04DC98291A768CB80097DEB0 /* back.png in Resources */,
 				04DC9A7B1A778EEB0097DEB0 /* send@3x.png in Resources */,
 				047B43921A71ECE20099DAA5 /* export.png in Resources */,
+				044AE31F1AA763BF00CB6B74 /* moviePlay.png in Resources */,
 				04DC9A5A1A778EEB0097DEB0 /* export@3x.png in Resources */,
 				047B43931A71ECE20099DAA5 /* like.png in Resources */,
 				04DC97F71A768CB80097DEB0 /* add.png in Resources */,
+				044AE3141AA763BF00CB6B74 /* movieBackwardSelected@2x.png in Resources */,
 				04DC994C1A77802E0097DEB0 /* like.png in Resources */,
 				04DC9A481A778EEB0097DEB0 /* apply@3x.png in Resources */,
 				047B437D1A71ECE20099DAA5 /* drop.png in Resources */,
@@ -3429,6 +3588,7 @@
 				04DC98441A768CB80097DEB0 /* logout.png in Resources */,
 				04DC9A881A778EEB0097DEB0 /* userAccount@2x.png in Resources */,
 				04DC98281A768CB80097DEB0 /* tool.png in Resources */,
+				044AE3111AA763BF00CB6B74 /* movieBackward.png in Resources */,
 				04DC9BFE1A78C4DA0097DEB0 /* jobPublicationViewController.xib in Resources */,
 				04DC99831A77802E0097DEB0 /* photo2.png in Resources */,
 				04DC9A761A778EEB0097DEB0 /* search.png in Resources */,
@@ -3451,6 +3611,7 @@
 				04DC99841A77802E0097DEB0 /* back.png in Resources */,
 				04DC98431A768CB80097DEB0 /* collection.png in Resources */,
 				04DC99431A77802E0097DEB0 /* map1.jpg in Resources */,
+				044AE3151AA763BF00CB6B74 /* movieEndFullscreen.png in Resources */,
 				04DC999E1A77802E0097DEB0 /* bg1.png in Resources */,
 				04DC980A1A768CB80097DEB0 /* 7.png in Resources */,
 				0432E0451A8EFE66008EE881 /* resume_phone.png in Resources */,
@@ -3479,6 +3640,7 @@
 				04DC983A1A768CB80097DEB0 /* mark2.png in Resources */,
 				04DC9A6F1A778EEB0097DEB0 /* notice@3x.png in Resources */,
 				04DC9A4D1A778EEB0097DEB0 /* catagory@2x.png in Resources */,
+				044AE31C1AA763BF00CB6B74 /* movieFullscreen@2x.png in Resources */,
 				04DC9A4C1A778EEB0097DEB0 /* catagory.png in Resources */,
 				0432E0391A8EF1DC008EE881 /* PiPeiView.xib in Resources */,
 				047B43A51A71ECE20099DAA5 /* search.png in Resources */,
@@ -3493,6 +3655,7 @@
 				047AA4691A7A2FF400A3B278 /* icon_location@3x.png in Resources */,
 				047AA8F41A7C89F900A3B278 /* FlowScrollViewController.xib in Resources */,
 				04DC993F1A77802E0097DEB0 /* location@3x.png in Resources */,
+				044AE3201AA763BF00CB6B74 /* moviePlay@2x.png in Resources */,
 				04FF85221AA55ABB00679B88 /* Icon.png in Resources */,
 				04DC98231A768CB80097DEB0 /* mark2.png in Resources */,
 				047C6CA01A976D3F00CCEA83 /* area.plist in Resources */,
@@ -3557,6 +3720,7 @@
 				04DC986C1A768CB80097DEB0 /* night1.png in Resources */,
 				04DC992B1A77802E0097DEB0 /* collection.png in Resources */,
 				04DC982B1A768CB80097DEB0 /* img.jpg in Resources */,
+				044AE3131AA763BF00CB6B74 /* movieBackwardSelected.png in Resources */,
 				04DC97FF1A768CB80097DEB0 /* back.png in Resources */,
 				04DC98331A768CB80097DEB0 /* 7.png in Resources */,
 				04DC991C1A77802E0097DEB0 /* img3.jpg in Resources */,
@@ -3565,6 +3729,7 @@
 				04DC98601A768CB80097DEB0 /* 2.png in Resources */,
 				04DC9A641A778EEB0097DEB0 /* location.png in Resources */,
 				047B438C1A71ECE20099DAA5 /* menu1.png in Resources */,
+				044AE31A1AA763BF00CB6B74 /* movieForwardSelected@2x.png in Resources */,
 				04DC9AD81A77B4650097DEB0 /* MLCell2.xib in Resources */,
 				047B43981A71ECE20099DAA5 /* back.png in Resources */,
 				047AA4BB1A7B38B200A3B278 /* userTabbar.png in Resources */,
@@ -3617,6 +3782,7 @@
 				04DC9A511A778EEB0097DEB0 /* cellBackground1@2x.png in Resources */,
 				04DC982A1A768CB80097DEB0 /* change.png in Resources */,
 				0432E0371A8EF1DC008EE881 /* MLMatchVC.xib in Resources */,
+				044AE2F11AA760E800CB6B74 /* previewVedioVC.xib in Resources */,
 				044849081A89EBBB00C05295 /* sr_refresh@2X.png in Resources */,
 				04589F001A80F86B00B86C0A /* sideNormalTableViewCell.xib in Resources */,
 				04DC98631A768CB80097DEB0 /* 5.png in Resources */,
@@ -3626,6 +3792,7 @@
 				04DC9B071A77BAED0097DEB0 /* AMap.bundle in Resources */,
 				04DC9A531A778EEB0097DEB0 /* cellBackground@2x.png in Resources */,
 				04DC99711A77802E0097DEB0 /* map.jpg in Resources */,
+				044AE3171AA763BF00CB6B74 /* movieForward.png in Resources */,
 				04DC99301A77802E0097DEB0 /* search.png in Resources */,
 				047AA4A81A7B37BC00A3B278 /* edit@3x.png in Resources */,
 				04DC9AB51A7796360097DEB0 /* checkbox1_unchecked@2x.png in Resources */,
@@ -3654,6 +3821,7 @@
 				047AA4BD1A7B38B200A3B278 /* userTabbar@3x.png in Resources */,
 				04DC99311A77802E0097DEB0 /* send.png in Resources */,
 				04DC9A811A778EEB0097DEB0 /* tourists.png in Resources */,
+				044AE3181AA763BF00CB6B74 /* movieForward@2x.png in Resources */,
 				047AA4A71A7B37BC00A3B278 /* edit@2x.png in Resources */,
 				043759CE1AA078EC00DFB4EE /* jobDetailVC.xib in Resources */,
 				04DC9A711A778EEB0097DEB0 /* percent@2x.png in Resources */,
@@ -3694,6 +3862,7 @@
 				0499237C1A8F74DA0015DC2A /* launchImage.png in Resources */,
 				04DC9A8B1A778EEB0097DEB0 /* userPassword@2x.png in Resources */,
 				04DC9AB81A7796360097DEB0 /* checkbox1_checked.png in Resources */,
+				044AE3121AA763BF00CB6B74 /* movieBackward@2x.png in Resources */,
 				04DC99721A77802E0097DEB0 /* refuse.png in Resources */,
 				047AA4A51A7B37BC00A3B278 /* calendar@3x.png in Resources */,
 				04DC99561A77802E0097DEB0 /* img2.jpg in Resources */,
@@ -3733,6 +3902,7 @@
 				047B44011A725D7B0099DAA5 /* PersonProfileViewController.xib in Resources */,
 				047AA4621A7A2FF400A3B278 /* trash@2x.png in Resources */,
 				047C6CA31A976D3F00CCEA83 /* HZAreaPickerView.xib in Resources */,
+				044AE31D1AA763BF00CB6B74 /* moviePause.png in Resources */,
 				04DC99381A77802E0097DEB0 /* catagory@3x.png in Resources */,
 				04DC985C1A768CB80097DEB0 /* img.jpg in Resources */,
 				04DC99701A77802E0097DEB0 /* back.png in Resources */,
@@ -3774,6 +3944,7 @@
 				04DC99601A77802E0097DEB0 /* invite.png in Resources */,
 				046699B11AA55FA400B65144 /* intro_2.png in Resources */,
 				04DC991F1A77802E0097DEB0 /* video.png in Resources */,
+				044AE3191AA763BF00CB6B74 /* movieForwardSelected.png in Resources */,
 				04DC99681A77802E0097DEB0 /* sale.png in Resources */,
 				04DC98581A768CB80097DEB0 /* down.png in Resources */,
 				047AA4A91A7B37BC00A3B278 /* letter.png in Resources */,
@@ -3881,6 +4052,7 @@
 				047C6C0C1A96D3CC00CCEA83 /* CWStarRateView.m in Sources */,
 				049926E01A93015D0015DC2A /* jobAppliedModel.m in Sources */,
 				04CE80211AA5E8D600190679 /* inivitesListModel.m in Sources */,
+				044AE3291AA763E700CB6B74 /* MDRadialProgressView.m in Sources */,
 				04589EF91A80F86B00B86C0A /* loginTableViewCell.m in Sources */,
 				043759CD1AA078EC00DFB4EE /* jobDetailVC.m in Sources */,
 				0448490A1A89EBBB00C05295 /* SRSlimeView.m in Sources */,
@@ -3888,6 +4060,7 @@
 				04589EFF1A80F86B00B86C0A /* sideNormalTableViewCell.m in Sources */,
 				049926D81A91E2770015DC2A /* UIScrollView+Extension.m in Sources */,
 				0432E03A1A8EF1DC008EE881 /* PopoverView.m in Sources */,
+				044AE30F1AA763BF00CB6B74 /* ALMoviePlayerController.m in Sources */,
 				047B44001A725D7B0099DAA5 /* PersonProfileViewController.m in Sources */,
 				044848CF1A88ECFB00C05295 /* userListModel.m in Sources */,
 				041F33761A9D717100A35679 /* fileUtil.m in Sources */,
@@ -3895,6 +4068,7 @@
 				047AA47C1A7A30AC00A3B278 /* JobPublishedListViewController.m in Sources */,
 				04589EFD1A80F86B00B86C0A /* RESideMenuCell.m in Sources */,
 				049926D61A91E2770015DC2A /* MJRefreshFooterView.m in Sources */,
+				044AE30E1AA763BF00CB6B74 /* ALButton.m in Sources */,
 				049926DA1A91E2770015DC2A /* UIView+Extension.m in Sources */,
 				049926D51A91E2770015DC2A /* MJRefreshConst.m in Sources */,
 				044848F31A88ED5E00C05295 /* loginModel.m in Sources */,
@@ -3958,6 +4132,7 @@
 				044848E41A88ED2800C05295 /* oprationResultModel.m in Sources */,
 				047AA4C01A7B422500A3B278 /* CustomButton1.m in Sources */,
 				044848BF1A88ECA000C05295 /* URLOperationWithBlock.m in Sources */,
+				044AE3281AA763E700CB6B74 /* MDRadialProgressTheme.m in Sources */,
 				04DC9B871A786E4E0097DEB0 /* MCPagerView.m in Sources */,
 				047C6BFD1A9624BC00CCEA83 /* BadgeManager.m in Sources */,
 				047AA4921A7B2EB100A3B278 /* ComProfileViewController.m in Sources */,
@@ -3967,17 +4142,21 @@
 				04DC9B781A786DF20097DEB0 /* MLResumeVC.m in Sources */,
 				04DC9AD71A77B4650097DEB0 /* MLCell2.m in Sources */,
 				0432E0381A8EF1DC008EE881 /* PiPeiView.m in Sources */,
+				044AE3101AA763BF00CB6B74 /* ALMoviePlayerControls.m in Sources */,
 				047AA46E1A7A309100A3B278 /* PersonListViewController.m in Sources */,
 				047AA4841A7A892400A3B278 /* MainTabBarViewController.m in Sources */,
 				04589F1A1A81C14300B86C0A /* ZHPickView.m in Sources */,
 				047C6C031A96D3B500CCEA83 /* MLFeedBackVC.m in Sources */,
 				044848DA1A88ED1400C05295 /* createJobModel.m in Sources */,
+				044AE3271AA763E700CB6B74 /* MDRadialProgressLabel.m in Sources */,
 				044849091A89EBBB00C05295 /* SRRefreshView.m in Sources */,
 				042E6CAA1A8A36E900747462 /* AJLocationManager.m in Sources */,
 				04DC9BFD1A78C4DA0097DEB0 /* jobPublicationViewController.m in Sources */,
 				044848F71A88ED7F00C05295 /* baseAPP.m in Sources */,
 				04DC975D1A763E7F0097DEB0 /* profileImageView.m in Sources */,
+				044AE2E51AA7065500CB6B74 /* LoginManager.m in Sources */,
 				046699A71AA55F7900B65144 /* MLIntroduceVC.m in Sources */,
+				044AE2F01AA760E800CB6B74 /* previewVedioVC.m in Sources */,
 				04654FF81A88628200906352 /* MBProgressHUD.m in Sources */,
 				047B43FA1A7231130099DAA5 /* CustomCollectionViewCell.m in Sources */,
 				047C6C141A96D42300CCEA83 /* MLLegalVC.m in Sources */,
@@ -4000,6 +4179,7 @@
 				04DC97531A75ED090097DEB0 /* FirstCollectionViewController.m in Sources */,
 				04DC9AA51A7796280097DEB0 /* MLLoginBusiness.m in Sources */,
 				0432E03B1A8EF1DC008EE881 /* RSCircaPageControl.m in Sources */,
+				044AE30D1AA763BF00CB6B74 /* ALAirplayView.m in Sources */,
 				04589EF71A80F86B00B86C0A /* AccelerationAnimation.m in Sources */,
 				04DC9B901A78711C0097DEB0 /* coverFlowView.m in Sources */,
 				049926D41A91E2770015DC2A /* MJRefreshBaseView.m in Sources */,

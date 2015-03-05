@@ -17,6 +17,7 @@
 #import "netAPI.h"
 #import "jobPublicationViewController.h"
 #import "jobListViewController.h"
+#import "previewVedioVC.h"
 static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 @interface PiPeiView ()<PopoverViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UIActionSheetDelegate>
@@ -62,8 +63,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 }
 
 - (IBAction)delete:(id)sender {
-    
-    ALERT(@"sorry,功能还在完善中");
+    [self.childViewDelegate deleteJob:self.index];
 }
 
 - (IBAction)apply:(id)sender {
@@ -160,8 +160,17 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 - (IBAction)showPersonalVedio:(id)sender {
     
-    ALERT(@"视频不存在");
     
+    
+    if ([[self.userModel getuserVideoURL]length]<4 ) {
+        ALERT(@"该用户没有视频");
+        return;
+    }
+    previewVedioVC *vc = [[previewVedioVC alloc]init];
+    vc.vedioPath = [self.userModel getuserVideoURL];
+    vc.type = [NSNumber numberWithInt:preview];
+    vc.title = @"我的视频介绍";
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)initData{
@@ -201,7 +210,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         self.personAgeLabel.text=[NSString stringWithFormat:@"%ld",(long)[DateUtil ageWithDateOfBirth:[self.userModel getuserBirthday]]];
         
         //设置电话
-        self.jobAddressLabel.text=[NSString stringWithFormat:@"%@",[self.userModel getuserPhone]];
+        self.jobAddressLabel.text=[NSString stringWithFormat:@"%@",[self.userModel getuserSchool]];
         
         //设置距离
         geoModel *usergeo=[self.userModel getuserLocationGeo];

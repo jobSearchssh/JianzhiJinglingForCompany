@@ -166,12 +166,10 @@ static PersonListViewController *thisVC;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    if (![UIViewController isLogin]) {
-        [self notLoginHandler];
-    }
     [self tableViewInit];
     [self segementedControlInit];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateUI) name:@"update" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateUI) name:@"autoLoadNearData" object:nil];
 }
 
 - (void)tableViewInit{
@@ -198,7 +196,12 @@ static PersonListViewController *thisVC;
 
 
 -(void)loadDataWhenFirst
-{   [self showHudInView:self.tableView hint:@"加载中.."];
+{
+    if (![UIViewController isLogin]) {
+    [self notLoginHandler];
+    return;
+}
+    [self showHudInView:self.tableView hint:@"加载中.."];
     
     [self loadFavorableDatafromIndex:self.page1Manager.firstStartIndex Length:self.page1Manager.pageSize];
     [self loadAcceptedDatafromIndex:self.page2Manager.firstStartIndex Length:self.page2Manager.pageSize];
@@ -349,19 +352,21 @@ static PersonListViewController *thisVC;
             dataArray=self.appliedDataSource;
             person.stateFlag=UnhanldedState;
             person.hideAcceptBtn=YES;
+            person.isShowPhone=YES;
             break;
         case UnhandledTableViewFlag:
         {
             dataArray=self.unhandledDataSource;
             person.stateFlag=UnhanldedState;
-   
-//            userModel *user1=[dataArray objectAtIndex:indexPath.row];
-//            [netAPI setRecordAlreadyRead:[[NSUserDefaults standardUserDefaults]objectForKey:CURRENTUSERID] applyOrInviteId:[user1 getApply_id] type:@"1" withBlock:^(oprationResultModel *oprationModel) {
-//                
-//                if ([[oprationModel getStatus]intValue]==BASE_OK) {
-//                    [[BadgeManager shareSingletonInstance]refreshCount];
-//                }
-//            }];
+            person.isShowPhone=YES;
+            
+            //            userModel *user1=[dataArray objectAtIndex:indexPath.row];
+            //            [netAPI setRecordAlreadyRead:[[NSUserDefaults standardUserDefaults]objectForKey:CURRENTUSERID] applyOrInviteId:[user1 getApply_id] type:@"1" withBlock:^(oprationResultModel *oprationModel) {
+            //
+            //                if ([[oprationModel getStatus]intValue]==BASE_OK) {
+            //                    [[BadgeManager shareSingletonInstance]refreshCount];
+            //                }
+            //            }];
         }
             break;
         default:
@@ -481,7 +486,10 @@ static PersonListViewController *thisVC;
 //上拉加载更多
 -(void)footerRefreshing
 {
-    
+    if (![UIViewController isLogin]) {
+        [self notLoginHandler];
+        return;
+    }
     switch (self.segement.selectedSegmentIndex) {
         case MyFavoriteTableViewFlag:
         {
@@ -491,8 +499,8 @@ static PersonListViewController *thisVC;
         case MyAppliedTableViewFlag:
         {
             
-//            NSInteger nowNum=[self getPageStartIndexWithSegmentIndex:MyAppliedTableViewFlag];
-//            NSInteger startNum=nowNum+1;
+            //            NSInteger nowNum=[self getPageStartIndexWithSegmentIndex:MyAppliedTableViewFlag];
+            //            NSInteger startNum=nowNum+1;
             [self loadAcceptedDatafromIndex:[self.page2Manager getNextStartAt] Length:self.page2Manager.pageSize];
         }
             
@@ -510,6 +518,10 @@ static PersonListViewController *thisVC;
 //下拉刷新全部，
 -(void)headerRefreshing
 {
+    if (![UIViewController isLogin]) {
+        [self notLoginHandler];
+        return;
+    }
     switch (self.segement.selectedSegmentIndex) {
         case MyFavoriteTableViewFlag:{
             //重置分页控制器
@@ -519,15 +531,15 @@ static PersonListViewController *thisVC;
         }
         case MyAppliedTableViewFlag:
         {
-             //重置分页控制器
+            //重置分页控制器
             [self.page2Manager resetPageSplitingManager];
             [self updateAcceptedDatafromIndex:self.page2Manager.firstStartIndex Length:self.page2Manager.pageSize];
             break;
         }
         case UnhandledTableViewFlag:
         {
-             //重置分页控制器
-             [self.page3Manager resetPageSplitingManager];
+            //重置分页控制器
+            [self.page3Manager resetPageSplitingManager];
             [self updateUnhandledDatafromIndex:self.page3Manager.firstStartIndex  Length:self.page3Manager.pageSize];
             break;
         }

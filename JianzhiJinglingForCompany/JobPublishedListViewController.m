@@ -14,9 +14,11 @@
 #import "NSDate+Category.h"
 #import "SRRefreshView.h"
 #import "MJRefresh.h"
-
+#import "UIViewController+LoginManager.h"
 #import "jobPublicationViewController.h"
-
+#import "PageSplitingManager.h"
+#import "MLNaviViewController.h"
+#import "MLLoginVC.h"
 @interface JobPublishedListViewController ()<UITableViewDataSource,UITableViewDelegate,SWTableViewCellDelegate,SRRefreshDelegate,UIAlertViewDelegate>
 {
     NSInteger cellNum;
@@ -28,11 +30,21 @@
 @property (nonatomic, strong) SRRefreshView         *slimeView;
 @property (strong,nonatomic)NSMutableArray *dataSourceArray;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-
+@property (strong,nonatomic)PageSplitingManager *pageManager;
 @end
 
 @implementation JobPublishedListViewController
 @synthesize tableView=_tableView;
+
+
+-(PageSplitingManager*)pageManager
+{
+    if(_pageManager==nil)
+    {
+        _pageManager=[[PageSplitingManager alloc]initWithPageSize:10];
+    }
+    return _pageManager;
+}
 
 #pragma --mark  getter
 - (SRRefreshView *)slimeView
@@ -79,7 +91,7 @@
     [_tableView addHeaderWithTarget:self action:@selector(headerRefreshing)];
     [_tableView addFooterWithTarget:self action:@selector(footerRefreshing)];
     //    self.tableView.hidden=YES;
-    [self downloadDataListStartAt:1 Length:cellNum];
+    [self downloadDataListStartAt:self.pageManager.firstStartIndex Length:self.pageManager.pageSize];
 }
 
 -(void)headerRefreshing
@@ -90,9 +102,8 @@
 
 -(void)footerRefreshing
 {
-    int a=cellNum;
-    int b=pageSize;
-    [self downloadDataListStartAt:1 Length:(a+b)];
+    
+    [self downloadDataListStartAt:[self.pageManager getNextStartAt ] Length:self.pageManager.pageSize];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -105,6 +116,10 @@
 
 -(void)downloadDataListStartAt:(int)start Length:(int)length
 {
+    if (![UIViewController isLogin]) {
+        [self notLoginHandler];
+        return;
+    }
     NSUserDefaults *mySettings=[NSUserDefaults standardUserDefaults];
     NSString *com_id=[mySettings objectForKey:@"currentUserObjectId"];
     NSLog(@"com_id:%@",com_id);
@@ -118,6 +133,7 @@
                 self.dataSourceArray=[NSMutableArray array];
             }
             self.dataSourceArray=[jobListModel getJobArray];
+            [self.pageManager pageLoadCompleted];
             cellNum=[self.dataSourceArray count];
             [self hideHud];
             [self.tableView reloadData];
@@ -229,6 +245,7 @@
     jobDetailVC.isHideBottomBtn=YES;
     jobDetailVC.publishedJob=[self.dataSourceArray objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:jobDetailVC animated:YES];
+    [self performSelector:@selector(deselect) withObject:nil afterDelay:2.0f];
 }
 
 - (void)deselect
@@ -365,22 +382,19 @@
 
 
 -(void)refreshDataSource
-{
-    [self downloadDataListStartAt:1 Length:cellNum];
-    //    self.dataSource = [self loadDataSource];
-    //    [_tableView reloadData];
-    //    [self hideHud];
+{ if (![UIViewController isLogin]) {
+    [self notLoginHandler];
+    return;
+}
+    [self.pageManager resetPageSplitingManager];
+    [self downloadDataListStartAt:[self.pageManager getNextStartAt] Length:self.pageManager.pageSize];
 }
 
 
 
 -(void)publishNewJob
 {
-//    jobPublicationViewController *newJobDetailVC=[[jobPublicationViewController alloc]init];
-//    newJobDetailVC.viewStatus=PublishNewJob;
-//    newJobDetailVC.hidesBottomBarWhenPushed=YES;
-//    newJobDetailVC.publishedJob=nil;
-//    [self.navigationController pushViewController:newJobDetailVC animated:YES];
+
 }
 
 
@@ -396,7 +410,16 @@
                 
             }
             break;
-            
+        case 323432:
+        {
+            if (buttonIndex==1) {
+                MLNaviViewController *navi=[[MLNaviViewController alloc]initWithRootViewController:[MLLoginVC sharedInstance]];
+                [self presentViewController:navi animated:YES completion:^{
+                    
+                }];
+            }
+            break;
+        }
         default:
             break;
     }

@@ -24,9 +24,8 @@
 #import "MLLoginVC.h"
 #import "RESideMenu.h"
 #import "ComProfileViewController.h"
-
 #import "BadgeManager.h"
-@interface MainTabBarViewController ()
+@interface MainTabBarViewController ()<UIAlertViewDelegate>
 
 @property (strong,nonatomic)NSArray  *vcArray;
 @property (strong,readonly,nonatomic)RESideMenu *sideMenu;
@@ -57,11 +56,11 @@ static MainTabBarViewController* thisVC=nil;
     //    [self.tabBar setBackgroundColor:TabBarColor];
     // Do any additional setup after loading the view from its nib.
     //设置颜色
-    if (![UIViewController isLogin]) {
-        [self notLoginHandler];
-        //        MLLoginVC *viewController = [MLLoginVC sharedInstance];
-        //        [self presentViewController:viewController animated:YES completion:nil];
-    }
+//    if (![UIViewController isLogin]) {
+//        [self notLoginHandler];
+//        //        MLLoginVC *viewController = [MLLoginVC sharedInstance];
+//        //        [self presentViewController:viewController animated:YES completion:nil];
+//    }
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(checkUnLoadConProfile) name:@"checkUnLoadConProfile" object:nil];
     
@@ -153,14 +152,13 @@ static MainTabBarViewController* thisVC=nil;
     
     tabBarItem2.title=@"消息";
     tabBarItem2.image=[UIImage imageNamed:@"letter"];
-    
     tabBarItem3.title=@"发布";
     tabBarItem3.image=[UIImage imageNamed:@"edit"];
     
     tabBarItem4.title=@"精灵管家";
     tabBarItem4.image=[UIImage imageNamed:@"calendar"];
     
-    tabBarItem5.title=@"更多";
+    tabBarItem5.title=@"企业信息";
     tabBarItem5.image=[UIImage imageNamed:@"moreTabbar"];
     
     //    [[self.tabBar.items objectAtIndex:0] setFinishedSelectedImage:[[UIImage imageNamed:@"name"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"name"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
@@ -193,10 +191,24 @@ static MainTabBarViewController* thisVC=nil;
 
 -(void)showLoginVC
 {
-    MLNaviViewController *navi=[[MLNaviViewController alloc]initWithRootViewController:[MLLoginVC sharedInstance]];
-    [self presentViewController:navi animated:YES completion:^{
+    
+    //检查登陆模式、和自动填充
+    NSUserDefaults *mySettingData = [NSUserDefaults standardUserDefaults];
+    NSString *username=[mySettingData objectForKey:CURRENTUSERNAME];
+    if (username!=nil) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"确定要退出？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定",nil];
+        alert.tag=123344;
+        [alert show];
+    }
+    else
+    {
+       //登陆
+        MLNaviViewController *navi=[[MLNaviViewController alloc]initWithRootViewController:[MLLoginVC sharedInstance] ];
         
-    }];
+        [self presentViewController:navi animated:YES completion:^{
+            
+        }];
+    }
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
@@ -206,13 +218,32 @@ static MainTabBarViewController* thisVC=nil;
         BadgeManager *bn=[BadgeManager shareSingletonInstance];
         if ([bn.applyCount intValue]>0)
         {
-            [tabBarItem1 setBadgeValue:[NSString stringWithFormat:@" ",bn.applyCount]];
+            [tabBarItem1 setBadgeValue:[NSString stringWithFormat:@"new",bn.applyCount]];
         }
         else
             tabBarItem1.badgeValue=nil;
     }
 }
 
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (alertView.tag) {
+        case 123344:
+            if (buttonIndex==1) {
+                
+                MLNaviViewController *navi=[[MLNaviViewController alloc]initWithRootViewController:[MLLoginVC sharedInstance] ];
+                
+                [self presentViewController:navi animated:YES completion:^{
+                     [[MLLoginVC sharedInstance] logoutBtnAction:nil];
+                }];
+            }
+            break;
+            
+        default:
+            break;
+    }
+   
+}
 /*
  #pragma mark - Navigation
  

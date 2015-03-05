@@ -22,6 +22,9 @@
 #import "MLIntroduceVC.h"
 #import "fileUtil.h"
 @interface AppDelegate ()
+{
+    int currentConnectType;
+}
 @property (strong,nonatomic,readonly)MainTabBarViewController *mainTabberVC;
 
 @property (strong, nonatomic) Reachability *internetReachability;
@@ -108,8 +111,8 @@
     //刷新badge
     [[BadgeManager shareSingletonInstance] refreshCount];
     
-    //创建缓存文件夹
-    [fileUtil createPicFolder];
+//    //创建缓存文件夹
+//    [fileUtil createPicFolder];
     return YES;
 }
 
@@ -126,6 +129,7 @@
     
     if(status == NotReachable)
     {
+        currentConnectType = NotReachable;
         if (self.isReachable) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"网络连接异常" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
             [alert show];
@@ -133,17 +137,28 @@
         }
         return;
     }
-    if (status==ReachableViaWiFi||status==ReachableViaWWAN) {
-        
+    if (status==ReachableViaWiFi) {
+          currentConnectType = ReachableViaWiFi;
         if (!self.isReachable) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"网络连接信息" message:@"网络连接恢复" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
             [alert show];
             self.isReachable = YES;
         }
     }
+    if (status==ReachableViaWWAN) {
+        currentConnectType = ReachableViaWWAN;
+        if (!self.isReachable) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"网络连接信息" message:@"网络连接恢复" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [alert show];
+            self.isReachable = YES;
+        }
+    }
+
 }
 
-
+-(int)getCurrentConnectType{
+    return currentConnectType;
+}
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.

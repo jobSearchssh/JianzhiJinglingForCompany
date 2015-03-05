@@ -40,26 +40,21 @@
 
 -(PageSplitingManager*)pageManager
 {
-  if(_pageManager==nil)
-  {
-      _pageManager=[[PageSplitingManager alloc]initWithPageSize:10];
-  }
+    if(_pageManager==nil)
+    {
+        _pageManager=[[PageSplitingManager alloc]initWithPageSize:10];
+    }
     return _pageManager;
 }
 
 - (void)viewDidLoad {
+     [super viewDidLoad];
     self.edgesForExtendedLayout=UIRectEdgeNone;
     self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithImage:Nil style:UIBarButtonItemStyleBordered target:self action:@selector(publishNewJob)];
     [self.navigationItem.rightBarButtonItem setTitle:@"创建新职位"];
     self.navigationItem.title=@"发布职位";
-    [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-    if (![UIViewController isLogin]) {
-        [self notLoginHandler];
-    }
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(autoLoadAfterLogin) name:@"autoLoadNearData" object:nil];
     [self tableViewInit];
-    
-    
 }
 
 -(void)viewDidLayoutSubviews
@@ -78,6 +73,7 @@
     _tableView.scrollEnabled=YES;
     [_tableView addHeaderWithTarget:self action:@selector(headerRefresh)];
     [_tableView addFooterWithTarget:self action:@selector(footerRefresh)];
+   
     [self downloadDataListStartAt:self.pageManager.firstStartIndex  Length:self.pageManager.pageSize];
 }
 
@@ -116,6 +112,10 @@
 
 -(void)downloadDataListStartAt:(int)start Length:(int)length
 {
+    if (![UIViewController isLogin]) {
+        [self notLoginHandler];
+        return;
+    }
     NSUserDefaults *mySettings=[NSUserDefaults standardUserDefaults];
     NSString *com_id=[mySettings objectForKey:@"currentUserObjectId"];
     NSLog(@"com_id:%@",com_id);
@@ -159,7 +159,7 @@
     TableViewCell2 *cell = [tableView dequeueReusableCellWithIdentifier:Cellidentifier forIndexPath:indexPath];
     //复用时，清空数据
     cell.jobImageView.image=[UIImage imageNamed:@"placeholder"];
-
+    
     [cell setRightUtilityButtons:[self rightButtons] WithButtonWidth:58.0f];
     
     cell.delegate = self;
@@ -174,7 +174,7 @@
             
             cell.jobUpdateTimeLabel.text=[[job getcreated_at] timeIntervalDescription];
             cell.Job_id=[job  getjobID];
-
+            
             
             NSString *imageurl=[NSString stringWithFormat:@"%@",[job getjobEnterpriseImageURL]];
             if ([imageurl length]>4) {
@@ -198,7 +198,7 @@
                 }
                 else cell.jobImageView.image=[UIImage imageNamed:@"placeholder"];
             }
-
+            
         }
     }
     return cell;
@@ -355,6 +355,14 @@
  */
 -(void)publishNewJob
 {
+    if (![UIViewController isLogin]) {
+        [self notLoginHandler];
+        return;
+    }
+    if (![UIViewController isUpLoadComProfile]) {
+        [self notSettingprofile];
+        return;
+    }
     jobPublicationViewController *newJobDetailVC=[[jobPublicationViewController alloc]init];
     newJobDetailVC.viewStatus=PublishNewJob;
     newJobDetailVC.hidesBottomBarWhenPushed=YES;
@@ -363,11 +371,16 @@
     [self.navigationController pushViewController:newJobDetailVC animated:YES];
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [self hideHud];
+    [self.tableView headerEndRefreshing];
+    [self.tableView footerEndRefreshing];
 
+}
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    
     switch (alertView.tag) {
         case 60001:
             if(buttonIndex==1)
@@ -390,8 +403,6 @@
             break;
     }
 }
-
-
 
 -(void)createDeleteJobReq:(NSString*)job_id
 {
@@ -438,7 +449,6 @@
             ALERT(errorDescription);
         }
     }];
-    
 }
 
 -(void)deleteCellAtIndexPath:(NSIndexPath*)path
@@ -453,16 +463,29 @@
 //下拉刷新全部
 -(void)headerRefresh
 {
+    if (![UIViewController isLogin]) {
+        [self notLoginHandler];
+        return;
+    }
     NSLog(@"cellNum from JobPublishedVC:%ld",(long)cellNum);
-//    [self.dataSourceArray removeAllObjects];
+    //    [self.dataSourceArray removeAllObjects];
     [self.pageManager resetPageSplitingManager];
     [self updateDataListStartAt:self.pageManager.firstStartIndex Length:self.pageManager.pageSize];
 }
 //上拉加载更多
 -(void)footerRefresh
 {
-
+    if (![UIViewController isLogin]) {
+        [self notLoginHandler];
+        return;
+    }
     [self downloadDataListStartAt:[self.pageManager getNextStartAt] Length:self.pageManager.pageSize];
+}
+
+
+-(void)autoLoadAfterLogin
+{
+
 
 }
 @end

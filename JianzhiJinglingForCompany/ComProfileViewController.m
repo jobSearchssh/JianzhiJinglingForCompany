@@ -25,6 +25,10 @@
 
 -(void)loadDataFromNet
 {
+    if (![UIViewController isLogin]) {
+        [self notLoginHandler];
+        return;
+    }
     if (self.thisCompany==nil) {
         [self showHudInView:self.view hint:@"正在加载..."];
         NSUserDefaults *mysettings=[NSUserDefaults standardUserDefaults];
@@ -91,9 +95,7 @@
         NSString *comName=[NSString stringWithFormat:@"%@",[self.thisCompany getenterpriseName]];
         NSString *comIndusrty=[[[NSNumberFormatter alloc] init]stringFromNumber:[self.thisCompany getenterpriseIndustry]];
         NSString *comAddress=[NSString stringWithFormat:@"%@",[self.thisCompany getenterpriseAddressDetail]];
-        
-        
-        
+ 
         [mysetings setObject:comLogoURL forKey:CURRENTLOGOURL];
         [mysetings setObject:comName forKey:CURRENTUSERREALNAME];
         [mysetings setObject:comIndusrty forKey:CURRENTUSERINDUSTRY];
@@ -113,10 +115,17 @@
     
 }
 
+
+-(void)autoLoadData
+{
+  [self loadDataFromNet];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loadDataFromNetAgain) name:@"资料修改成功" object:nil];
-    
+     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(autoLoadData) name:@"autoLoadNearData" object:nil];
+    self.title=@"企业信息";
     // Do any additional setup after loading the view from its nib.
     self.edgesForExtendedLayout=UIRectEdgeNone;
     self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithImage:Nil style:UIBarButtonItemStyleBordered target:self action:@selector(editResume)];
@@ -127,14 +136,15 @@
     self.comIntro.editable=NO;//禁止编辑
     
     self.comIntro.autoresizingMask= UIViewAutoresizingFlexibleHeight |UIViewAutoresizingFlexibleWidth;
-    if (![UIViewController isLogin]) {
-        [self notLoginHandler];
-    }
     [self loadDataFromNet];
 }
 
 -(void)editResume
 {
+    if (![UIViewController isLogin]) {
+        [self notLoginHandler];
+        return;
+    }
     CompanyResumeViewController *editVC=[[CompanyResumeViewController alloc]init];
     editVC.enterprise=self.thisCompany;
     editVC.hidesBottomBarWhenPushed=YES;
