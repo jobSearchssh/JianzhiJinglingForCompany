@@ -10,6 +10,7 @@
 #import "MLLoginVC.h"
 #import "CompanyResumeViewController.h"
 #import "MLNaviViewController.h"
+#import "MainTabBarViewController.h"
 @implementation UIViewController (LoginManager)
 +(BOOL)isLogin
 {
@@ -66,11 +67,14 @@
         case 323435:
         {
             if (buttonIndex==1) {
-                CompanyResumeViewController *profile=[[CompanyResumeViewController alloc]init];
-                profile.enterprise=nil;
-                [self presentViewController:profile animated:YES completion:^{
-                    
-                }];
+                
+            
+//                CompanyResumeViewController *profile=[[CompanyResumeViewController alloc]init];
+//                profile.enterprise=nil;
+//                [self presentViewController:profile animated:YES completion:^{
+//                    
+//                }];
+                [MainTabBarViewController shareInstance].selectedIndex=4;
             }
             break;
         }

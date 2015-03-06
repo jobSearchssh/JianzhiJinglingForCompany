@@ -334,6 +334,17 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     }else{
         [self initBtnViewWithBtnIndex:0];
     }
+    
+    //初始化GEO
+    
+    NSUserDefaults *mySettingData = [NSUserDefaults standardUserDefaults];
+    NSString *geoString=[mySettingData objectForKey:CURRENTLOCATOIN];
+    if (geoString!=nil) {
+        CGPoint point=CGPointFromString(geoString);
+        
+        nowGeo=[[geoModel alloc]initWith:point.x lat:point.y];
+    }
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -374,7 +385,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     self.navigationController.navigationBar.barStyle = UIStatusBarStyleDefault;
     [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
     NSMutableDictionary *titleBarAttributes = [NSMutableDictionary dictionaryWithDictionary:[[UINavigationBar appearance] titleTextAttributes]];
-    [titleBarAttributes setValue:[UIColor whiteColor] forKey:UITextAttributeTextColor];
+    [titleBarAttributes setValue:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
     [self.navigationController.navigationBar setTitleTextAttributes:titleBarAttributes];
     
     //layoutRadioButton
@@ -793,7 +804,9 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         return;
     }
     
+    
     createJobModel *newJob=[[createJobModel alloc]init];
+    
     
     //设置id
     [newJob setenterprise_id:com_id];
@@ -801,6 +814,12 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     if (![self checkFromBeforeUpLoad]) {
         ALERT(@"上传失败，数据输入错误");
         return;
+    }
+    
+    
+    //设置geo
+    if (nowGeo!=nil) {
+        [self.thisJob setgeomodel:nowGeo];
     }
     //设置title
     [self.thisJob setjobTitle:self.jobTitleTextField.text];
@@ -919,17 +938,19 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     if(0);
     else{
         if (1==flag) {
+//            [self.thisJob getBaseString]
             NSLog(@"BaseString: %@",[self.thisJob getBaseString]);
-            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:[self.thisJob getBaseString] delegate:self cancelButtonTitle:@"再看看" otherButtonTitles:@"发布", nil];
+        
+            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"确认发布职位" delegate:self cancelButtonTitle:@"再看看" otherButtonTitles:@"发布", nil];
             alert.tag=12301;
             [alert show];
         }
-        else{
-            NSLog(@"BaseString: %@",[self.thisJob getBaseString]);
-            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:[self.thisJob getBaseString] delegate:self cancelButtonTitle:@"再看看" otherButtonTitles:@"发布职位模板", nil];
-            alert.tag=12300;
-            [alert show];
-        }
+//        else{
+//            NSLog(@"BaseString: %@",[self.thisJob getBaseString]);
+//            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:[self.thisJob getBaseString] delegate:self cancelButtonTitle:@"再看看" otherButtonTitles:@"发布职位模板", nil];
+//            alert.tag=12300;
+//            [alert show];
+//        }
     }
     
     
@@ -966,8 +987,8 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
             ALERT(@"发布成功，请前往“我的发布”中查看！");
 #warning （待完成）职位发布完成后操作，比如设置下我的发布列表；通知更新
             [self.navigationController popToRootViewControllerAnimated:YES];
-            RESideMenu *sideMune=[RESideMenu sharedInstance];
-            [sideMune setBadgeView:3 badgeText:@"1"];
+//            RESideMenu *sideMune=[RESideMenu sharedInstance];
+//            [sideMune setBadgeView:3 badgeText:@"1"];
         }
         else
         {
@@ -1305,11 +1326,13 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         regeoRequest.radius = 10000;
         regeoRequest.requireExtension = YES;
         
+        //
+        
+        
         //设置定位，
         geoModel *geo = [[geoModel alloc]initWith:locationCorrrdinate.longitude lat:locationCorrrdinate.latitude];
+        //
         nowGeo=geo;
-        [weakSelf.thisJob setgeomodel:nowGeo];
-        
         //发起逆地理编码
         [weakSelf.search AMapReGoecodeSearch: regeoRequest];
     } error:^(NSError *error) {
@@ -1659,6 +1682,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 -(void)cannotEditMode
 {
+    self.publishBtn.enabled=NO;
     self.jobPlaceLabel.enabled=NO;
     self.addImageBtn.enabled=NO;
     self.publishedAgainBtn.enabled=NO;

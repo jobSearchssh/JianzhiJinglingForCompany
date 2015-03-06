@@ -137,6 +137,7 @@ static  MLMatchVC *thisVC=nil;
 
 - (void)refreshScrollView{
     if ([recordArray count]>0) {
+    self.scrollView.hidden=NO;
     CGFloat currentY = 0;
     PiPeiView* childView=[[PiPeiView alloc]init];
     [childView.view setFrame:CGRectMake(0, currentY, self.scrollView.bounds.size.width, kScrollViewHeight-104)];
@@ -173,6 +174,11 @@ static  MLMatchVC *thisVC=nil;
     }
     
     self.scrollView.contentSize = CGSizeMake(self.scrollView.contentSize.width, currentY);
+    }
+    else
+    {
+        self.scrollView.hidden=YES;
+    
     }
 }
 

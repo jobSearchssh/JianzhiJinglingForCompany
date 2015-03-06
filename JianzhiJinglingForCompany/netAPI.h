@@ -119,7 +119,10 @@ typedef void (^inivitesListReturnBlock)(inivitesListModel *inivitesListModel);
 
 //取消关注
 +(void)cancelFocusUser:(NSString*)enterprise_id user_id:(NSString*)userId withBlock:(operationReturnBlock)oprationReturnBlock;
-
+/**
+ 邀请多个求职者
+ **/
++(void)MultiInviteUserWithEnterpriseId:(NSString*)enterprise_id userId:(NSString*)userId jobId:(NSString*)jobId withBlock:(operationReturnBlock)oprationReturnBlock;
 //邀请求职者
 +(void)inviteUserWithEnterpriseId:(NSString*)enterprise_id userId:(NSString*)userId jobId:(NSString*)jobId withBlock:(operationReturnBlock)oprationReturnBlock;
 

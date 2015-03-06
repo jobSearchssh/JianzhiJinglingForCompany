@@ -14,6 +14,7 @@
 
 
 @interface jobPublicationViewController : UIViewController<UIScrollViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UIActionSheetDelegate>
+
 @property int viewStatus;
 @property (strong,nonatomic)jobModel *publishedJob;
 @property BOOL editButtonEnable;

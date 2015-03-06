@@ -19,6 +19,7 @@
 #import "MLLoginVC.h"
 #import "MLNaviViewController.h"
 #import "PageSplitingManager.h"
+#import "MainTabBarViewController.h"
 @interface jobTemplateListViewController ()<UITableViewDataSource,UITableViewDelegate,SWTableViewCellDelegate,UIAlertViewDelegate>
 {
     NSInteger cellNum;
@@ -143,7 +144,7 @@
             [alert show];
         }
     }];
-    [self performSelector:@selector(hideHud) withObject:nil afterDelay:30];
+    [self performSelector:@selector(hideHud) withObject:nil afterDelay:10];
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -174,7 +175,7 @@
             
             cell.jobUpdateTimeLabel.text=[[job getcreated_at] timeIntervalDescription];
             cell.Job_id=[job  getjobID];
-            
+            cell.recruitNumLabel.text=[NSString stringWithFormat:@"招募:%d/%d",[[job getjobHasAccepted]intValue],[[job getjobRecruitNum]intValue]];
             
             NSString *imageurl=[NSString stringWithFormat:@"%@",[job getjobEnterpriseImageURL]];
             if ([imageurl length]>4) {
@@ -246,6 +247,7 @@
     jobDetailVC.hidesBottomBarWhenPushed=YES;
     jobDetailVC.publishedJob=[self.dataSourceArray objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:jobDetailVC animated:YES];
+    [self performSelector:@selector(deselect) withObject:nil afterDelay:1.0f];
 }
 
 - (void)deselect
@@ -373,6 +375,7 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
     [self hideHud];
     [self.tableView headerEndRefreshing];
     [self.tableView footerEndRefreshing];
@@ -399,6 +402,15 @@
             }
             break;
         }
+        case 323435:
+        {
+            if (buttonIndex==1) {
+                
+                [MainTabBarViewController shareInstance].selectedIndex=4;
+            }
+            break;
+        }
+
         default:
             break;
     }
@@ -485,7 +497,7 @@
 
 -(void)autoLoadAfterLogin
 {
-
+    [self headerRefresh];
 
 }
 @end

@@ -240,9 +240,8 @@ static PersonListViewController *thisVC;
     cell.usrNameLabel.text=[user getuserName];
     cell.usrJobReq.text=[user getuserExperience];
     cell.usrBreifIntro.text=[user getuserIntroduction];
-#warning  image 字段没有添加
+
     cell.timeStamp.text=[[user getUpdateAt]timeIntervalDescription];
-    double d= [[user getuserLocationGeo] getLat];
     if (1) {
         [self startLocationService:^{
             MAMapPoint point1 = MAMapPointForCoordinate(CLLocationCoordinate2DMake([rightNowGPS getLat],[rightNowGPS getLon]));
@@ -378,6 +377,8 @@ static PersonListViewController *thisVC;
     person.hideRightBarButton=YES;
     person.hidesBottomBarWhenPushed=YES;
     [self.navigationController pushViewController:person animated:YES];
+    [self performSelector:@selector(deselect) withObject:nil afterDelay:1.0f];
+
 }
 - (void)deselect
 {

@@ -19,12 +19,15 @@
 #import "PageSplitingManager.h"
 #import "MLNaviViewController.h"
 #import "MLLoginVC.h"
+#import "MBProgressHUD+Add.h"
+#import "MBProgressHUD.h"
 @interface JobPublishedListViewController ()<UITableViewDataSource,UITableViewDelegate,SWTableViewCellDelegate,SRRefreshDelegate,UIAlertViewDelegate>
 {
     NSInteger cellNum;
     NSInteger pageSize;
     NSString *selectedJobId;
     NSInteger selectedCellRow;
+    BOOL touchRefresh;
 }
 
 @property (nonatomic, strong) SRRefreshView         *slimeView;
@@ -67,7 +70,10 @@
 }
 
 
-
+-(void)autoLoadData
+{
+    [self headerRefreshing];
+}
 
 - (void)viewDidLoad {
     self.edgesForExtendedLayout=UIRectEdgeNone;
@@ -79,6 +85,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self tableViewInit];
+      [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(autoLoadData) name:@"autoLoadNearData" object:nil];
 }
 
 - (void)tableViewInit{
@@ -103,7 +110,7 @@
 -(void)footerRefreshing
 {
     
-    [self downloadDataListStartAt:[self.pageManager getNextStartAt ] Length:self.pageManager.pageSize];
+    [self downloadDataListStartAt:[self.pageManager getNextStartAt] Length:self.pageManager.pageSize];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -123,16 +130,27 @@
     NSUserDefaults *mySettings=[NSUserDefaults standardUserDefaults];
     NSString *com_id=[mySettings objectForKey:@"currentUserObjectId"];
     NSLog(@"com_id:%@",com_id);
+    
     [self showHudInView:self.tableView hint:@"加载中.."];
     [netAPI queryEnterpriseJobs:com_id start:start length:length withBlock:^(jobListModel *jobListModel) {
         [self hideHud];
         [self.tableView headerEndRefreshing];
         [self.tableView footerEndRefreshing];
-        if ([jobListModel getStatus]) {
+        if ([[jobListModel getStatus]intValue]==BASE_SUCCESS) {
             if (self.dataSourceArray==nil) {
                 self.dataSourceArray=[NSMutableArray array];
             }
-            self.dataSourceArray=[jobListModel getJobArray];
+            //判断是不是刷新 ，刷新清楚数据
+            if (touchRefresh) {
+                [self.dataSourceArray removeAllObjects];
+                touchRefresh=NO;
+            }
+            //判断是不是没数据
+            if ([[jobListModel getCount]intValue]<1) {
+               
+            }
+            
+            [self.dataSourceArray addObjectsFromArray:[jobListModel getJobArray]];
             [self.pageManager pageLoadCompleted];
             cellNum=[self.dataSourceArray count];
             [self hideHud];
@@ -173,7 +191,7 @@
             cell.jobAddressDetailLabel.text=[job getjobWorkAddressDetail];
             cell.jobUpdateTimeLabel.text=[[job getcreated_at] timeIntervalDescription];
             cell.Job_id=[job  getjobID];
-            
+            cell.recruitNumLabel.text=[NSString stringWithFormat:@"招募:%d/%d",[[job getjobHasAccepted]intValue],[[job getjobRecruitNum]intValue]];
             NSString *imageurl=[NSString stringWithFormat:@"%@",[job getjobEnterpriseImageURL]];
             if ([imageurl length]>4) {
                 if ([[imageurl substringToIndex:4]isEqualToString:@"http"]) {
@@ -245,7 +263,7 @@
     jobDetailVC.isHideBottomBtn=YES;
     jobDetailVC.publishedJob=[self.dataSourceArray objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:jobDetailVC animated:YES];
-    [self performSelector:@selector(deselect) withObject:nil afterDelay:2.0f];
+    [self performSelector:@selector(deselect) withObject:nil afterDelay:1.0f];
 }
 
 - (void)deselect
@@ -382,11 +400,13 @@
 
 
 -(void)refreshDataSource
-{ if (![UIViewController isLogin]) {
+{
+    if (![UIViewController isLogin]) {
     [self notLoginHandler];
     return;
 }
     [self.pageManager resetPageSplitingManager];
+    touchRefresh=YES;
     [self downloadDataListStartAt:[self.pageManager getNextStartAt] Length:self.pageManager.pageSize];
 }
 

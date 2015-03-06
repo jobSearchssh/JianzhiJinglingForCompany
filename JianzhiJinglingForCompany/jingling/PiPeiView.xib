@@ -65,7 +65,7 @@
                         </mask>
                     </variation>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="QY5-gV-TY1">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="locat.png" translatesAutoresizingMaskIntoConstraints="NO" id="QY5-gV-TY1">
                     <rect key="frame" x="93" y="71" width="15" height="15"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="15" id="Jyn-ZG-GyZ"/>
@@ -144,7 +144,7 @@
                         </mask>
                     </variation>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6DF-e8-FmE">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="自我介绍：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6DF-e8-FmE">
                     <rect key="frame" x="195" y="100" width="111" height="26"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="69" id="B9X-QI-pm4"/>
@@ -186,7 +186,7 @@
                         </mask>
                     </variation>
                 </textView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h8O-W0-jsZ">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="工作经验：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h8O-W0-jsZ">
                     <rect key="frame" x="195" y="100" width="111" height="26"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="69" id="hsX-PV-eBZ"/>
@@ -208,7 +208,7 @@
                         </mask>
                     </variation>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ao5-Ou-qMx">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="just.png" translatesAutoresizingMaskIntoConstraints="NO" id="ao5-Ou-qMx">
                     <rect key="frame" x="234" y="71" width="15" height="15"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="15" id="hvX-9j-IFC"/>
@@ -801,6 +801,8 @@
         <image name="agreeInvite.png" width="40" height="40"/>
         <image name="cellBackground1.png" width="100" height="100"/>
         <image name="ignoreInvite.png" width="40" height="40"/>
+        <image name="just.png" width="35" height="35"/>
+        <image name="locat.png" width="60" height="60"/>
         <image name="percent.png" width="40" height="40"/>
         <image name="resume_phone.png" width="46" height="46"/>
     </resources>

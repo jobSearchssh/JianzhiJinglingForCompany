@@ -28,7 +28,7 @@
     self.navigationBar.barStyle = UIStatusBarStyleDefault;
     [self.navigationBar setTintColor:[UIColor whiteColor]];
     NSMutableDictionary *titleBarAttributes = [NSMutableDictionary dictionaryWithDictionary:[[UINavigationBar appearance] titleTextAttributes]];
-    [titleBarAttributes setValue:[UIColor whiteColor] forKey:UITextAttributeTextColor];
+    [titleBarAttributes setValue:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
     [self.navigationBar setTitleTextAttributes:titleBarAttributes];
 }
 

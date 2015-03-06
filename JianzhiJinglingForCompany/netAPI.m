@@ -32,6 +32,8 @@
 #define jinglingMatch @"enterpriseService/queryJingLingList"
 #define INVITEUSER_FUNCTION @"enterprise/addEnterpriseInvite"
 
+
+#define Multi_INVITEUSERMulti_FUNCTION @"enterprise/addManyEnterpriseInvite"
 #define GETBADGENUM_FUNCTION @"enterprise/enterpriseNumIsNotRead"
 #define SETREAD_FUNCTION @"enterprise/enterpriseIsRead"
 
@@ -510,12 +512,29 @@
 
     }];
 }
-//邀请求职者
+
+//邀请多个求职者
 +(void)inviteUserWithEnterpriseId:(NSString*)enterprise_id userId:(NSString*)userId jobId:(NSString*)jobId withBlock:(operationReturnBlock)oprationReturnBlock{
     
     NSString *str = [[NSString alloc]initWithFormat:@"enterprise_id=%@&job_user_id=%@&job_id=%@",enterprise_id,userId,jobId];
     NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
     [self testAPIPostTestWithBlock:data getFunction:INVITEUSER_FUNCTION block:^(URLReturnModel *returnModel) {
+        if (returnModel != Nil && [returnModel getFlag]) {
+            oprationResultModel *a = [[oprationResultModel alloc]initWithData:[returnModel getData]];
+            oprationReturnBlock(a);
+        }else{
+            oprationResultModel *a = [[oprationResultModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:networkError];
+            oprationReturnBlock(a);
+        }
+    }];
+}
+
+//邀请求职者
++(void)MultiInviteUserWithEnterpriseId:(NSString*)enterprise_id userId:(NSString*)userId jobId:(NSString*)jobId withBlock:(operationReturnBlock)oprationReturnBlock{
+    
+    NSString *str = [[NSString alloc]initWithFormat:@"enterprise_id=%@&job_user_id=%@&job_id=%@",enterprise_id,userId,jobId];
+    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+    [self testAPIPostTestWithBlock:data getFunction:Multi_INVITEUSERMulti_FUNCTION block:^(URLReturnModel *returnModel) {
         if (returnModel != Nil && [returnModel getFlag]) {
             oprationResultModel *a = [[oprationResultModel alloc]initWithData:[returnModel getData]];
             oprationReturnBlock(a);

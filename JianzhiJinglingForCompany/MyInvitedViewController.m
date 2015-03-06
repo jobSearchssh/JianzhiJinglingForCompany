@@ -54,12 +54,17 @@ static MyInvitedViewController *thisVC;
     return _pageManager;
 }
 
+-(void)autoLoadData
+{
+    [self headerRefreshing];
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.edgesForExtendedLayout=UIRectEdgeNone;
     [self tableViewInit];
-    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(autoLoadData) name:@"autoLoadNearData" object:nil];
     // Do any additional setup after loading the view from its nib.
 }
 - (void)tableViewInit{
@@ -308,7 +313,7 @@ static MyInvitedViewController *thisVC;
     if ([[invitation getinviteStatus]intValue]==2) person.isShowPhone=YES;
     
     [self.navigationController pushViewController:person animated:YES];
-    [self performSelector:@selector(deselect) withObject:nil afterDelay:2.0];
+    [self performSelector:@selector(deselect) withObject:nil afterDelay:1.0];
 }
 
 

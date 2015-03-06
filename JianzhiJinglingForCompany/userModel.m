@@ -32,6 +32,7 @@
             beiyong3 = [dictionary objectForKey:@"beiyong3"];
             beiyong4 = [dictionary objectForKey:@"beiyong4"];
             userGender = [dictionary objectForKey:@"userGender"];
+            userHeight = [dictionary objectForKey:@"userHeight"];
             NSString *updateAtString=[dictionary objectForKey:@"updated_at"];
             NSString *createAtString=[dictionary objectForKey:@"created_at"];
 //            job_id= [dictionary objectForKey:@"job_id"];

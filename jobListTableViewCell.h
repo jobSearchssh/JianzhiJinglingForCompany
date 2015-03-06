@@ -22,6 +22,7 @@ typedef enum{
 @property (weak, nonatomic) IBOutlet UILabel *jobTitleLabel;
 @property (weak, nonatomic) IBOutlet AsyncImageView *jobImageView;
 
+@property (weak, nonatomic) IBOutlet UILabel *recruitNumLabel;
 
 @property int selectedFlag;
 @end

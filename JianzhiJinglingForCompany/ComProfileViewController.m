@@ -15,8 +15,14 @@
 #import "UIViewController+RESideMenu.h"
 #import "UIViewController+LoginManager.h"
 #import "MLLoginVC.h"
+#import "MainTabBarViewController.h"
 #import "MLNaviViewController.h"
+#import "MBProgressHUD+Add.h"
 @interface ComProfileViewController ()<UIAlertViewDelegate>
+{
+    BOOL isLoadSucceed;
+}
+
 @property(nonatomic,strong)enterpriseDetailModel *thisCompany;
 @end
 
@@ -36,30 +42,21 @@
         [netAPI getEnterpriseDetail:com_id withBlock:^(enterpriseDetailReturnModel *detailModel) {
             [self hideHud];
             if ([[detailModel getStatus]intValue]==BASE_SUCCESS) {
-                
                 self.thisCompany=[detailModel getenterpriseDetailModel];
+                isLoadSucceed=YES;
                 [self loadDataInView];
             }else
             {
                 NSString *error=[NSString stringWithFormat:@"%@",[detailModel getInfo]];
-                UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"加载失败，是否重试？" message:error delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"好的", nil];
+                UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"提示" message:error delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"重试", nil];
                 [alertView show];
             }
         }];
     }
 }
 
-//-(void)viewWillAppear:(BOOL)animated
-//{
-//    [super viewWillAppear:animated];
-//    if (![UIViewController isLogin]) {
-//        [self notLoginHandler];
-//    }
-//}
-
-
 -(void)loadDataInView
-{
+{   isLoadSucceed=YES;
     self.comName.text=[NSString stringWithFormat:@"%@",[self.thisCompany getenterpriseName]];
     self.comAddress.text=[NSString stringWithFormat:@"%@",[self.thisCompany getenterpriseAddressDetail]];
     
@@ -108,6 +105,17 @@
 }
 
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    
+    [super viewWillAppear:animated];
+    [self hideHud];
+    if (!isLoadSucceed) {
+        [self loadDataFromNetAgain];
+    }
+
+}
+
 -(void)loadDataFromNetAgain
 {
     self.thisCompany=nil;
@@ -123,6 +131,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    isLoadSucceed=NO;
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loadDataFromNetAgain) name:@"资料修改成功" object:nil];
      [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(autoLoadData) name:@"autoLoadNearData" object:nil];
     self.title=@"企业信息";
@@ -170,6 +179,13 @@
                 [self presentViewController:navi animated:YES completion:^{
                     
                 }];
+            }
+            break;
+        }
+        case 323435:
+        {
+            if (buttonIndex==1) {
+                [self editResume];
             }
             break;
         }

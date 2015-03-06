@@ -533,16 +533,16 @@ static NSString *scrollindentify = @"scrollviewdown";
         
         
 #warning 加载图片（待完善）
-        //        dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        //            UIImage *img=[UIImage imageWithData:<#(NSData *)#>]
-        //
-        //
-        //
-        //
-        //        });
-        //
-        //
-        //        [self.imageBtn setBackgroundImage:temp forState:UIControlStateNormal];
+//                dispatch_async(dispatch_get_global_queue(0, 0), ^{
+//                    UIImage *img=[UIImage imageWithData:<#(NSData *)#>]
+//        
+//        
+//        
+//        
+//                });
+//        
+//        
+//                [self.imageBtn setBackgroundImage:temp forState:UIControlStateNormal];
         
     }
     
@@ -827,6 +827,12 @@ static NSString *scrollindentify = @"scrollviewdown";
         NSLog(@"ReGeo: %@", result);
         [self.choiceDistrictBtn setTitle:[NSString stringWithFormat:@"%@ %@ %@",response.regeocode.addressComponent.province,response.regeocode.addressComponent.city,response.regeocode.addressComponent.district]
                             forState:UIControlStateNormal];
+        
+        province=response.regeocode.addressComponent.province?response.regeocode.addressComponent.province:response.regeocode.addressComponent.city;
+        city=response.regeocode.addressComponent.city?response.regeocode.addressComponent.city:response.regeocode.addressComponent.province;
+        district=response.regeocode.addressComponent.district;
+        
+        
     }
 }
 

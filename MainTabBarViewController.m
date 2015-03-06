@@ -85,8 +85,6 @@ static MainTabBarViewController* thisVC=nil;
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    MLNaviViewController *a=[self.vcArray objectAtIndex:1];
-    
     NSLog(@"%lu",(unsigned long)[self.vcArray count]);
 }
 
@@ -218,7 +216,7 @@ static MainTabBarViewController* thisVC=nil;
         BadgeManager *bn=[BadgeManager shareSingletonInstance];
         if ([bn.applyCount intValue]>0)
         {
-            [tabBarItem1 setBadgeValue:[NSString stringWithFormat:@"new",bn.applyCount]];
+            [tabBarItem1 setBadgeValue:[NSString stringWithFormat:@"new"]];
         }
         else
             tabBarItem1.badgeValue=nil;

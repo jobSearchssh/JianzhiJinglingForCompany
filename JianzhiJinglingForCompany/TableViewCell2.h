@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *jobDistanceLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *jobUpdateTimeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *recruitNumLabel;
 
 -(void)setJobImageViewWithJsBadgeNSString:(NSString*) badgeString;
 @end

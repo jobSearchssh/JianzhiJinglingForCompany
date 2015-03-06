@@ -72,7 +72,8 @@ static  MLLoginVC *thisVC=nil;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    isPushWhenInRegistrationState=NO;
+//    self.edgesForExtendedLayout=UIRectEdgeNone;
     //监听登出成功接口
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(logoutSuccessAction) name:@"logoutSuccess"object:nil];
     
@@ -102,9 +103,14 @@ static  MLLoginVC *thisVC=nil;
     [chooseRegisterBtn addTarget:self action:@selector(chooseRegister) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:chooseRegisterBtn];
     
+    if ([[UIScreen mainScreen] bounds].size.height!=480) {
+        self.loginView.frame=CGRectMake(0, 40, [[UIScreen mainScreen] bounds].size.width, 220);
+        self.registerView.frame=CGRectMake([[UIScreen mainScreen] bounds].size.width, 40, [[UIScreen mainScreen] bounds].size.width, 330);
+    }else{
+        self.loginView.frame=CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, 220);
+        self.registerView.frame=CGRectMake([[UIScreen mainScreen] bounds].size.width, 0, [[UIScreen mainScreen] bounds].size.width, 330);
+    }
     
-    self.loginView.frame=CGRectMake(0, 40, [[UIScreen mainScreen] bounds].size.width, 220);
-    self.registerView.frame=CGRectMake([[UIScreen mainScreen] bounds].size.width, 40, [[UIScreen mainScreen] bounds].size.width, 330);
     
     //for check box
     QCheckBox *_check1 = [[QCheckBox alloc] initWithDelegate:self];
@@ -145,12 +151,22 @@ static  MLLoginVC *thisVC=nil;
     
 }
 
+//-(void)viewWillLayoutSubviews
+//{
+//
+//    self.loginView.frame=CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, 220);
+//    self.registerView.frame=CGRectMake([[UIScreen mainScreen] bounds].size.width, 0, [[UIScreen mainScreen] bounds].size.width, 330);
+//}
+
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+//    self.loginView.frame=CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, 220);
+//    self.registerView.frame=CGRectMake([[UIScreen mainScreen] bounds].size.width, 0, [[UIScreen mainScreen] bounds].size.width, 330);
 //    [self checkLoginStatus];
     if (isPushWhenInRegistrationState) {
         [self chooseRegister];
+        isPushWhenInRegistrationState=NO;
     }
 }
 
@@ -191,7 +207,7 @@ static  MLLoginVC *thisVC=nil;
     [chooseLoginBtn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
     chooseRegisterBtn.backgroundColor=[UIColor darkGrayColor];
     [chooseRegisterBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self.scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
+    [self.scrollView setContentOffset:CGPointMake(0, self.scrollView.contentOffset.y) animated:YES];
 }
 
 - (void)chooseRegister{
@@ -199,7 +215,7 @@ static  MLLoginVC *thisVC=nil;
     chooseRegisterBtn.backgroundColor=[UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1.0];
     [chooseRegisterBtn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
     [chooseLoginBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self.scrollView setContentOffset:CGPointMake([[UIScreen mainScreen] bounds].size.width, 0) animated:YES];
+    [self.scrollView setContentOffset:CGPointMake([[UIScreen mainScreen] bounds].size.width, self.scrollView.contentOffset.y) animated:YES];
 }
 
 - (void)tapRegisnFirstRespond{
@@ -282,7 +298,7 @@ static  MLLoginVC *thisVC=nil;
 - (void)registerResult:(BOOL)isSucceed Feedback:(NSString *)feedback{
     [self hideHud];
     if (isSucceed) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"注册成功" message:nil delegate:self cancelButtonTitle:@"返回稍后登录" otherButtonTitles:@"立即进入"];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"注册成功" message:nil delegate:self cancelButtonTitle:@"返回稍后登录" otherButtonTitles:@"立即进入",nil];
         alert.tag=RegistAlertViewTag;
         [alert show];
     }
@@ -295,6 +311,7 @@ static  MLLoginVC *thisVC=nil;
 - (IBAction)phoneEditingChanged:(id)sender {
     if(self.phoneNumber.text.length==11)
     {
+        [self stopTimerAndResetBtn];
         inputUserPhoneNumber=_phoneNumber.text;
         self.sendMsgButton.enabled=YES;
         [self.sendMsgButtonLabel setBackgroundColor:[UIColor colorWithRed:23.0/255.0 green:87.0/255.0 blue:150.0/255.0 alpha:1.0]];
@@ -382,8 +399,18 @@ static  MLLoginVC *thisVC=nil;
         [self performSelectorOnMainThread:@selector(showTimerWhenTimeOut) withObject:nil waitUntilDone:YES];
     }
     else{
-    [self performSelectorOnMainThread:@selector(showTimer) withObject:nil waitUntilDone:YES];
+    [self performSelectorOnMainThread:@selector(showTimer) withObject:nil waitUntilDone:NO];
     }
+}
+
+
+-(void)stopTimerAndResetBtn
+{
+    [timer invalidate];
+    [self.sendMsgButtonLabel setText:@"发送短信验证码"];
+    self.sendMsgButton.enabled=YES;
+    [self.sendMsgButtonLabel setBackgroundColor:[UIColor colorWithRed:23.0/255.0 green:87.0/255.0 blue:150.0/255.0 alpha:1.0]];
+    seconds=60;
 }
 
 -(void)showTimerWhenTimeOut
@@ -416,7 +443,6 @@ static  MLLoginVC *thisVC=nil;
             }
             [self showHudInView:self.view hint:@"正在注册中"];
             [self.loginer registerInBackground:inputUserPhoneNumber Password:inputUserPassword2];
-            [self performSelector:@selector(timeout) withObject:nil afterDelay:TIMEOUT];
         }
         else if(0==state)
         {
@@ -476,8 +502,6 @@ static  MLLoginVC *thisVC=nil;
             if (buttonIndex==1) {
                 [self showHudInView:self.view hint:@"登录中.."];
                 [self.loginer loginInBackground:inputUserPhoneNumber Password:inputUserPassword2];
-                //如果超时 自动hideHub
-                [self performSelector:@selector(timeout) withObject:nil afterDelay:TIMEOUT];
             }else if(buttonIndex==0)
             {
                 [self chooseLogin];
@@ -506,10 +530,10 @@ static  MLLoginVC *thisVC=nil;
 }
 
 - (IBAction)readLegalStatementAction:(id)sender {
-    isPushWhenInRegistrationState=YES;
     MLLegalVC *VC=[MLLegalVC sharedInstance];
     VC.edgesForExtendedLayout=UIRectEdgeNone;
     [self.navigationController pushViewController:VC animated:YES];
+    isPushWhenInRegistrationState=YES;
 }
 
 - (IBAction)disMissBtnAction:(id)sender {

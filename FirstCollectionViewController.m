@@ -65,7 +65,7 @@ static  FirstCollectionViewController *thisVC=nil;
     self.navigationController.navigationBar.barStyle = UIStatusBarStyleDefault;
     [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
     NSMutableDictionary *titleBarAttributes = [NSMutableDictionary dictionaryWithDictionary:[[UINavigationBar appearance] titleTextAttributes]];
-    [titleBarAttributes setValue:[UIColor whiteColor] forKey:UITextAttributeTextColor];
+    [titleBarAttributes setValue:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
     
     [self.navigationController.navigationBar setTitleTextAttributes:titleBarAttributes];
     self.navigationItem.title=@"附近的人";
@@ -319,7 +319,6 @@ static  FirstCollectionViewController *thisVC=nil;
         float kmDistance=distance/1000;
         cell.distanceLabelWithoutUnit.text=[NSString stringWithFormat:@"%.2fkm",kmDistance];
         //        ALERT(cell.distanceLabelWithoutUnit.text);
-#warning  后台接口暂时没有Image 接口 （待改）
         //    cell.ContentImage.image=[UIImage imageNamed:@"img1"];
         //    [cell sizeToFit];
         //设置图片
@@ -425,6 +424,7 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 //上拉刷新
 -(void)headerRefresh
 {
+    [self hideHud];
     [self.pageManager resetPageSplitingManager];
     [self startLocationService];
     touchRefresh=YES;
@@ -434,6 +434,7 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 //下拉加载更多
 -(void)footerRefresh
 {
+     [self hideHud];
     [self prepareRequestParametersStartAt:[self.pageManager getNextStartAt] Length:self.pageManager.pageSize];
 }
 @end

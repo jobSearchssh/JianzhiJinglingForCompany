@@ -47,6 +47,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 @property (weak, nonatomic) IBOutlet UIImageView *phoneLogo;
 @property (weak, nonatomic) IBOutlet UILabel *intentionOutlet;
 @property (weak, nonatomic) IBOutlet UILabel *phoneOutlet;
+@property (weak, nonatomic) IBOutlet UILabel *userHeightOutlet;
 
 //第四项
 @property (strong, nonatomic) IBOutlet UIView *collectionViewOutlet;
@@ -203,6 +204,14 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     }else{
         self.sexOutlet.image = Nil;
     }
+    //身高
+    if ([userModel getuserHeight] != Nil) {
+        self.userHeightOutlet.text = [NSString stringWithFormat:@"%@cm",[userModel getuserHeight]];
+    }else{
+        self.userHeightOutlet.text = @"未填写身高";
+    }
+    
+    NSLog(@"aaa = %@",[userModel getuserHeight]);
     
     //年龄
     if ([userModel getuserBirthday] != Nil) {
@@ -218,16 +227,25 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     }
     //电话
     if (self.isShowPhone) {
-          self.phoneLogo.hidden=NO;
-          self.phoneOutlet.text = [userModel getuserPhone];
+        self.phoneLogo.hidden=NO;
+        self.phoneOutlet.text = [userModel getuserPhone];
     }
     //位置
-    NSString *usrLoaction = [NSString stringWithFormat:@"%@%@%@",[userModel getuserProvince],[userModel getuserCity],[userModel getuserDistrict]];
+    NSString *usrLoaction = Nil;
+    if ([userModel getuserProvince]== Nil && [userModel getuserCity] == Nil && [userModel getuserDistrict] == Nil) {
+        usrLoaction = @"未填写地区";
+    }else{
+        usrLoaction = [NSString stringWithFormat:@"%@%@%@",[userModel getuserProvince],[userModel getuserCity],[userModel getuserDistrict]];
+    }
+    
+    
     [self.locationOutlet setNumberOfLines:0];
     [self.locationOutlet setLineBreakMode:NSLineBreakByWordWrapping];
-    CGSize locationOutletlabelsize = [usrLoaction sizeWithFont:[self.locationOutlet font] constrainedToSize:CGSizeMake(self.locationOutlet.frame.size.width,2000) lineBreakMode:NSLineBreakByWordWrapping];
+    CGSize locationOutletlabelsize = [usrLoaction sizeWithFont:[self.locationOutlet font] constrainedToSize:CGSizeMake([UIScreen mainScreen].bounds.size.width - 143,2000) lineBreakMode:NSLineBreakByWordWrapping];
     [self.locationOutlet setFrame:CGRectMake(self.locationOutlet.frame.origin.x,
-                                             self.locationOutlet.frame.origin.y, locationOutletlabelsize.width, locationOutletlabelsize.height)];
+                                             self.locationOutlet.frame.origin.y,
+                                             self.locationOutlet.frame.size.width,
+                                             locationOutletlabelsize.height)];
     [self.locationOutlet setText:usrLoaction];
     
     const NSDictionary *TYPESELECTEDDICT=@{@"模特/礼仪":@"0", @"促销/导购":@"1", @"销售":@"2" ,@"传单派发":@"3" ,@"安保":@"4" ,@"钟点工":@"5", @"法律事务":@"6", @"服务员":@"7" ,@"婚庆":@"8", @"配送/快递":@"9", @"化妆":@"10", @"护工/保姆":@"11", @"演出":@"12", @"问卷调查":@"13", @"志愿者":@"14" ,@"网络营销":@"15" ,@"导游":@"16", @"游戏代练":@"17", @"家教":@"18", @"软件/网站开发":@"19", @"会计":@"20", @"平面设计/制作":@"21", @"翻译":@"22", @"装修":@"23", @"影视制作":@"24", @"搬家":@"25", @"其他":@"26"};
@@ -245,12 +263,15 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     
     [self.intentionOutlet setNumberOfLines:0];
     [self.intentionOutlet setLineBreakMode:NSLineBreakByWordWrapping];
-    CGSize intentionOutletlabelsize = [usrLoaction sizeWithFont:[self.intentionOutlet font] constrainedToSize:CGSizeMake(self.intentionOutlet.frame.size.width,2000) lineBreakMode:NSLineBreakByWordWrapping];
+    CGSize intentionOutletlabelsize = [usrintention sizeWithFont:[self.intentionOutlet font] constrainedToSize:CGSizeMake([UIScreen mainScreen].bounds.size.width - 112,2000) lineBreakMode:NSLineBreakByWordWrapping];
     [self.intentionOutlet setFrame:CGRectMake(self.intentionOutlet.frame.origin.x,
                                               self.intentionOutlet.frame.origin.y,
-                                              intentionOutletlabelsize.width,
+                                              self.intentionOutlet.frame.size.width,
                                               intentionOutletlabelsize.height)];
     [self.intentionOutlet setText:usrintention];
+    
+    [self.usrinfo2Outlet setFrame:CGRectMake(0,self.coverflowOutlet.frame.origin.y+self.coverflowOutlet.frame.size.height,[UIScreen mainScreen].bounds.size.width,self.intentionOutlet.frame.origin.y+self.intentionOutlet.frame.size.height)];
+    [self.mainScrollviewOutlet addSubview:self.usrinfo2Outlet];
     
     [self.usrinfo2Outlet setFrame:CGRectMake(0,self.coverflowOutlet.frame.origin.y+self.coverflowOutlet.frame.size.height,[UIScreen mainScreen].bounds.size.width,self.intentionOutlet.frame.origin.y+self.intentionOutlet.frame.size.height+20)];
     [self.mainScrollviewOutlet addSubview:self.usrinfo2Outlet];
@@ -295,34 +316,32 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     //第五项
     
     
-    NSString *edu=[userModel getuserSchool];
-    NSString *eduFormat=[edu stringByReplacingOccurrencesOfString:@"\\n" withString:@" \r\n" ];
-    [self.userEduLabel setNumberOfLines:0];
-    [self.userEduLabel setLineBreakMode:NSLineBreakByWordWrapping];
+    //第五项
     
-    CGSize testEduLabelsize = [eduFormat sizeWithFont:[self.userEduLabel font] constrainedToSize:CGSizeMake(self.userEduLabel.frame.size.width,2000) lineBreakMode:NSLineBreakByWordWrapping];
-    [self.userEduLabel setFrame:CGRectMake(self.userEduLabel.frame.origin.x,
-                                           self.userEduLabel.frame.origin.y, testEduLabelsize.width,
-                                           testEduLabelsize.height)];
-    [self.userEduLabel setText:eduFormat];
+    if ([userModel getuserSchool] != nil) {
+        [self.userEduLabel setText:[userModel getuserSchool]];
+    }else{
+        [self.userEduLabel setText:@""];
+    }
     
     NSString *intro = [userModel getuserIntroduction];
-    NSString  *testintroFormat = [intro stringByReplacingOccurrencesOfString:@"\\n" withString:@" \r\n" ];
+    NSLog(@"%@",intro);
+    NSString  *testintroFormat = [intro stringByReplacingOccurrencesOfString:@"\n" withString:@"\r\n" ];
     [self.userIntroductionOutlet setNumberOfLines:0];
     [self.userIntroductionOutlet setLineBreakMode:NSLineBreakByWordWrapping];
-    CGSize testintrolabelsize = [testintroFormat sizeWithFont:[self.userIntroductionOutlet font] constrainedToSize:CGSizeMake(self.userIntroductionOutlet.frame.size.width,2000) lineBreakMode:NSLineBreakByWordWrapping];
+    CGSize testintrolabelsize = [testintroFormat sizeWithFont:[self.userIntroductionOutlet font] constrainedToSize:CGSizeMake([UIScreen mainScreen].bounds.size.width - 120,2000) lineBreakMode:NSLineBreakByWordWrapping];
     [self.userIntroductionOutlet setFrame:CGRectMake(self.userIntroductionOutlet.frame.origin.x,
                                                      self.userIntroductionOutlet.frame.origin.y, testintrolabelsize.width,
                                                      testintrolabelsize.height)];
     [self.userIntroductionOutlet setText:testintroFormat];
+    NSLog(@"aaaaa = %f,",testintrolabelsize.height);
     
     
     NSString *workexperience = [userModel getuserExperience];
-    NSString  *workexperienceFormat = [workexperience stringByReplacingOccurrencesOfString:@"\\n" withString:@" \r\n" ];
+    NSString  *workexperienceFormat = [workexperience stringByReplacingOccurrencesOfString:@"\n" withString:@" \r\n" ];
     [self.workexperienceOutlet setNumberOfLines:0];
     [self.workexperienceOutlet setLineBreakMode:NSLineBreakByWordWrapping];
-    
-    CGSize testworkexperiencelabelsize = [workexperienceFormat sizeWithFont:[self.workexperienceOutlet font] constrainedToSize:CGSizeMake(self.workexperienceOutlet.frame.size.width,2000) lineBreakMode:NSLineBreakByWordWrapping];
+    CGSize testworkexperiencelabelsize =[workexperienceFormat sizeWithFont:[self.workexperienceOutlet font] constrainedToSize:CGSizeMake([UIScreen mainScreen].bounds.size.width - 120,2000) lineBreakMode:NSLineBreakByWordWrapping];
     [self.workexperienceOutlet setFrame:CGRectMake(self.workexperienceOutlet.frame.origin.x,
                                                    self.workexperienceOutlet.frame.origin.y, testworkexperiencelabelsize.width, testworkexperiencelabelsize.height)];
     [self.workexperienceOutlet setText:workexperienceFormat];
@@ -347,9 +366,9 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         //设置最终长度
         [self.mainScrollviewOutlet setContentSize:CGSizeMake(0,self.userInfoBtnView.frame.origin.y+self.userInfoBtnView.frame.size.height)];
     }
-    else if(self.stateFlag==hanldedState)
-    {
-        
+    else if(self.stateFlag==hanldedState){
+        //设置最终长度
+        [self.mainScrollviewOutlet setContentSize:CGSizeMake(0,self.usrinfo3Outet.frame.origin.y+self.usrinfo3Outet.frame.size.height)];
     }
 }
 
@@ -508,7 +527,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 - (IBAction)showVedioAction:(id)sender {
     if ([[self.thisUser getuserVideoURL]length]<4 ) {
-         ALERT(@"该用户没有视频");
+        ALERT(@"该用户没有视频");
         return;
     }
     previewVedioVC *vc = [[previewVedioVC alloc]init];
@@ -565,7 +584,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
             //修改前页代码
             [[BadgeManager shareSingletonInstance]minusApplyCount];
             [[NSNotificationCenter defaultCenter]postNotificationName:@"update" object:nil];
-             [self.navigationController popToRootViewControllerAnimated:YES];
+            [self.navigationController popToRootViewControllerAnimated:YES];
         }else
         {
             NSString *error=[NSString stringWithFormat:@"%@",[oprationModel getInfo]];

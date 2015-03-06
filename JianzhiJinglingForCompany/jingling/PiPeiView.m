@@ -170,6 +170,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     vc.vedioPath = [self.userModel getuserVideoURL];
     vc.type = [NSNumber numberWithInt:preview];
     vc.title = @"我的视频介绍";
+    vc.hidesBottomBarWhenPushed=YES;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
