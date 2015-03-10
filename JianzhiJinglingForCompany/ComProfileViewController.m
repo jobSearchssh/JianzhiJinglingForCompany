@@ -18,6 +18,7 @@
 #import "MainTabBarViewController.h"
 #import "MLNaviViewController.h"
 #import "MBProgressHUD+Add.h"
+#import "LoginManager.h"
 @interface ComProfileViewController ()<UIAlertViewDelegate>
 {
     BOOL isLoadSucceed;
@@ -48,7 +49,7 @@
             }else
             {
                 NSString *error=[NSString stringWithFormat:@"%@",[detailModel getInfo]];
-                UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"提示" message:error delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"重试", nil];
+                UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:Text_Note message:error delegate:self cancelButtonTitle:Text_CancelBtnText otherButtonTitles:Text_RetryText, nil];
                 [alertView show];
             }
         }];
@@ -107,33 +108,42 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    
     [super viewWillAppear:animated];
     [self hideHud];
-    if (!isLoadSucceed) {
-        [self loadDataFromNetAgain];
+    //如果加载成功过，就不要刷新
+    if([LoginManager isOrNotSettingComProfile]==NO){
+        ALERT(Text_NoCompanyDetail);
+        return;
     }
-
+    if (!isLoadSucceed) {
+            [self loadDataFromNet];
+    }
 }
 
--(void)loadDataFromNetAgain
+-(void)loadDataFromEditAgain:(NSNotification*)sender
 {
-    self.thisCompany=nil;
+    //加载本地
+    NSDictionary *dict=[sender userInfo];
+    self.thisCompany=[dict objectForKey:@"item"];
+    [self loadDataInView];
+}
+
+
+-(void)autoData
+{
+    if([LoginManager isOrNotSettingComProfile]==NO)
+    {
+        ALERT(Text_NoCompanyDetail);
+        return;
+    }
     [self loadDataFromNet];
-    
-}
-
-
--(void)autoLoadData
-{
-  [self loadDataFromNet];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     isLoadSucceed=NO;
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loadDataFromNetAgain) name:@"资料修改成功" object:nil];
-     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(autoLoadData) name:@"autoLoadNearData" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loadDataFromEditAgain:) name:@"资料修改成功" object:nil];
+     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(autoData) name:@"autoLoadNearData" object:nil];
     self.title=@"企业信息";
     // Do any additional setup after loading the view from its nib.
     self.edgesForExtendedLayout=UIRectEdgeNone;
@@ -145,7 +155,6 @@
     self.comIntro.editable=NO;//禁止编辑
     
     self.comIntro.autoresizingMask= UIViewAutoresizingFlexibleHeight |UIViewAutoresizingFlexibleWidth;
-    [self loadDataFromNet];
 }
 
 -(void)editResume

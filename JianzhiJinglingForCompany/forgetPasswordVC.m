@@ -15,7 +15,7 @@
 #import "MBProgressHUD+Add.h"
 #import "MBProgressHUD.h"
 
-@interface forgetPasswordVC ()<UITextFieldDelegate,resetPasswordResult,UIAlertViewDelegate,resetPasswordResult>
+@interface forgetPasswordVC ()<UITextFieldDelegate,resetPasswordResult,UIAlertViewDelegate>
 {
 
     NSString *inputUserPhoneNumber;
@@ -99,7 +99,7 @@
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     
     if (isSucceed) {
-        UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"密码设置成功" message:nil delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:Text_PWDResetSuccess  message:nil delegate:self cancelButtonTitle:Text_ConfirmBrntext otherButtonTitles:nil, nil];
         alertView.tag=1;
         [alertView show];
     }else{
@@ -159,26 +159,26 @@
 
 - (IBAction)sendMessage:(id)sender {
     
-    [self showHudInView:self.view hint:@"正在发送.."];
-    [SMS_SDK getVerifyCodeByPhoneNumber:inputUserPhoneNumber AndZone:@"86" result:^(enum SMS_GetVerifyCodeResponseState state) {
+    [self showHudInView:self.view hint:Text_Sending];
+    [SMS_SDK getVerifyCodeByPhoneNumber:inputUserPhoneNumber AndZone:Num_TelephonePrefixZone result:^(enum SMS_GetVerifyCodeResponseState state) {
         [self hideHud];
         if (1==state) {
             [NSThread detachNewThreadSelector:@selector(initTimer) toTarget:self withObject:nil];
-            [MBProgressHUD showSuccess:@"验证码已发送" toView:self.view];
+            [MBProgressHUD showSuccess:Text_SendedVMS toView:self.view];
             
             verifiedPhoneNumber=inputUserPhoneNumber;
         }
         else if(0==state)
         {
-            [MBProgressHUD showError:@"验证码获取失败" toView:self.view];
+            [MBProgressHUD showError:Text_VMSFail toView:self.view];
         }
         else if (SMS_ResponseStateMaxVerifyCode==state)
         {
-            [MBProgressHUD showError:@"验证码申请次数超限" toView:self.view];
+            [MBProgressHUD showError:Text_VMSOverLimits toView:self.view];
         }
         else if(SMS_ResponseStateGetVerifyCodeTooOften==state)
         {
-            [MBProgressHUD showError:@"对不起，你的操作太频繁啦" toView:self.view];
+            [MBProgressHUD showError:Text_VMSOperationInvailed toView:self.view];
         }
     }];
 }
@@ -186,7 +186,7 @@
 -(void)initTimer
 {
     self.timeCountLabel.hidden=NO;
-    self.timeCountLabel.text=[NSString stringWithFormat:@"%d秒",60];
+    self.timeCountLabel.text=[NSString stringWithFormat:@"%ds",60];
     self.sendMsgButton.hidden=YES;
     NSTimeInterval timeInterval =1.0 ;
     //定时器
@@ -204,7 +204,7 @@
 }
 
 - (void)showTimer{
-    self.timeCountLabel.text=[NSString stringWithFormat:@"%d秒",seconds];
+    self.timeCountLabel.text=[NSString stringWithFormat:@"%ds",seconds];
     
     if (seconds==0) {
         [timer invalidate];
@@ -223,7 +223,7 @@
         [loginer resetPasswordInBackground:inputUserPhoneNumber Password:inputUserPassword1];
     }
     else{
-        [MBProgressHUD showError:@"两次输入的密码不一致" toView:self.view];
+        [MBProgressHUD showError:Text_PWDNotComfirm toView:self.view];
     }
 }
 
@@ -277,12 +277,12 @@
             }
             else if(0==state)
             {
-                [MBProgressHUD showError:@"验证码错误" toView:self.view];
+                [MBProgressHUD showError:Text_VMSError toView:self.view];
             }
         }];
     }
     else{
-        [MBProgressHUD showError:@"请输入正确的手机号和验证码" toView:self.view];
+        [MBProgressHUD showError:Text_VMSMissed toView:self.view];
     }
     
 }

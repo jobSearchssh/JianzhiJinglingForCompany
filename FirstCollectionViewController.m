@@ -174,7 +174,7 @@ static  FirstCollectionViewController *thisVC=nil;
             [self.collectionView reloadData];
         }
         else{
-            UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"提示" message:[userListModel getInfo] delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:@"重试",nil];
+            UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:Text_Note message:[userListModel getInfo] delegate:self cancelButtonTitle:Text_GetKnownText otherButtonTitles:Text_RetryText,nil];
             alertView.tag=30001;
             [alertView show];
         }
@@ -197,7 +197,7 @@ static  FirstCollectionViewController *thisVC=nil;
 -(void)startLocationService
 {
     self.ajLocationManager=[AJLocationManager shareLocation];
-    [self showHudInView:self.view hint:@"定位中.."];
+    [self showHudInView:self.view hint:Text_Locating];
     [self.ajLocationManager getLocationCoordinate:^(CLLocationCoordinate2D locationCorrrdinate) {
         [self hideHud];
         [self.collectionView headerEndRefreshing];
@@ -228,7 +228,7 @@ static  FirstCollectionViewController *thisVC=nil;
 //    if (rightNowGPS==nil) {
 //        return;
 //    }
-    [self showHudInView:self.collectionView hint:@"加载中.."];
+    [self showHudInView:self.collectionView hint:Text_Loading];
     [self loadData:@"null" GeoModel:rightNowGPS StartAt:index Length:size];
 }
 

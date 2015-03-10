@@ -682,6 +682,8 @@
 		04DC9BE41A7880B00097DEB0 /* jobListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04DC9BE21A7880B00097DEB0 /* jobListViewController.xib */; };
 		04DC9BFD1A78C4DA0097DEB0 /* jobPublicationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DC9BFB1A78C4DA0097DEB0 /* jobPublicationViewController.m */; };
 		04DC9BFE1A78C4DA0097DEB0 /* jobPublicationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04DC9BFC1A78C4DA0097DEB0 /* jobPublicationViewController.xib */; };
+		04E10B4A1AAD9C4700C19B59 /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 04E10B491AAD9C4700C19B59 /* home.png */; };
+		04E10B4E1AADCB1500C19B59 /* GlobalConstant.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E10B4D1AADCB1500C19B59 /* GlobalConstant.m */; };
 		04FBE2DA1A88DFCC00737503 /* AKPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FBE2D91A88DFCC00737503 /* AKPickerView.m */; };
 		04FBE2E01A88DFEE00737503 /* 0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 04FBE2DB1A88DFEE00737503 /* 0.jpg */; };
 		04FBE2E11A88DFEE00737503 /* 1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 04FBE2DC1A88DFEE00737503 /* 1.jpg */; };
@@ -1529,6 +1531,10 @@
 		04DC9BFA1A78C4DA0097DEB0 /* jobPublicationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jobPublicationViewController.h; sourceTree = "<group>"; };
 		04DC9BFB1A78C4DA0097DEB0 /* jobPublicationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = jobPublicationViewController.m; sourceTree = "<group>"; };
 		04DC9BFC1A78C4DA0097DEB0 /* jobPublicationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = jobPublicationViewController.xib; sourceTree = "<group>"; };
+		04E10B491AAD9C4700C19B59 /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home.png; sourceTree = "<group>"; };
+		04E10B4B1AAD9FA900C19B59 /* TextMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TextMessage.h; sourceTree = "<group>"; };
+		04E10B4C1AADCB1500C19B59 /* GlobalConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalConstant.h; sourceTree = "<group>"; };
+		04E10B4D1AADCB1500C19B59 /* GlobalConstant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlobalConstant.m; sourceTree = "<group>"; };
 		04FBE2D81A88DFCC00737503 /* AKPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKPickerView.h; path = JianzhiJinglingForCompany/AKPickerView.h; sourceTree = "<group>"; };
 		04FBE2D91A88DFCC00737503 /* AKPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKPickerView.m; path = JianzhiJinglingForCompany/AKPickerView.m; sourceTree = "<group>"; };
 		04FBE2DB1A88DFEE00737503 /* 0.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 0.jpg; path = JianzhiJinglingForCompany/profileimages/0.jpg; sourceTree = "<group>"; };
@@ -2153,6 +2159,9 @@
 				047C6C1D1A97574900CCEA83 /* vedioVC */,
 				047B43C71A721F010099DAA5 /* oldFile */,
 				047B44031A72929A0099DAA5 /* 3rd Party */,
+				04E10B4B1AAD9FA900C19B59 /* TextMessage.h */,
+				04E10B4C1AADCB1500C19B59 /* GlobalConstant.h */,
+				04E10B4D1AADCB1500C19B59 /* GlobalConstant.m */,
 			);
 			path = JianzhiJinglingForCompany;
 			sourceTree = "<group>";
@@ -2195,6 +2204,7 @@
 		047B43491A71ECE20099DAA5 /* icon */ = {
 			isa = PBXGroup;
 			children = (
+				04E10B491AAD9C4700C19B59 /* home.png */,
 				041F6FD71A8A55B000A1A849 /* IBM.png */,
 				047AA4B21A7B38B200A3B278 /* moreTabbar.png */,
 				047AA4B31A7B38B200A3B278 /* moreTabbar@2x.png */,
@@ -3936,6 +3946,7 @@
 				04DC99401A77802E0097DEB0 /* mainItem.png in Resources */,
 				04FBE2E11A88DFEE00737503 /* 1.jpg in Resources */,
 				04DC9A6A1A778EEB0097DEB0 /* mainItem.png in Resources */,
+				04E10B4A1AAD9C4700C19B59 /* home.png in Resources */,
 				047B43991A71ECE20099DAA5 /* map.jpg in Resources */,
 				047B438D1A71ECE20099DAA5 /* prompt.png in Resources */,
 				04DC9A541A778EEB0097DEB0 /* cellBackground@3x.png in Resources */,
@@ -4060,6 +4071,7 @@
 				04589EFF1A80F86B00B86C0A /* sideNormalTableViewCell.m in Sources */,
 				049926D81A91E2770015DC2A /* UIScrollView+Extension.m in Sources */,
 				0432E03A1A8EF1DC008EE881 /* PopoverView.m in Sources */,
+				04E10B4E1AADCB1500C19B59 /* GlobalConstant.m in Sources */,
 				044AE30F1AA763BF00CB6B74 /* ALMoviePlayerController.m in Sources */,
 				047B44001A725D7B0099DAA5 /* PersonProfileViewController.m in Sources */,
 				044848CF1A88ECFB00C05295 /* userListModel.m in Sources */,

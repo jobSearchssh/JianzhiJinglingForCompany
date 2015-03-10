@@ -111,6 +111,8 @@ static PersonListViewController *thisVC;
     });
     return thisVC;
 }
+
+
 //重写allocWithZone方法，保证分配内存alloc时都相同
 //+(id)allocWithZone:(struct _NSZone *)zone
 //{
@@ -201,7 +203,7 @@ static PersonListViewController *thisVC;
     [self notLoginHandler];
     return;
 }
-    [self showHudInView:self.tableView hint:@"加载中.."];
+    [self showHudInView:self.tableView hint:Text_Loading];
     
     [self loadFavorableDatafromIndex:self.page1Manager.firstStartIndex Length:self.page1Manager.pageSize];
     [self loadAcceptedDatafromIndex:self.page2Manager.firstStartIndex Length:self.page2Manager.pageSize];
@@ -851,7 +853,7 @@ static PersonListViewController *thisVC;
     //  +(void)deleteTheJob:(NSString *)enterprise_id job_id:(NSString *)job_id withBlock:(operationReturnBlock)oprationReturnBlock;
     if (user_id==nil || [selectedCellRow row]<0 || [selectedCellRow row]>=[self.faviriteDataSource count]) {
         //处理删除请求
-        ALERT(@"错误,请重试");
+        ALERT(Text_DeleteError);
         return ;
         
     }
@@ -874,12 +876,12 @@ static PersonListViewController *thisVC;
 -(void)doCancelFavoriteReq
 {
     if (selectedUserId==nil) {
-        ALERT(@"UserId不存在,请重试");
+        ALERT(Text_UserNotExist);
         return;
     }
     NSUserDefaults *mysettings=[NSUserDefaults standardUserDefaults];
     NSString *com_id=[mysettings objectForKey:CURRENTUSERID];
-    [self showHudInView:self.tableView hint:@"取消中"];
+    [self showHudInView:self.tableView hint:Text_Cancelling];
     [netAPI cancelFocusUser:com_id user_id:selectedUserId withBlock:^(oprationResultModel *oprationModel) {
         [self hideHud];
         if ([[oprationModel getStatus]isEqualToNumber:[
@@ -889,11 +891,11 @@ static PersonListViewController *thisVC;
                 NSIndexPath *path=selectedCellRow;
                 [self deleteCellAtIndexPath:path];
                 [self.tableView reloadData];
-                ALERT(@"删除成功");
+                ALERT(Text_DeleteSuccess);
             }
             else
             {
-                ALERT(@"列表错误，请重试");
+                ALERT(Text_LoadAfterDeleteError);
             }
         }else
         {

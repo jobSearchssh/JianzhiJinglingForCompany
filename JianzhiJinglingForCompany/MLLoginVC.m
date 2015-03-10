@@ -167,7 +167,9 @@ static  MLLoginVC *thisVC=nil;
     if (isPushWhenInRegistrationState) {
         [self chooseRegister];
         isPushWhenInRegistrationState=NO;
+        return;
     }
+    [self chooseLogin];
 }
 
 -(void)checkLoginStatus
@@ -240,22 +242,22 @@ static  MLLoginVC *thisVC=nil;
 - (IBAction)touchLoginBtn:(id)sender {
     
     if ([[NSUserDefaults standardUserDefaults] objectForKey:CURRENTUSERID]!=nil) {
-        [MBProgressHUD showError:@"重复登录" toView:self.view];
+        [MBProgressHUD showError:Text_LoginOverdone toView:self.view];
         return;
     }
     [self.userPassword resignFirstResponder];
     if ([inputUserAccount length]==0) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入手机号码或账户名" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:Text_Note message:Text_InputPhone delegate:nil cancelButtonTitle:Text_ConfirmBrntext otherButtonTitles:nil];
         [alert show];
     }else if ([inputUserPassword length]==0){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入登陆密码" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:Text_InputPwd message:nil delegate:nil cancelButtonTitle:Text_ConfirmBrntext otherButtonTitles:nil];
         [alert show];
     }else{
         if (!self.loginer) {
             self.loginer=[[MLLoginBusiness alloc]init];
             self.loginer.loginResultDelegate=self;
         }
-        [self showHudInView:self.view hint:@"正在登陆请稍后"];
+        [self showHudInView:self.view hint:Text_Logining];
         [self.loginer loginInBackground:inputUserAccount Password:inputUserPassword];
     }
 }
@@ -276,7 +278,7 @@ static  MLLoginVC *thisVC=nil;
             }
             [_sideMenu setTableItem:0 Title:currentUsrName Subtitle:@"点击退出" ImageUrl:Urlstring];
         }
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"登录成功" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:Text_LoginSucess message:nil delegate:nil cancelButtonTitle:Text_ConfirmBrntext otherButtonTitles:nil];
         [alert show];
         [self dismissViewControllerAnimated:YES completion:^{
             [self checkUserStatusForReSideMenu];
@@ -290,7 +292,7 @@ static  MLLoginVC *thisVC=nil;
         }];
     }
     else{
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"登录失败" message:feedback delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:Text_LoginFail message:feedback delegate:nil cancelButtonTitle:Text_ConfirmBrntext otherButtonTitles:nil];
         [alert show];
     }
 }
@@ -298,12 +300,12 @@ static  MLLoginVC *thisVC=nil;
 - (void)registerResult:(BOOL)isSucceed Feedback:(NSString *)feedback{
     [self hideHud];
     if (isSucceed) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"注册成功" message:nil delegate:self cancelButtonTitle:@"返回稍后登录" otherButtonTitles:@"立即进入",nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:Text_RegistSuccess message:nil delegate:self cancelButtonTitle:Text_LoginWait otherButtonTitles:Text_LoginImd,nil];
         alert.tag=RegistAlertViewTag;
         [alert show];
     }
     else{
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"注册失败" message:feedback delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:Text_RegistFail message:feedback delegate:nil cancelButtonTitle:Text_ConfirmBrntext otherButtonTitles:nil];
         [alert show];
     }
 }
@@ -354,33 +356,33 @@ static  MLLoginVC *thisVC=nil;
 }
 
 - (IBAction)sendMassage:(id)sender {
-    [self showHudInView:self.view hint:@"正在发送.."];
-    [SMS_SDK getVerifyCodeByPhoneNumber:inputUserPhoneNumber AndZone:@"86" result:^(enum SMS_GetVerifyCodeResponseState state) {
+    [self showHudInView:self.view hint:Text_Sending];
+    [SMS_SDK getVerifyCodeByPhoneNumber:inputUserPhoneNumber AndZone:Num_TelephonePrefixZone result:^(enum SMS_GetVerifyCodeResponseState state) {
         [self hideHud];
         if (1==state) {
             [NSThread detachNewThreadSelector:@selector(initTimer) toTarget:self withObject:nil];
-            [MBProgressHUD showSuccess:@"验证码已发送" toView:self.view];
+            [MBProgressHUD showSuccess:Text_SendedVMS toView:self.view];
             
             verifiedPhoneNumber=inputUserPhoneNumber;
         }
         else if(0==state)
         {
-            [MBProgressHUD showError:@"验证码获取失败" toView:self.view];
+            [MBProgressHUD showError:Text_VMSFail toView:self.view];
         }
         else if (SMS_ResponseStateMaxVerifyCode==state)
         {
-            [MBProgressHUD showError:@"验证码申请次数超限" toView:self.view];
+            [MBProgressHUD showError:Text_VMSOverLimits toView:self.view];
         }
         else if(SMS_ResponseStateGetVerifyCodeTooOften==state)
         {
-           [MBProgressHUD showError:@"对不起，你的操作太频繁啦" toView:self.view];
+           [MBProgressHUD showError:Text_VMSOperationInvailed toView:self.view];
         }
     }];
 }
 
 -(void)initTimer
 {
-    [self.sendMsgButtonLabel setText:[NSString stringWithFormat:@"%d秒",60] ];
+    [self.sendMsgButtonLabel setText:[NSString stringWithFormat:@"%ds",60] ];
     self.sendMsgButton.enabled=NO;
     [self.sendMsgButtonLabel setBackgroundColor:[UIColor lightGrayColor]];
     NSTimeInterval timeInterval =1.0 ;
@@ -407,7 +409,7 @@ static  MLLoginVC *thisVC=nil;
 -(void)stopTimerAndResetBtn
 {
     [timer invalidate];
-    [self.sendMsgButtonLabel setText:@"发送短信验证码"];
+    [self.sendMsgButtonLabel setText:Text_SendVMSBtnText];
     self.sendMsgButton.enabled=YES;
     [self.sendMsgButtonLabel setBackgroundColor:[UIColor colorWithRed:23.0/255.0 green:87.0/255.0 blue:150.0/255.0 alpha:1.0]];
     seconds=60;
@@ -416,17 +418,17 @@ static  MLLoginVC *thisVC=nil;
 -(void)showTimerWhenTimeOut
 {
     [timer invalidate];
-    [self.sendMsgButtonLabel setText:@"发送短信验证码"];
+    [self.sendMsgButtonLabel setText:Text_SendVMSBtnText];
     self.sendMsgButton.enabled=YES;
     [self.sendMsgButtonLabel setBackgroundColor:[UIColor colorWithRed:23.0/255.0 green:87.0/255.0 blue:150.0/255.0 alpha:1.0]];
     seconds=60;
 }
 
 - (void)showTimer{
-    [self.sendMsgButtonLabel setText:[NSString stringWithFormat:@"%d秒",seconds] ];
+    [self.sendMsgButtonLabel setText:[NSString stringWithFormat:@"%ds",seconds] ];
     if (seconds==0) {
         [timer invalidate];
-        [self.sendMsgButtonLabel setText:@"发送短信验证码"];
+        [self.sendMsgButtonLabel setText:Text_SendVMSBtnText];
         self.sendMsgButton.enabled=YES;
         [self.sendMsgButtonLabel setBackgroundColor:[UIColor colorWithRed:23.0/255.0 green:87.0/255.0 blue:150.0/255.0 alpha:1.0]];
         seconds=60;
@@ -441,12 +443,12 @@ static  MLLoginVC *thisVC=nil;
                 self.loginer=[[MLLoginBusiness alloc]init];
                 self.loginer.registerResultDelegate=self;
             }
-            [self showHudInView:self.view hint:@"正在注册中"];
+            [self showHudInView:self.view hint:Text_Registing];
             [self.loginer registerInBackground:inputUserPhoneNumber Password:inputUserPassword2];
         }
         else if(0==state)
         {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"验证码错误" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:Text_VMSError message:nil delegate:nil cancelButtonTitle:Text_ConfirmBrntext otherButtonTitles:nil];
             [alert show];
         }
     }];
@@ -458,20 +460,20 @@ static  MLLoginVC *thisVC=nil;
         NSString*alertString=@"";
         
         if (inputUserPhoneNumber.length!=11) {
-            alertString=[alertString stringByAppendingString:@"手机号码不正确\n"];
+            alertString=[alertString stringByAppendingString:Text_PhoneError];
         }
         else if ([inputSecurityCode length]==0) {
-            alertString=[alertString stringByAppendingString:@"请输入手机验证码\n"];
+            alertString=[alertString stringByAppendingString:Text_VMSMissed];
         }
         else if (![inputUserPassword1 isEqualToString:inputUserPassword2]) {
-            alertString=[alertString stringByAppendingString:@"两次输入密码不一致\n"];
+            alertString=[alertString stringByAppendingString:Text_PWDNotComfirm];
         }
         else if (!agree){
-            alertString=[alertString stringByAppendingString:@"您没有同意用户使用协议\n"];
+            alertString=[alertString stringByAppendingString:Text_ProtocolNotAgree];
         }
         else if (verifiedPhoneNumber==nil || ![inputUserPhoneNumber isEqualToString:verifiedPhoneNumber])
         {
-           alertString=[alertString stringByAppendingString:@"验证码不正确或失效，请重新获取"];
+           alertString=[alertString stringByAppendingString:Text_VMSObsolete];
         }
 //        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:alertString delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
 //        [alert show];
@@ -500,7 +502,7 @@ static  MLLoginVC *thisVC=nil;
             
         case RegistAlertViewTag:
             if (buttonIndex==1) {
-                [self showHudInView:self.view hint:@"登录中.."];
+                [self showHudInView:self.view hint:Text_Logining];
                 [self.loginer loginInBackground:inputUserPhoneNumber Password:inputUserPassword2];
             }else if(buttonIndex==0)
             {
@@ -525,7 +527,7 @@ static  MLLoginVC *thisVC=nil;
     //退出逻辑
     [MLLoginBusiness logout];
     self.userPassword.text=nil;
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您的账号已经退出成功" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:Text_Note message:Text_logoutSuccess delegate:nil cancelButtonTitle:Text_GetKnownText otherButtonTitles:nil];
     [alert show];
 }
 

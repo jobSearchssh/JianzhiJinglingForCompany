@@ -17,5 +17,6 @@
 #endif
 #import "CommonMacro.h"
 #import <Availability.h>
-
+#import "TextMessage.h"
+#import "GlobalConstant.h"
 #endif

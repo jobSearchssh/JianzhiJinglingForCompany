@@ -107,7 +107,7 @@
         //            [menu setRootViewController:navigationController];
         //        }];
         
-        RESideMenuItem *backItem = [[RESideMenuItem alloc] initWithTitle:@"首页" setFlag:NORMALCELL image:[UIImage imageNamed:@"logout"] highlightedImage:[UIImage imageNamed:@"logout"] action:^(RESideMenu *menu, RESideMenuItem *item) {
+        RESideMenuItem *backItem = [[RESideMenuItem alloc] initWithTitle:@"首页" setFlag:NORMALCELL image:[UIImage imageNamed:@"home"] highlightedImage:[UIImage imageNamed:@"home"] action:^(RESideMenu *menu, RESideMenuItem *item) {
             NSLog(@"Item %@", item);
             [menu hide];
             MainTabBarViewController *mainTab=[MainTabBarViewController shareInstance];

@@ -38,6 +38,11 @@
 
 static MainTabBarViewController* thisVC=nil;
 
+
+
+#if __has_feature(objc_arc)
+#else
+#endif
 +(MainTabBarViewController*)shareInstance
 {
     if (thisVC==nil) {
@@ -49,6 +54,7 @@ static MainTabBarViewController* thisVC=nil;
     
     return thisVC;
 }
+
 
 
 - (void)viewDidLoad {

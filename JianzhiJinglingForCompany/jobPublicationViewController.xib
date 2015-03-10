@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
@@ -35,6 +35,7 @@
                 <outlet property="publishBtnView" destination="IzI-Mt-Hui" id="ZkB-xR-FaC"/>
                 <outlet property="publishedAgainBtn" destination="XDy-a3-0iS" id="cX2-Vz-an1"/>
                 <outlet property="salaryTextField" destination="ywT-P2-OcT" id="xxv-MJ-jn2"/>
+                <outlet property="scrollViewToBottom" destination="EMw-6m-NSn" id="TRL-nX-WgL"/>
                 <outlet property="selectedCollectionView" destination="hwV-U9-l2G" id="sBY-k2-9pA"/>
                 <outlet property="typeLabel" destination="8Ub-eL-Zky" id="psF-wu-vJF"/>
                 <outlet property="view" destination="wth-80-wgj" id="tUz-1F-KBo"/>
@@ -343,6 +344,8 @@
                 <constraint firstAttribute="bottom" secondItem="XDy-a3-0iS" secondAttribute="bottom" id="0I3-bR-bhq"/>
                 <constraint firstAttribute="centerX" secondItem="A9h-4U-vLZ" secondAttribute="centerX" id="8Re-gZ-ZD8"/>
                 <constraint firstItem="dvp-eI-eSR" firstAttribute="leading" secondItem="wth-80-wgj" secondAttribute="leading" id="Chn-aW-x8P"/>
+                <constraint firstAttribute="bottom" secondItem="A9h-4U-vLZ" secondAttribute="bottom" constant="65" id="EMw-6m-NSn"/>
+                <constraint firstItem="dvp-eI-eSR" firstAttribute="top" secondItem="A9h-4U-vLZ" secondAttribute="bottom" id="Hs6-Ge-bbc"/>
                 <constraint firstItem="A9h-4U-vLZ" firstAttribute="leading" secondItem="wth-80-wgj" secondAttribute="leading" id="JSP-oY-k8A"/>
                 <constraint firstAttribute="trailing" secondItem="dvp-eI-eSR" secondAttribute="trailing" id="JuB-Uk-QRX"/>
                 <constraint firstAttribute="centerY" secondItem="A9h-4U-vLZ" secondAttribute="centerY" id="n33-S0-lCo">
@@ -359,10 +362,12 @@
                     <exclude reference="dvp-eI-eSR"/>
                 </mask>
                 <mask key="constraints">
+                    <exclude reference="EMw-6m-NSn"/>
                     <exclude reference="0I3-bR-bhq"/>
                     <exclude reference="pJO-IA-lXK"/>
                     <exclude reference="qc2-aR-3XM"/>
                     <exclude reference="Chn-aW-x8P"/>
+                    <exclude reference="Hs6-Ge-bbc"/>
                     <exclude reference="JuB-Uk-QRX"/>
                     <exclude reference="u77-gq-OZB"/>
                 </mask>
@@ -373,10 +378,13 @@
                     <include reference="dvp-eI-eSR"/>
                 </mask>
                 <mask key="constraints">
+                    <include reference="EMw-6m-NSn"/>
+                    <exclude reference="n33-S0-lCo"/>
                     <include reference="0I3-bR-bhq"/>
                     <include reference="pJO-IA-lXK"/>
                     <include reference="qc2-aR-3XM"/>
                     <include reference="Chn-aW-x8P"/>
+                    <include reference="Hs6-Ge-bbc"/>
                     <include reference="JuB-Uk-QRX"/>
                     <include reference="u77-gq-OZB"/>
                 </mask>
@@ -1525,7 +1533,7 @@
                         </constraint>
                         <constraint firstAttribute="height" constant="94" id="UTf-0q-pBj"/>
                     </constraints>
-                    <state key="normal" title="添加照片">
+                    <state key="normal">
                         <color key="titleColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="titleShadowColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                     </state>

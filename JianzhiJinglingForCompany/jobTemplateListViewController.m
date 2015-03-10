@@ -151,7 +151,6 @@
 {
     
     BOOL nibsRegistered = NO;
-    
     static NSString *Cellidentifier=@"TableViewCell2";
     if (!nibsRegistered) {
         UINib *nib = [UINib nibWithNibName:@"TableViewCell2" bundle:nil];
@@ -160,11 +159,8 @@
     TableViewCell2 *cell = [tableView dequeueReusableCellWithIdentifier:Cellidentifier forIndexPath:indexPath];
     //复用时，清空数据
     cell.jobImageView.image=[UIImage imageNamed:@"placeholder"];
-    
     [cell setRightUtilityButtons:[self rightButtons] WithButtonWidth:58.0f];
-    
     cell.delegate = self;
-    
     if (self.dataSourceArray!=nil) {
         if ( [[self.dataSourceArray objectAtIndex:indexPath.row]isKindOfClass:[jobModel class]])
         {
@@ -421,7 +417,7 @@
     //  +(void)deleteTheJob:(NSString *)enterprise_id job_id:(NSString *)job_id withBlock:(operationReturnBlock)oprationReturnBlock;
     if (job_id==nil || selectedCellRow<0 || selectedCellRow>=[self.dataSourceArray count]) {
         //处理删除请求
-        ALERT(@"错误,请重试");
+        ALERT(@"操作失败,请重试");
         return ;
         
     }
@@ -436,12 +432,12 @@
 -(void)doDeleteReq
 {
     if (selectedJobId==nil) {
-        ALERT(@"JobId不存在,请重试");
+        ALERT(@"职位不存在,请重试");
         return;
     }
     NSUserDefaults *mysettings=[NSUserDefaults standardUserDefaults];
     NSString *com_id=[mysettings objectForKey:CURRENTUSERID];
-    [self showHudInView:self.tableView hint:@"删除中"];
+    [self showHudInView:self.tableView hint:@"删除中..."];
     [netAPI deleteTheJob:com_id  job_id:selectedJobId withBlock:^(oprationResultModel *oprationModel) {
         [self hideHud];
         if ([[oprationModel getStatus]isEqualToNumber:[NSNumber numberWithInt:BASE_SUCCESS]]) {
@@ -453,7 +449,7 @@
             }
             else
             {
-                ALERT(@"列表错误，请重试");
+                ALERT(@"加载列表失败，请重新刷新");
             }
         }else
         {

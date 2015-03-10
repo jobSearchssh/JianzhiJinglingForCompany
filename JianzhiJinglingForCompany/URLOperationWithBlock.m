@@ -35,12 +35,9 @@ static NSString *baseURL = @"http://123.57.5.113:8081/";
         }else{
             [request setHTTPMethod:@"GET"];
         }
-    
-        
         if (postInfo != Nil) {
             [request setHTTPBody:postInfo];
         }
-        
         NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
             
             URLReturnModel *objRe = [[URLReturnModel alloc]initWithData:data error:error];

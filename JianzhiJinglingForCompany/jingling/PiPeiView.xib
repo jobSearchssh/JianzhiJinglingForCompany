@@ -246,7 +246,7 @@
                         </mask>
                     </variation>
                 </label>
-                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="resume_phone.png" translatesAutoresizingMaskIntoConstraints="NO" id="Erg-Gx-iEy">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="resume_icon2.png" translatesAutoresizingMaskIntoConstraints="NO" id="Erg-Gx-iEy">
                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="20" id="Ek0-5j-BXq"/>
@@ -804,6 +804,6 @@
         <image name="just.png" width="35" height="35"/>
         <image name="locat.png" width="60" height="60"/>
         <image name="percent.png" width="40" height="40"/>
-        <image name="resume_phone.png" width="46" height="46"/>
+        <image name="resume_icon2.png" width="160" height="160"/>
     </resources>
 </document>

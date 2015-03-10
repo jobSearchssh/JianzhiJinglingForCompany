@@ -18,6 +18,7 @@
 #import "jobPublicationViewController.h"
 #import "jobListViewController.h"
 #import "previewVedioVC.h"
+#import "LoginManager.h"
 static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 @interface PiPeiView ()<PopoverViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UIActionSheetDelegate>
@@ -68,7 +69,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 - (IBAction)apply:(id)sender {
     
-    UIActionSheet *actionSheet=[[UIActionSheet alloc]initWithTitle:@"" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"选择职位"  otherButtonTitles:@"创建新职位", nil];
+    UIActionSheet *actionSheet=[[UIActionSheet alloc]initWithTitle:@"" delegate:self cancelButtonTitle:Text_CancelBtnText destructiveButtonTitle:Text_JobSelection  otherButtonTitles:Text_CreateNewJob, nil];
     actionSheet.actionSheetStyle=UIActionSheetStyleBlackTranslucent;
     [actionSheet showInView:self.view];
 
@@ -83,7 +84,14 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         [actionSheet dismissWithClickedButtonIndex:nil animated:YES];
         
     }else if (buttonIndex == 1) {
-        
+        if ([LoginManager isOrNotLogin]==NO) {
+            ALERT(@"请先登录");
+            return;
+        }
+        if ([LoginManager isOrNotSettingComProfile]==NO) {
+            ALERT(@"请先到“企业详请“编辑企业信息，再发布职位!");
+            return;
+        }
         jobPublicationViewController *newJobVC=[[jobPublicationViewController alloc]init];
         
         [self.navigationController pushViewController:newJobVC animated:YES];
@@ -163,7 +171,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     
     
     if ([[self.userModel getuserVideoURL]length]<4 ) {
-        ALERT(@"该用户没有视频");
+        ALERT(Text_NoVideo);
         return;
     }
     previewVedioVC *vc = [[previewVedioVC alloc]init];

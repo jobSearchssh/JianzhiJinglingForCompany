@@ -33,14 +33,12 @@
     return NO;
 }
 
-
 -(void)notSettingprofile
 {
     UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"提示" message:@"您还未填写企业信息，为了不影响您使用，请先去补充？" delegate:self cancelButtonTitle:@"再看看" otherButtonTitles:@"马上去", nil];
     alertView.tag=323435;
     [alertView show];
 }
-
 
 -(void)notLoginHandler
 {
@@ -64,20 +62,15 @@
             }
             break;
         }
-        case 323435:
-        {
-            if (buttonIndex==1) {
-                
-            
-//                CompanyResumeViewController *profile=[[CompanyResumeViewController alloc]init];
-//                profile.enterprise=nil;
-//                [self presentViewController:profile animated:YES completion:^{
-//                    
-//                }];
-                [MainTabBarViewController shareInstance].selectedIndex=4;
-            }
-            break;
-        }
+//        case 323435:
+//        {
+//            if (buttonIndex==1) {
+//                
+//            
+//
+//            }
+//            break;
+//        }
         default:
             break;
     }

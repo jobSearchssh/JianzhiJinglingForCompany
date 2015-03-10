@@ -195,7 +195,7 @@ static  MLMatchVC *thisVC=nil;
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             if ([[userListModel getStatus] intValue]==BASE_SUCCESS) {
                 if ([[userListModel getuserArray]count]<1) {
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"暂时没有适合求职者哦~" message:[userListModel getInfo] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:Text_NoSuitableUser message:[userListModel getInfo] delegate:nil cancelButtonTitle:Text_ConfirmBrntext otherButtonTitles:nil];
                     [alert show];
                 }else
                 {
@@ -209,7 +209,7 @@ static  MLMatchVC *thisVC=nil;
                 
             }else
             {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"信息加载失败" message:[userListModel getInfo] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"匹配没有成功" message:[userListModel getInfo] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
                 [alert show];
             }
         }];
@@ -245,7 +245,7 @@ static  MLMatchVC *thisVC=nil;
 -(void)refresh
 {
     if (isLoadSusseed) {
-        ALERT(@"今日刷新次数已到，请明日再来~！");
+        ALERT(Text_NotPermitRefresh);
     }
     else
     {
@@ -267,7 +267,8 @@ static  MLMatchVC *thisVC=nil;
             }];
         }
         self.scrollView.contentSize = CGSizeMake(self.scrollView.contentSize.width, self.scrollView.contentSize.height-kScrollViewHeight);
-        
+        [recordArray removeObjectAtIndex:index];
+        [self refreshScrollView];
 //        //删除匹配的职位
 //        NSUserDefaults *myData = [NSUserDefaults standardUserDefaults];
 //        NSString *currentUserObjectId=[myData objectForKey:@"currentUserObjectId"];

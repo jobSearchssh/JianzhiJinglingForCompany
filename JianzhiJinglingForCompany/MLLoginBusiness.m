@@ -11,8 +11,9 @@
 #import "MLLoginBusiness.h"
 #import "netAPI.h"
 #import "User.h"
-
-
+#import "enterpriseDetailModel.h"
+#import "MBProgressHUD.h"
+#import "MBProgressHUD+Add.h"
 @implementation MLLoginBusiness
 
 - (void)registerInBackground:(NSString*)username Password:(NSString*)pwd{
@@ -28,7 +29,7 @@
             {
               //user本地化
                 [weakself saveUserInfoLocally:username usrID:[registerModel getUsrID]];
-                [weakself registerIsSucceed:YES feedback:@"注册成功"];
+                [weakself registerIsSucceed:YES feedback:Text_RegistSuccess];
                 
             }
         }
@@ -75,14 +76,53 @@
             if ([[loginModel getStatus]intValue]==STATIS_NO) {
                 [weakself loginIsSucceed:NO feedback:[loginModel getInfo]];
                 
+                
+                
             }else if([[loginModel getStatus]intValue]==STATIS_OK)
             {
                 //user本地化
                 [weakself saveUserInfoLocally:username usrID:[loginModel getUsrID]];
-                [weakself loginIsSucceed:YES feedback:@"注册成功"];
+                [weakself loginIsSucceed:YES feedback:Text_RegistSuccess];
+                
             }
         }
 
+    }];
+}
+
+
+-(void)loginComProfile
+{
+    NSUserDefaults *mysettings=[NSUserDefaults standardUserDefaults];
+    if ([mysettings objectForKey:COMPROFILEFlag]) {
+        return;
+    }
+    NSString *com_id=[mysettings objectForKey:CURRENTUSERID];
+    [netAPI getEnterpriseDetail:com_id withBlock:^(enterpriseDetailReturnModel *detailModel) {
+        if ([[detailModel getStatus]intValue]==BASE_SUCCESS) {
+            enterpriseDetailModel *thisCompany=[detailModel getenterpriseDetailModel];
+            //修改NSUserDefaults
+            if (thisCompany!=nil)
+            {
+                NSString *comLogoURL=[NSString stringWithFormat:@"%@",[thisCompany getenterpriseLogoURL]];
+                NSString *comIntro=[NSString stringWithFormat:@"%@",[thisCompany getenterpriseIntroduction]];
+                NSString *comName=[NSString stringWithFormat:@"%@",[thisCompany getenterpriseName]];
+                NSString *comIndusrty=[[[NSNumberFormatter alloc] init]stringFromNumber:[thisCompany getenterpriseIndustry]];
+                NSString *comAddress=[NSString stringWithFormat:@"%@",[thisCompany getenterpriseAddressDetail]];
+                
+                [mysettings setObject:comLogoURL forKey:CURRENTLOGOURL];
+                [mysettings setObject:comName forKey:CURRENTUSERREALNAME];
+                [mysettings setObject:comIndusrty forKey:CURRENTUSERINDUSTRY];
+                [mysettings setObject:comIntro forKey:CURRENTINTRODUCTION];
+                [mysettings setObject:comAddress forKey:CURRENTUSERADDRESS];
+                [mysettings setBool:YES forKey:COMPROFILEFlag];
+                [mysettings synchronize];
+            }
+        }else
+        {
+            NSString *error=[NSString stringWithFormat:@"%@",[detailModel getInfo]];
+            [MBProgressHUD showError:error toView:nil];
+        }
     }];
 }
 
@@ -101,7 +141,7 @@
         [mySettingData setObject:usrname forKey:CURRENTUSERNAME];
         [mySettingData setObject:objectId forKey:CURRENTUSERID];
         [mySettingData synchronize];
-    
+        [self loginComProfile];
     
     NSLog(@"登录成功:%@",[mySettingData objectForKey:CURRENTUSERNAME]);
 
@@ -112,7 +152,7 @@
     
     [netAPI usrResetPassword:username usrPassword:pwd withBlock:^(oprationResultModel *oprationResultModel) {
         if ([oprationResultModel.getStatus intValue]==0) {
-            [self.resetResultDelegate resetPassword:YES Feedback:@"修改成功"];
+            [self.resetResultDelegate resetPassword:YES Feedback:Text_PWDResetSuccess];
         }else{
             [self.resetResultDelegate resetPassword:NO Feedback:oprationResultModel.getInfo];
         }
@@ -130,6 +170,13 @@
         [mySettingData setObject:nil forKey:CURRENTINTRODUCTION];
         [mySettingData setObject:nil  forKey:CURRENTLOGOURL];
         [mySettingData setObject:nil  forKey:CURRENTUSERADDRESS];
+        
+        [mySettingData setObject:nil forKey:CURRENTLOGOURL];
+        [mySettingData setObject:nil forKey:CURRENTUSERREALNAME];
+        [mySettingData setObject:nil forKey:CURRENTUSERINDUSTRY];
+        [mySettingData setObject:nil forKey:CURRENTINTRODUCTION];
+        [mySettingData setObject:nil forKey:CURRENTUSERADDRESS];
+        [mySettingData setBool:NO forKey:COMPROFILEFlag];
         [mySettingData synchronize];
         [[NSNotificationCenter defaultCenter]postNotificationName:@"logoutSuccess" object:nil];
     }

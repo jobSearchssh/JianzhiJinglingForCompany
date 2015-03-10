@@ -35,7 +35,7 @@
 #import <AMapSearchKit/AMapSearchAPI.h>
 #import <MAMapKit/MAMapKit.h>
 
-
+#import "LoginManager.h"
 #import "FileNameGenerator.h"
 #define BeginDatePickViewTag 20001
 #define EndDatePickViewTag 20002
@@ -103,7 +103,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 @property (strong,nonatomic)ZHPickView *datePicker;
 
 @property(strong,nonatomic)DropDownListView *dropDownList1;
-
+@property (strong,nonatomic)LoginManager *loginManager;
 
 @property (strong, nonatomic) IBOutlet UIView *jobInfo1View;
 @property (weak, nonatomic) IBOutlet UIScrollView *mainScrollView;
@@ -178,6 +178,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 //再次发布
 - (IBAction)publisedAgainAction:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *publishedAgainBtn;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *scrollViewToBottom;
 
 @end
 @implementation jobPublicationViewController
@@ -210,16 +211,22 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    collectionViewDataArray=nil;
     workPlaceFlag=FALSE;
     self.mainScrollView.delegate=self;
     [self.navigationItem setTitle:@"发布职位"];
+    
+    // Do any additional setup after loading the view from its nib.
+    //初始化空着野指针
+   
+    
     NSMutableArray *sourceImages = [[NSMutableArray alloc]init];
     [sourceImages addObject:[UIImage imageNamed:@"0.jpg"]];
     [sourceImages addObject:[UIImage imageNamed:@"1.jpg"]];
     [sourceImages addObject:[UIImage imageNamed:@"2.jpg"]];
     
-    typeSelectedDict=@{@"模特/礼仪":@"0", @"促销/导购":@"1", @"销售":@"2" ,@"传单派发":@"3" ,@"安保":@"4" ,@"钟点工":@"5", @"法律事务":@"6", @"服务员":@"7" ,@"婚庆":@"8", @"配送/快递":@"9", @"化妆":@"10", @"护工/保姆":@"11", @"演出":@"12", @"问卷调查":@"13", @"志愿者":@"14" ,@"网络营销":@"15" ,@"导游":@"16", @"游戏代练":@"17", @"家教":@"18", @"软件/网站开发":@"19", @"会计":@"20", @"平面设计/制作":@"21", @"翻译":@"22", @"装修":@"23", @"影视制作":@"24", @"搬家":@"25", @"其他":@"26"};
+//    typeSelectedDict=@{@"模特/礼仪":@"0", @"促销/导购":@"1", @"销售":@"2" ,@"传单派发":@"3" ,@"安保":@"4" ,@"钟点工":@"5", @"法律事务":@"6", @"服务员":@"7" ,@"婚庆":@"8", @"配送/快递":@"9", @"化妆":@"10", @"护工/保姆":@"11", @"演出":@"12", @"问卷调查":@"13", @"志愿者":@"14" ,@"网络营销":@"15" ,@"导游":@"16", @"游戏代练":@"17", @"家教":@"18", @"软件/网站开发":@"19", @"会计":@"20", @"平面设计/制作":@"21", @"翻译":@"22", @"装修":@"23", @"影视制作":@"24", @"搬家":@"25", @"其他":@"26"};
+    typeSelectedDict=[[GlobalConstant alloc]init].jobTypeDict;
     
     eduDict=@{@"不限":@"1",@"初中及以下":@"2",@"高中":@"3",@"大专":@"4",@"本科":@"5",@"硕士":@"6",@"博士及以上":@"7"};
     
@@ -320,6 +327,9 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     [_radio_noDemand setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
     [_radio_noDemand.titleLabel setFont:[UIFont boldSystemFontOfSize:13.0f]];
     [self.jobInfo4View addSubview:_radio_noDemand];
+    
+    
+    
     if(PublishedJob==self.viewStatus)
     {
         //如果是查看已发布的页面走这里初始化
@@ -344,16 +354,17 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         
         nowGeo=[[geoModel alloc]initWith:point.x lat:point.y];
     }
-    
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     if (self.isHideBottomBtn) {
-        self.publishBtn.hidden=NO;
+        self.publishBtn.hidden=YES;
         self.publishBtn.enabled=NO;
         self.publishedAgainBtn.hidden=YES;
+        [self.publishBtnView removeFromSuperview];
+        self.scrollViewToBottom.constant=0.0;
     }
 }
 
@@ -435,15 +446,15 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     for (NSObject *obj in jobworkTime) {
         NSString *intString=[NSString stringWithFormat:@"%@",obj];
         int i=[intString intValue];
-        if (i>21 && i<0) {
-            break;
+        if (i>21 || i<0) {
+            continue;
         }
         selectFreeData[i]=true;
     }
-    [self.selectedCollectionView reloadData];
+    collectionViewDataArray=nil;
     collectionViewDataArray=jobworkTime;
     workTimeFlag=YES;
-    
+    [self.selectedCollectionView reloadData];
     
     //设置工作类型
     NSMutableDictionary *typeForReanlysis=[NSMutableDictionary dictionary];
@@ -1228,7 +1239,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 #pragma mark - QRadioButtonDelegate
 
 - (void)didSelectedRadioButton:(QRadioButton *)radio groupId:(NSString *)groupId {
-    
     NSLog(@"did selected radio:%@ groupId:%@", radio.titleLabel.text, groupId);
     gender=1;
     if ([radio.titleLabel.text isEqualToString:@"男"]) {
@@ -1308,13 +1318,13 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
     
+    
+    
+    
 }
-
-
 #pragma --mark  获取地理位置
 -(void)startLocationService
 {
-    
     jobPublicationViewController *__weak weakSelf=self;
     AJLocationManager *ajLocationManager=[AJLocationManager shareLocation];
     [self showHudInView:self.mainScrollView hint:@"定位中.."];
@@ -1325,9 +1335,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         regeoRequest.location=[AMapGeoPoint locationWithLatitude:locationCorrrdinate.latitude longitude:locationCorrrdinate.longitude];
         regeoRequest.radius = 10000;
         regeoRequest.requireExtension = YES;
-        
-        //
-        
         
         //设置定位，
         geoModel *geo = [[geoModel alloc]initWith:locationCorrrdinate.longitude lat:locationCorrrdinate.latitude];
@@ -1359,7 +1366,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         //通过AMapReGeocodeSearchResponse对象处理搜索结果
         NSString *result = [NSString stringWithFormat:@"ReGeocode: %@", response.regeocode];
         NSLog(@"ReGeo: %@", result);
-        
         [self.jobPlaceLabel setTitle:[NSString stringWithFormat:@"%@ %@ %@",response.regeocode.addressComponent.province,response.regeocode.addressComponent.city,response.regeocode.addressComponent.district]
                             forState:UIControlStateNormal];
         [self.thisJob setjobWorkProvince:response.regeocode.addressComponent.province];

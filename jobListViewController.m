@@ -49,6 +49,12 @@
         [weakSelf hideHud];
         [weakSelf.tableView footerEndRefreshing];
         if ([[jobListModel getStatus]intValue]==BASE_SUCCESS) {
+            if([[jobListModel getCount]intValue]==0)
+            {
+                ALERT(@"没有职位，请先返回发布一个职位");
+                return ;
+                //                [self.navigationController popViewControllerAnimated:YES];
+            }
             if (_dataSource==nil) {
                 _dataSource=[NSMutableArray array];
             }
@@ -57,8 +63,6 @@
             [weakSelf.tableView reloadData];
         }else
         {
-            
-            
             ALERT([jobListModel getInfo]);
         }
     }];
@@ -259,7 +263,7 @@
     CGPoint nowlocation=CGPointFromString([[NSUserDefaults standardUserDefaults]objectForKey:CURRENTLOCATOIN]);
     if (_dataSource!=nil) {
         jobModel *job=[_dataSource objectAtIndex:indexPath.row];
-        cell.distanceLabel.text=[NSString stringWithFormat:@"%.2f",[jobModel getDistance:@[[NSNumber numberWithDouble:nowlocation.x],[NSNumber numberWithDouble:nowlocation.y]]]] ;
+        cell.distanceLabel.text=[NSString stringWithFormat:@"%.2fkm",[jobModel getDistance:@[[NSNumber numberWithDouble:nowlocation.x],[NSNumber numberWithDouble:nowlocation.y]]]] ;
         cell.addressLabel.text=[NSString stringWithFormat:@"%@",[job getjobWorkAddressDetail]];
         cell.jobTitleLabel.text=[NSString stringWithFormat:@"%@",[job getjobTitle]];
         cell.recruitNumLabel.text=[NSString stringWithFormat:@"招募:%d/%d",[[job getjobHasAccepted]intValue],[[job getjobRecruitNum]intValue]];

@@ -216,11 +216,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "jobListViewController.m"
-            timestampString = "447260235.042044"
+            timestampString = "447346486.145892"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "325"
-            endingLineNumber = "325"
+            startingLineNumber = "329"
+            endingLineNumber = "329"
             landmarkName = "-tableView:didSelectRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -232,11 +232,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JianzhiJinglingForCompany/personListViewController.m"
-            timestampString = "447173523.077507"
+            timestampString = "447585732.923911"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "215"
-            endingLineNumber = "215"
+            startingLineNumber = "217"
+            endingLineNumber = "217"
             landmarkName = "-tableView:cellForRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -360,12 +360,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JianzhiJinglingForCompany/jobPublicationViewController.m"
-            timestampString = "447260235.042044"
+            timestampString = "447607695.156612"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1180"
-            endingLineNumber = "1180"
-            landmarkName = "-showBeginTimeAction:"
+            startingLineNumber = "1195"
+            endingLineNumber = "1195"
+            landmarkName = "-showEndTimeAction:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -376,11 +376,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JianzhiJinglingForCompany/jobPublicationViewController.m"
-            timestampString = "447260235.042044"
+            timestampString = "447607695.156612"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1232"
-            endingLineNumber = "1232"
+            startingLineNumber = "1246"
+            endingLineNumber = "1246"
             landmarkName = "-didSelectedRadioButton:groupId:"
             landmarkType = "5">
          </BreakpointContent>
@@ -392,13 +392,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JianzhiJinglingForCompany/jobPublicationViewController.m"
-            timestampString = "447260235.042044"
+            timestampString = "447607695.156612"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1223"
-            endingLineNumber = "1223"
-            landmarkName = "-selectedEduAction:"
-            landmarkType = "5">
+            startingLineNumber = "1238"
+            endingLineNumber = "1238"
+            landmarkName = "@implementation jobPublicationViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

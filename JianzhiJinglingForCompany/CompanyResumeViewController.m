@@ -221,7 +221,7 @@ static NSString *scrollindentify = @"scrollviewdown";
     picker = Nil;
     [self dismissModalViewControllerAnimated:YES];
     if (![self writeImageToDoc:image]) {
-        UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:@"提示" message:@"写入文件夹错误,请重试" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+        UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:Text_Note message:Text_WriteFile delegate:nil cancelButtonTitle:Text_GetKnownText otherButtonTitles:nil];
         [alterTittle show];
     }else{
         //添加图片
@@ -263,7 +263,7 @@ static NSString *scrollindentify = @"scrollviewdown";
                                   //                                  [self showHudInView:self.view hint:[NSString stringWithFormat:@"上传:%ld％",(long)(progress*100)]];
                                   
                                   dispatch_async(dispatch_get_main_queue(), ^{
-                                      [self showHudInView:self.view hint:[NSString stringWithFormat:@"上传:%ld％",(long)(progress*100)]];
+                                      [self showHudInView:self.view hint:[NSString stringWithFormat:@"Loading:%ld％",(long)(progress*100)]];
                                       if (progress==1) {
                                           [self hideHud];
                                       }
@@ -280,19 +280,19 @@ static NSString *scrollindentify = @"scrollviewdown";
                                               dispatch_async(dispatch_get_main_queue(), ^{
                                                   
                                                   imageUrl=imageTemp;
-                                                  [MBProgressHUD showError:@"上传成功" toView:self.view];
+                                                  [MBProgressHUD showError:Text_UpLoadSuccess toView:self.view];
                                               });
                                           }else{
                                               [self hideHud];
                                               dispatch_async(dispatch_get_main_queue(), ^{
-                                                  [MBProgressHUD showError:@"上传失败" toView:self.view];
+                                                  [MBProgressHUD showError:Text_UpLoadError toView:self.view];
                                               });
                                           }
                                       }
                                       
                                   }else{
                                       dispatch_async(dispatch_get_main_queue(), ^{
-                                          [MBProgressHUD showError:@"上传失败" toView:self.view];
+                                          [MBProgressHUD showError:Text_UpLoadError toView:self.view];
                                       });
                                   }
                               }];
@@ -489,9 +489,9 @@ static NSString *scrollindentify = @"scrollviewdown";
     UIActionSheet *actionSheet = [[UIActionSheet alloc]
                                   initWithTitle:Nil
                                   delegate:self
-                                  cancelButtonTitle:@"取消"
+                                  cancelButtonTitle:Text_CancelBtnText
                                   destructiveButtonTitle:Nil
-                                  otherButtonTitles:@"选择本地图片",@"拍照",nil];
+                                  otherButtonTitles:Text_ChoosePhoto,Text_TakingPhoto,nil];
     actionSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
     actionSheet.tag = 0;
     [actionSheet showInView:self.view];
@@ -545,9 +545,6 @@ static NSString *scrollindentify = @"scrollviewdown";
 //                [self.imageBtn setBackgroundImage:temp forState:UIControlStateNormal];
         
     }
-    
-    
-    
 }
 
 
@@ -563,7 +560,7 @@ static NSString *scrollindentify = @"scrollviewdown";
         [self.newenterprise setenterpriseName:[NSString stringWithFormat:@"%@",[self.enterprise getenterpriseName]]];
     }else
     {
-        ALERT(@"请输入企业名称");
+        ALERT(Text_AddName);
         return;
     }
     //选择城市
@@ -579,7 +576,7 @@ static NSString *scrollindentify = @"scrollviewdown";
         [self.newenterprise setenterpriseDistrict:[NSString stringWithFormat:@"%@",[self.enterprise getenterpriseDistrict]]];
     }else
     {
-        ALERT(@"请输入企业所在区域");
+        ALERT(Text_AddZone);
         return;
     }
     //详细地址
@@ -591,7 +588,7 @@ static NSString *scrollindentify = @"scrollviewdown";
         [self.newenterprise setenterpriseAddressDetail:[NSString stringWithFormat:@"%@",[self.enterprise getenterpriseAddressDetail]]];
     }else
     {
-        ALERT(@"请输入企业详细地址");
+        ALERT(Text_AddAddress);
         return;
     }
     
@@ -605,10 +602,9 @@ static NSString *scrollindentify = @"scrollviewdown";
         [self.newenterprise setenterpriseAddressDetail:[NSString stringWithFormat:@"%@",[self.enterprise getenterpriseIntroduction]]];
     }else
     {
-        ALERT(@"请输入企业简介");
+        ALERT(Text_AddIntro);
         return;
     }
-    
     //公司图片
     if (imageUrl!=nil) {
         [self.newenterprise setenterpriseLogoURL:imageUrl];
@@ -618,10 +614,9 @@ static NSString *scrollindentify = @"scrollviewdown";
     }
     else
     {
-        ALERT(@"请添加企业照片");
+        ALERT(Text_AddPhoto);
         return;
     }
-    
     
     //一下为默认设置
     NSUserDefaults *mysettings=[NSUserDefaults standardUserDefaults];
@@ -635,7 +630,7 @@ static NSString *scrollindentify = @"scrollviewdown";
         //更新新的位置信息
         if(newGeo==nil)
         {
-            ALERT(@"缺少位置信息，请重新定位");
+            ALERT(Text_LocateErrorAndRetry);
             return;
         }
         [self.newenterprise setgeoModel:geo];
@@ -643,7 +638,7 @@ static NSString *scrollindentify = @"scrollviewdown";
     else if (self.enterprise!=nil) {
         geo=[self.enterprise getGeo];
         if (geo==nil) {
-            ALERT(@"缺少位置信息，请重新定位");
+            ALERT(Text_LocateErrorAndRetry);
             return;
         }
         else{
@@ -656,22 +651,24 @@ static NSString *scrollindentify = @"scrollviewdown";
 
 -(void)doCommit
 {
-    [self showHudInView:self.view hint:@"正在提交..."];
+    [self showHudInView:self.view hint:Text_Commiting];
     
     [netAPI createOrEditEnterpriseInfo:self.newenterprise withBlock:^(ceateOrEditInfoModel *createEditModel) {
         [self hideHud];
         if ([[createEditModel getStatus]intValue]==BASE_SUCCESS) {
             
             [self dismissingThisVCWithComletion:^{
-                ALERT(@"修改成功");
-                [[NSNotificationCenter defaultCenter]postNotificationName:@"资料修改成功" object:nil];
+                NSUserDefaults  *mysetings=[NSUserDefaults standardUserDefaults];
+                [mysetings setBool:YES forKey:COMPROFILEFlag];
+                [mysetings synchronize];
+                ALERT(Text_ModfySuccess);
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"资料修改成功" object:nil  userInfo:@{@"item":self.newenterprise }];
             }];
-           
         }
         else
         {
             NSString *error=[NSString stringWithFormat:@"%@",[createEditModel getInfo]];
-            UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"加载失败，是否重试？" message:error delegate:self cancelButtonTitle:@"返回" otherButtonTitles:@"好的", nil];
+            UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:Text_loadError message:error delegate:self cancelButtonTitle:Text_Back otherButtonTitles:Text_OK, nil];
             alertView.tag=CANCELEDITALERTTAG;
             [alertView show];
         }
@@ -730,7 +727,7 @@ static NSString *scrollindentify = @"scrollviewdown";
                 imagePickerController.allowsEditing = TRUE;
                 [self presentViewController:imagePickerController animated:YES completion:^{}];
             }else{
-                UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:@"提示" message:@"无法使用照相功能" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+                UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:Text_Note message:Text_NoCamera delegate:nil cancelButtonTitle:Text_GetKnownText otherButtonTitles:nil];
                 [alterTittle show];
             }
             return;
@@ -766,11 +763,11 @@ static NSString *scrollindentify = @"scrollviewdown";
 
 - (IBAction)upDateLocation:(id)sender {
     wantedUpdateLocation=YES;
-    [self showHudInView:self.view hint:@"正在定位中"];
+    [self showHudInView:self.view hint:Text_Locating];
     MLLocationServiceManager *manager=[MLLocationServiceManager shareInstance];
     [manager startLocationServiceWithCompleteBlock:^{
         [self hideHud];
-        [MBProgressHUD showError:@"定位成功" toView:self.view];
+        [MBProgressHUD showError:Text_LocateSuccess toView:self.view];
         NSUserDefaults *mySettingData = [NSUserDefaults standardUserDefaults];
         NSString *geoString1=[mySettingData objectForKey:CURRENTLOCATOIN];
         CGPoint p2=CGPointFromString(geoString1);
@@ -792,7 +789,7 @@ static NSString *scrollindentify = @"scrollviewdown";
         [self.search AMapReGoecodeSearch: regeoRequest];
     } Error:^{
         [self hideHud];
-        [MBProgressHUD showError:@"定位失败，使用默认位置" toView:self.view];
+        [MBProgressHUD showError:Text_LocateError toView:self.view];
         NSUserDefaults *mySettingData = [NSUserDefaults standardUserDefaults];
         NSString *geoString=[mySettingData objectForKey:CURRENTLOCATOIN];
         CGPoint p2=CGPointFromString(geoString);
@@ -805,7 +802,7 @@ static NSString *scrollindentify = @"scrollviewdown";
 -(void)errorHideHudAfterDelay
 {
     [self hideHud];
-    ALERT(@"请求超时");
+    ALERT(Text_Timeout);
     //    [self.thisJob setjobWorkProvince:@"北京"];
     //    [self.thisJob setjobWorkCity:@"北京市"];
     //    [self.thisJob setjobWorkDistrict:@"朝阳区"];

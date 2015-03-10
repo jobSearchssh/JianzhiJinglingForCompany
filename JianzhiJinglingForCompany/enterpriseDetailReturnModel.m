@@ -38,7 +38,7 @@
                 detail = [[enterpriseDetailModel alloc]initWithDictionary:dic];
             }
             @catch (NSException *exception) {
-                NSLog(@"enterpriseDetailModel erroe");
+                NSLog(@"enterpriseDetailModel error");
                 flag = false;
             }
         }

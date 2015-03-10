@@ -141,11 +141,11 @@
 
 #pragma mark - KVNMaskedPageControlDataSource
 - (UIColor *)pageControl:(KVNMaskedPageControl *)control pageIndicatorTintColorForIndex:(NSInteger)index {
-    return [UIColor lightGrayColor];
+    return [UIColor colorWithRed:171/255.0 green:171/255.0 blue:171/255.0 alpha:1.0];
 }
 
 - (UIColor *)pageControl:(KVNMaskedPageControl *)control currentPageIndicatorTintColorForIndex:(NSInteger)index {
-    return [UIColor colorWithRed:174.0/255.0 green:197.0/255.0 blue:80.0/255.0 alpha:1.0];
+    return [UIColor colorWithRed:255/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0];
 }
 
 

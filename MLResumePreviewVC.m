@@ -19,6 +19,7 @@
 #import "NSDateFormatter+Category.h"
 #import "UIViewController+LoginManager.h"
 #import "previewVedioVC.h"
+#import "LoginManager.h"
 static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 @interface MLResumePreviewVC (){
@@ -28,9 +29,12 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     bool selectFreeData[21];
     CGFloat freecellwidth;
     
+    NSString *thisUserPhoneNum;
 }
 
+@property (weak, nonatomic) IBOutlet UIButton *PhoneCallBtn;
 
+- (IBAction)makePhoneCall:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *mainScrollviewOutlet;
 //第一项
@@ -44,6 +48,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 @property (weak, nonatomic) IBOutlet UIImageView *sexOutlet;
 @property (weak, nonatomic) IBOutlet UILabel *ageOutlet;
 @property (weak, nonatomic) IBOutlet UILabel *locationOutlet;
+@property (weak, nonatomic) IBOutlet UIButton *phoneLogoBtn;
 @property (weak, nonatomic) IBOutlet UIImageView *phoneLogo;
 @property (weak, nonatomic) IBOutlet UILabel *intentionOutlet;
 @property (weak, nonatomic) IBOutlet UILabel *phoneOutlet;
@@ -228,7 +233,14 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     //电话
     if (self.isShowPhone) {
         self.phoneLogo.hidden=NO;
+        self.phoneLogoBtn.hidden=NO;
+        self.phoneLogoBtn.enabled=YES;
         self.phoneOutlet.text = [userModel getuserPhone];
+        if (self.hideAcceptBtn) {
+            thisUserPhoneNum=[userModel getuserPhone];
+            self.PhoneCallBtn.hidden=NO;
+            self.PhoneCallBtn.enabled=YES;
+        }
     }
     //位置
     NSString *usrLoaction = Nil;
@@ -547,7 +559,14 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         //        [actionSheet dismissWithClickedButtonIndex:nil animated:YES];
         
     }else if (buttonIndex == 1) {
-        
+        if ([LoginManager isOrNotLogin]==NO) {
+            ALERT(@"请先登录");
+            return;
+        }
+        if ([LoginManager isOrNotSettingComProfile]==NO) {
+            ALERT(@"请先到“企业详请“编辑企业信息，再发布职位!");
+            return;
+        }
         jobPublicationViewController *newJobVC=[[jobPublicationViewController alloc]init];
         [self.navigationController pushViewController:newJobVC animated:YES];
         //        [actionSheet dismissWithClickedButtonIndex:nil animated:YES];
@@ -615,5 +634,14 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         }
     }];
     [self performSelector:@selector(hideHud) withObject:nil afterDelay:20];
+}
+- (IBAction)makePhoneCall:(id)sender {
+    
+    UIWebView*callWebview =[[UIWebView alloc] init];
+    NSString *tel=[NSString stringWithFormat:@"tel:%@",thisUserPhoneNum];
+    NSURL *telURL =[NSURL URLWithString:tel];
+    [callWebview loadRequest:[NSURLRequest requestWithURL:telURL]];
+    //记得添加到view上
+    [self.view addSubview:callWebview];
 }
 @end

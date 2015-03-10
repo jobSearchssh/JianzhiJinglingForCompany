@@ -16,7 +16,7 @@
 
 @implementation LoginManager
 
-+(BOOL)isLogin
++(BOOL)isOrNotLogin
 {
     NSUserDefaults *mySetting=[NSUserDefaults standardUserDefaults];
     NSString *com_id=[mySetting objectForKey:CURRENTUSERID];
@@ -27,7 +27,7 @@
 }
 
 
-+(BOOL)isUpLoadComProfile
++(BOOL)isOrNotSettingComProfile
 {
     NSUserDefaults *mySetting=[NSUserDefaults standardUserDefaults];
     BOOL comProfileflag=[mySetting boolForKey:COMPROFILEFlag];
@@ -38,7 +38,7 @@
 }
 
 
--(void)notSettingprofile
+-(void)noProfileHandler
 {
     UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"提示" message:@"您还未填写企业信息，为了不影响您使用，请先去补充？" delegate:self cancelButtonTitle:@"再看看" otherButtonTitles:@"马上去", nil];
     alertView.tag=settingsAlertTag;
@@ -46,7 +46,7 @@
 }
 
 
--(void)notLoginHandler
+-(void)unLoginHandler
 {
     UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:nil message:@"还未登录，请先登录" delegate:self cancelButtonTitle:@"再看看" otherButtonTitles:@"马上去", nil];
     alertView.tag=loginAlertTag;
