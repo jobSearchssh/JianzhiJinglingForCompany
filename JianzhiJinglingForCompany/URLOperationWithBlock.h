@@ -10,12 +10,20 @@
 #import "URLReturnModel.h"
 
 typedef void (^returnBlock)(URLReturnModel *returnModel);
+
+/**
+ 自定义Operation 集成自NSOperation
+ **/
+
 @interface URLOperationWithBlock : NSOperation{
     NSData *postInfo;
     NSString *postLoca;
     BOOL isPost;
     returnBlock block;
 }
-//data为post数据 postFunction为post地址 block为回调函数
-- (id)initWithURL:(NSData*)getInfo serveceFunction:(NSString *)getPostLoca returnblock:(returnBlock)rblock isPost:(BOOL)postOrGet;
+
+/**
+ data为post数据 postFunction为post地址 block为回调函数
+**/
+ - (id)initWithURL:(NSData*)getInfo serveceFunction:(NSString *)getPostLoca returnblock:(returnBlock)rblock isPost:(BOOL)postOrGet;
 @end

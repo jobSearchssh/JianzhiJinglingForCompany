@@ -47,7 +47,7 @@
     {
         usrItem.subtitle=@"点击退出";
         if ([username length]>7) {
-            usrItem.title=[NSString stringWithFormat:@"%@**%@",[username substringToIndex:3],[username substringFromIndex:([username length]-3)]];
+            usrItem.title=username;
         }else
         {
           usrItem.subtitle=username;
@@ -85,7 +85,7 @@
 {
     RESideMenu *_sideMenu=[RESideMenu sharedInstance];
     if (!_sideMenu) {
-        RESideMenuItem *usrItem = [[RESideMenuItem alloc] initWithTitle:@"游客" setFlag:USRCELL setSubtitle:@"未登录"image:nil imageUrl:nil highlightedImage:[UIImage imageNamed:@"avatar_round_m"] action:^(RESideMenu *menu, RESideMenuItem *item){
+        RESideMenuItem *usrItem = [[RESideMenuItem alloc] initWithTitle:Btn_Tourists setFlag:USRCELL setSubtitle:Btn_NOLogin image:nil imageUrl:nil highlightedImage:[UIImage imageNamed:@"tourists"] action:^(RESideMenu *menu, RESideMenuItem *item){
             NSLog(@"Item %@", item);
             [menu hide];
             
@@ -107,7 +107,7 @@
         //            [menu setRootViewController:navigationController];
         //        }];
         
-        RESideMenuItem *backItem = [[RESideMenuItem alloc] initWithTitle:@"首页" setFlag:NORMALCELL image:[UIImage imageNamed:@"home"] highlightedImage:[UIImage imageNamed:@"home"] action:^(RESideMenu *menu, RESideMenuItem *item) {
+        RESideMenuItem *backItem = [[RESideMenuItem alloc] initWithTitle:Btn_FirstPage setFlag:NORMALCELL image:[UIImage imageNamed:@"home"] highlightedImage:[UIImage imageNamed:@"home"] action:^(RESideMenu *menu, RESideMenuItem *item) {
             NSLog(@"Item %@", item);
             [menu hide];
             MainTabBarViewController *mainTab=[MainTabBarViewController shareInstance];
@@ -116,14 +116,14 @@
         }];
         
         
-        RESideMenuItem *savedItem = [[RESideMenuItem alloc] initWithTitle:@"申请人管理" setFlag:NORMALCELL image:[UIImage imageNamed:@"collection"] highlightedImage:[UIImage imageNamed:@"collection"] action:^(RESideMenu *menu, RESideMenuItem *item) {
+        RESideMenuItem *savedItem = [[RESideMenuItem alloc] initWithTitle:Btn_CandidateManager setFlag:NORMALCELL image:[UIImage imageNamed:@"collection"] highlightedImage:[UIImage imageNamed:@"collection"] action:^(RESideMenu *menu, RESideMenuItem *item) {
             
             PersonListViewController *personVC=[PersonListViewController shareSingletonInstance];
             [self addLeftBarItem:personVC];
             MLNaviViewController *navigationVC=[[MLNaviViewController alloc]initWithRootViewController:personVC];
             [menu setRootViewController:navigationVC];
         }];
-        RESideMenuItem *applicationItem = [[RESideMenuItem alloc] initWithTitle:@"我的发布" setFlag:NORMALCELL image:[UIImage imageNamed:@"apply"] highlightedImage:[UIImage imageNamed:@"apply"] action:^(RESideMenu *menu, RESideMenuItem *item) {
+        RESideMenuItem *applicationItem = [[RESideMenuItem alloc] initWithTitle:Btn_MyJob setFlag:NORMALCELL image:[UIImage imageNamed:@"apply"] highlightedImage:[UIImage imageNamed:@"apply"] action:^(RESideMenu *menu, RESideMenuItem *item) {
             JobPublishedListViewController *publishedJobListVC=[[JobPublishedListViewController alloc]init];
             [self addLeftBarItem:publishedJobListVC];
             
@@ -131,7 +131,7 @@
             [menu setRootViewController:navigationVC];
         }];
         
-        RESideMenuItem *InvitationItem = [[RESideMenuItem alloc] initWithTitle:@"我的邀请" setFlag:NORMALCELL image:[UIImage imageNamed:@"catagory"] highlightedImage:[UIImage imageNamed:@"catagory"] action:^(RESideMenu *menu, RESideMenuItem *item) {
+        RESideMenuItem *InvitationItem = [[RESideMenuItem alloc] initWithTitle:Btn_MyInvitation setFlag:NORMALCELL image:[UIImage imageNamed:@"catagory"] highlightedImage:[UIImage imageNamed:@"catagory"] action:^(RESideMenu *menu, RESideMenuItem *item) {
             MyInvitedViewController *publishedJobListVC=[MyInvitedViewController shareSingletonInstance];
             [self addLeftBarItem:publishedJobListVC];
             
@@ -139,7 +139,7 @@
             [menu setRootViewController:navigationVC];
         }];
         
-        RESideMenuItem *feedbackItem = [[RESideMenuItem alloc] initWithTitle:@"发送反馈" setFlag:NORMALCELL image:[UIImage imageNamed:@"send"] highlightedImage:[UIImage imageNamed:@"send"] action:^(RESideMenu *menu, RESideMenuItem *item) {
+        RESideMenuItem *feedbackItem = [[RESideMenuItem alloc] initWithTitle:Btn_FeedBack setFlag:NORMALCELL image:[UIImage imageNamed:@"send"] highlightedImage:[UIImage imageNamed:@"send"] action:^(RESideMenu *menu, RESideMenuItem *item) {
             MLFeedBackVC *feedBack=[MLFeedBackVC sharedInstance];
             [self addLeftBarItem:feedBack];
             
@@ -148,7 +148,7 @@
             [menu setRootViewController:navigationVC];
         }];
         
-        RESideMenuItem *aboutusItem = [[RESideMenuItem alloc] initWithTitle:@"声明" setFlag:NORMALCELL image:[UIImage imageNamed:@"notice"] highlightedImage:[UIImage imageNamed:@"notice"] action:^(RESideMenu *menu, RESideMenuItem *item) {
+        RESideMenuItem *aboutusItem = [[RESideMenuItem alloc] initWithTitle:Btn_Statement setFlag:NORMALCELL image:[UIImage imageNamed:@"notice"] highlightedImage:[UIImage imageNamed:@"notice"] action:^(RESideMenu *menu, RESideMenuItem *item) {
             NSLog(@"Item %@", item);
             MLLegalVC *legalVC=[MLLegalVC sharedInstance];
             [self addLeftBarItem:legalVC];

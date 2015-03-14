@@ -190,7 +190,7 @@ static NSString *scrollindentify = @"scrollviewdown";
     BOOL result;
     @synchronized(self) {
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-           fileTempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",[FileNameGenerator getNameForNewFile]]];
+        fileTempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",[FileNameGenerator getNameForNewFile]]];
         result = [UIImagePNGRepresentation(image)writeToFile:fileTempPath atomically:YES];
     }
     return result;
@@ -224,37 +224,6 @@ static NSString *scrollindentify = @"scrollviewdown";
         UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:Text_Note message:Text_WriteFile delegate:nil cancelButtonTitle:Text_GetKnownText otherButtonTitles:nil];
         [alterTittle show];
     }else{
-        //添加图片
-        //        imageButton *btnPic=[[imageButton alloc]initWithFrame:CGRectMake(-PIC_WIDTH, INSETS, PIC_WIDTH, PIC_HEIGHT)];
-        //        btnPic.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-        //        btnPic.titleLabel.font = [UIFont systemFontOfSize:13];
-        //        UIImage *darkTemp = [temp rt_darkenWithLevel:0.5f];
-        //        [btnPic setBackgroundImage:darkTemp forState:UIControlStateNormal];
-        //        [btnPic setFrame:CGRectMake(-PIC_WIDTH, INSETS, PIC_WIDTH, PIC_HEIGHT)];
-        //        [addedPicArray addObject:btnPic];
-        //        [btnPic setRestorationIdentifier:[NSString stringWithFormat:@"%lu",(unsigned long)addedPicArray.count-1]];
-        //        [btnPic addTarget:self action:@selector(deletePicAction:) forControlEvents:UIControlEventTouchUpInside];
-        //        [btnPic setStatus:uplaoding];
-        //        [self.picScrollView addSubview:btnPic];
-        //
-        //        for (imageButton *btn in addedPicArray) {
-        //            CABasicAnimation *positionAnim=[CABasicAnimation animationWithKeyPath:@"position"];
-        //            [positionAnim setFromValue:[NSValue valueWithCGPoint:CGPointMake(btn.center.x, btn.center.y)]];
-        //            [positionAnim setToValue:[NSValue valueWithCGPoint:CGPointMake(btn.center.x+INSETS+PIC_WIDTH, btn.center.y)]];
-        //            [positionAnim setDelegate:self];
-        //            [positionAnim setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
-        //            [positionAnim setDuration:0.25f];
-        //            [btn.layer addAnimation:positionAnim forKey:nil];
-        //
-        //            [btn setCenter:CGPointMake(btn.center.x+INSETS+PIC_WIDTH, btn.center.y)];
-        //        }
-        //        [self refreshScrollView];
-        
-        //        if ([addedPicArray count]>1)
-        //        {
-        //            ALERT(@"请选择一张图片");
-        //            return;
-        //        }
         [self.imageBtn setBackgroundImage:temp forState:UIControlStateNormal];
         //上传图片
         [BmobFile filesUploadBatchWithPaths:@[fileTempPath]
@@ -499,6 +468,7 @@ static NSString *scrollindentify = @"scrollviewdown";
 }
 - (IBAction)choiceDistrictAction:(id)sender {
     [self cancelLocatePicker];
+    
     self.locatePicker = [[HZAreaPickerView alloc] initWithStyle:HZAreaPickerWithStateAndCityAndDistrict delegate:self];
     self.locatePicker.autoresizingMask=UIViewAutoresizingFlexibleWidth;
     
@@ -533,16 +503,6 @@ static NSString *scrollindentify = @"scrollviewdown";
         
         
 #warning 加载图片（待完善）
-//                dispatch_async(dispatch_get_global_queue(0, 0), ^{
-//                    UIImage *img=[UIImage imageWithData:<#(NSData *)#>]
-//        
-//        
-//        
-//        
-//                });
-//        
-//        
-//                [self.imageBtn setBackgroundImage:temp forState:UIControlStateNormal];
         
     }
 }
@@ -642,7 +602,7 @@ static NSString *scrollindentify = @"scrollviewdown";
             return;
         }
         else{
-        [self.newenterprise setgeoModel:geo];
+            [self.newenterprise setgeoModel:geo];
         }
     }
     [self doCommit];
@@ -774,7 +734,7 @@ static NSString *scrollindentify = @"scrollviewdown";
         newGeo=[[geoModel alloc]initWith:p2.x lat:p2.y];
         
         //初始化检索对象
-   
+        
         //构造AMapReGeocodeSearchRequest对象，location为必选项，radius为可选项
         AMapReGeocodeSearchRequest *regeoRequest = [[AMapReGeocodeSearchRequest alloc] init];
         regeoRequest.searchType = AMapSearchType_ReGeocode;
@@ -794,8 +754,8 @@ static NSString *scrollindentify = @"scrollviewdown";
         NSString *geoString=[mySettingData objectForKey:CURRENTLOCATOIN];
         CGPoint p2=CGPointFromString(geoString);
         newGeo=[[geoModel alloc]initWith:p2.x lat:p2.y];
-//        [self.newenterprise setgeoModel:geo];
-//        [self doCommit];
+        //        [self.newenterprise setgeoModel:geo];
+        //        [self doCommit];
     }];
 }
 
@@ -823,7 +783,7 @@ static NSString *scrollindentify = @"scrollviewdown";
         NSString *result = [NSString stringWithFormat:@"ReGeocode: %@", response.regeocode];
         NSLog(@"ReGeo: %@", result);
         [self.choiceDistrictBtn setTitle:[NSString stringWithFormat:@"%@ %@ %@",response.regeocode.addressComponent.province,response.regeocode.addressComponent.city,response.regeocode.addressComponent.district]
-                            forState:UIControlStateNormal];
+                                forState:UIControlStateNormal];
         
         province=response.regeocode.addressComponent.province?response.regeocode.addressComponent.province:response.regeocode.addressComponent.city;
         city=response.regeocode.addressComponent.city?response.regeocode.addressComponent.city:response.regeocode.addressComponent.province;
@@ -837,7 +797,7 @@ static NSString *scrollindentify = @"scrollviewdown";
 -(void)dismissingThisVCWithComletion:(void(^)(void))block
 {
     if (self.isPushedOut) {
-         block();
+        block();
         [self.navigationController popToRootViewControllerAnimated:YES];
     }else
     {

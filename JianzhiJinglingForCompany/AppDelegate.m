@@ -88,10 +88,9 @@
     }
     [netAPI test];
     
-    
     //友盟
     [MobClick startWithAppkey:@"54e344c6fd98c56d32000210" reportPolicy:BATCH  channelId:nil];
-    [MobClick checkUpdate:@"兼职精灵企业版有新版本啦" cancelButtonTitle:@"无情的忽略" otherButtonTitles:@"前往下载"];
+ 
     [UMFeedback setAppkey:@"54e344c6fd98c56d32000210"];
     //Bmob后台服务
     [Bmob registerWithAppKey:@"feda8b57c5da4a0364a3406906f77e2d"];

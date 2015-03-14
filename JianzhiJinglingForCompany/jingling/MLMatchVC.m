@@ -229,8 +229,6 @@ static  MLMatchVC *thisVC=nil;
 {
     if (scrollView == self.scrollView) {
         int index = (int)(scrollView.contentOffset.y / kScrollViewHeight);
-        
-        //UIView *sv=(UIView*)[self.scrollView viewWithTag:kScrollViewTagBase + index];
         [self.pageControl setCurrentPage:index usingScroller:NO];
         
     }
@@ -269,19 +267,6 @@ static  MLMatchVC *thisVC=nil;
         self.scrollView.contentSize = CGSizeMake(self.scrollView.contentSize.width, self.scrollView.contentSize.height-kScrollViewHeight);
         [recordArray removeObjectAtIndex:index];
         [self refreshScrollView];
-//        //删除匹配的职位
-//        NSUserDefaults *myData = [NSUserDefaults standardUserDefaults];
-//        NSString *currentUserObjectId=[myData objectForKey:@"currentUserObjectId"];
-//        
-//        userModel *_usrModel=[recordArray objectAtIndex:index];
-//        
-//        if (_usrModel.getjobID&&[currentUserObjectId length]>0) {
-//            [netAPI deleteMatchJob:_jobModel.getjobID userId:currentUserObjectId withBlock:^(oprationResultModel *oprationResultModel) {
-//                if ([oprationResultModel.getStatus intValue]==0) {
-//                    NSLog(@"删除成功");
-//                }
-//            }];
-//        }
     }
 }
 
@@ -291,14 +276,6 @@ static  MLMatchVC *thisVC=nil;
     [self.pageManager resetPageSplitingManager];
     [self initData];
 }
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
+
 
 @end

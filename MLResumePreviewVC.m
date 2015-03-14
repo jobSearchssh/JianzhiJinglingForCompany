@@ -20,6 +20,8 @@
 #import "UIViewController+LoginManager.h"
 #import "previewVedioVC.h"
 #import "LoginManager.h"
+
+#import "GlobalConstant.h"
 static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 @interface MLResumePreviewVC (){
@@ -61,6 +63,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 @property (strong, nonatomic) IBOutlet UIView *usrinfo3Outet;
 @property (weak, nonatomic) IBOutlet UILabel *workexperienceOutlet;
 @property (weak, nonatomic) IBOutlet UILabel *userIntroductionOutlet;
+@property (weak, nonatomic) IBOutlet UILabel *userDegreeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *userEduLabel;
 //最后一项
 @property (strong, nonatomic) IBOutlet UIView *userInfoBtnView;
@@ -102,15 +105,15 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    if (![UIViewController isLogin]) {
-        [self notLoginHandler];
-    }
+    //    if (![UIViewController isLogin]) {
+    //        [self notLoginHandler];
+    //    }
     self.mainScrollviewOutlet.delegate=self;
-    [self.navigationItem setTitle:@"简历预览"];
+    [self.navigationItem setTitle:Tit_Resume];
     
     if (!self.hideRightBarButton) {
         self.navigationItem.rightBarButtonItem=self.rightBarBtn;
-        [self.navigationItem.rightBarButtonItem setTitle:@"收藏"];
+        [self.navigationItem.rightBarButtonItem setTitle:Btn_Favorite];
     }
     
     [self.coverflowOutlet setFrame:CGRectMake(0,0,[UIScreen mainScreen].bounds.size.width,[UIScreen mainScreen].bounds.size.width*0.6)];
@@ -202,9 +205,9 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
                                         self.sexOutlet.frame.size.width,
                                         self.sexOutlet.frame.size.height)];
     //性别
-    if ([userModel getuserGender].intValue == 0) {
+    if ([userModel getuserGender].intValue == 1) {
         self.sexOutlet.image = [UIImage imageNamed:@"resume_male"];
-    }else if ([userModel getuserGender].intValue == 1){
+    }else if ([userModel getuserGender].intValue == 2){
         self.sexOutlet.image = [UIImage imageNamed:@"resume_female"];
     }else{
         self.sexOutlet.image = Nil;
@@ -213,7 +216,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     if ([userModel getuserHeight] != Nil) {
         self.userHeightOutlet.text = [NSString stringWithFormat:@"%@cm",[userModel getuserHeight]];
     }else{
-        self.userHeightOutlet.text = @"未填写身高";
+        //        self.userHeightOutlet.text = @"未填写身高";
     }
     
     NSLog(@"aaa = %@",[userModel getuserHeight]);
@@ -221,14 +224,14 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     //年龄
     if ([userModel getuserBirthday] != Nil) {
         @try {
-            NSString *ageString = [NSString stringWithFormat:@"%ld岁",(long)[DateUtil ageWithDateOfBirth:[userModel getuserBirthday]]];
+            NSString *ageString = [NSString stringWithFormat:@"%ld",(long)[DateUtil ageWithDateOfBirth:[userModel getuserBirthday]]];
             self.ageOutlet.text = ageString;
         }
         @catch (NSException *exception) {
-            self.ageOutlet.text = @"未知年龄";
+            //            self.ageOutlet.text = @"未知年龄";
         }
     }else{
-        self.ageOutlet.text = @"未知年龄";
+        //        self.ageOutlet.text = @"未知年龄";
     }
     //电话
     if (self.isShowPhone) {
@@ -245,7 +248,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     //位置
     NSString *usrLoaction = Nil;
     if ([userModel getuserProvince]== Nil && [userModel getuserCity] == Nil && [userModel getuserDistrict] == Nil) {
-        usrLoaction = @"未填写地区";
+        //        usrLoaction = @"未填写地区";
     }else{
         usrLoaction = [NSString stringWithFormat:@"%@%@%@",[userModel getuserProvince],[userModel getuserCity],[userModel getuserDistrict]];
     }
@@ -260,8 +263,15 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
                                              locationOutletlabelsize.height)];
     [self.locationOutlet setText:usrLoaction];
     
-    const NSDictionary *TYPESELECTEDDICT=@{@"模特/礼仪":@"0", @"促销/导购":@"1", @"销售":@"2" ,@"传单派发":@"3" ,@"安保":@"4" ,@"钟点工":@"5", @"法律事务":@"6", @"服务员":@"7" ,@"婚庆":@"8", @"配送/快递":@"9", @"化妆":@"10", @"护工/保姆":@"11", @"演出":@"12", @"问卷调查":@"13", @"志愿者":@"14" ,@"网络营销":@"15" ,@"导游":@"16", @"游戏代练":@"17", @"家教":@"18", @"软件/网站开发":@"19", @"会计":@"20", @"平面设计/制作":@"21", @"翻译":@"22", @"装修":@"23", @"影视制作":@"24", @"搬家":@"25", @"其他":@"26"};
     
+    
+    //    const NSDictionary *TYPESELECTEDDICT=@{@"模特/礼仪":@"0", @"促销/导购":@"1", @"销售":@"2" ,@"传单派发":@"3" ,@"安保":@"4" ,@"钟点工":@"5", @"法律事务":@"6", @"服务员":@"7" ,@"婚庆":@"8", @"配送/快递":@"9", @"化妆":@"10", @"护工/保姆":@"11", @"演出":@"12", @"问卷调查":@"13", @"志愿者":@"14" ,@"网络营销":@"15" ,@"导游":@"16", @"游戏代练":@"17", @"家教":@"18", @"软件/网站开发":@"19", @"会计":@"20", @"平面设计/制作":@"21", @"翻译":@"22", @"装修":@"23", @"影视制作":@"24", @"搬家":@"25", @"其他":@"26"};
+    
+    GlobalConstant *globalClass=[GlobalConstant shareInstance];
+    
+    NSDictionary *EDUSELECTEDDICT=globalClass.eduTypeDict;
+    
+    NSDictionary *TYPESELECTEDDICT=globalClass.jobTypeDict;
     //设置工作类型
     NSMutableDictionary *typeForReanlysis=[NSMutableDictionary dictionary];
     NSArray *keyword=[TYPESELECTEDDICT allKeys];
@@ -329,6 +339,23 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     
     
     //第五项
+    
+    //设置工作类型
+    
+    
+    NSMutableDictionary *eduForReanlysis=[NSMutableDictionary dictionary];
+    NSArray *keyword1=[EDUSELECTEDDICT allKeys];
+    for (NSString *value in keyword1) {
+        [eduForReanlysis setObject:value forKey:[EDUSELECTEDDICT objectForKey:value]];
+    }
+    NSString *usrDegree=@"";
+    if ([userModel getuserDegree]!=nil && [[userModel getuserDegree]intValue]!=0) {
+        usrDegree=[usrDegree stringByAppendingString:[eduForReanlysis objectForKey:[NSString stringWithFormat:@"%ld",(long)[[userModel getuserDegree]integerValue ]]]];
+    }
+
+    self.userDegreeLabel.text=usrDegree;
+    
+    
     
     if ([userModel getuserSchool] != nil) {
         [self.userEduLabel setText:[userModel getuserSchool]];
@@ -404,21 +431,18 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         NSUserDefaults *myseting=[NSUserDefaults standardUserDefaults];
         NSString *com_id=[myseting objectForKey:CURRENTUSERID];
         if (self.jobUserId==nil ||com_id==nil ) {
-            ALERT(@"未找到该求职者，请重试");
+            ALERT(Text_Error);
         }
         else {
-            [self showHudInView:self.mainScrollviewOutlet hint:@"收藏中.."];
+            [self showHudInView:self.mainScrollviewOutlet hint:Text_Liking];
             [netAPI starJobUser:com_id jobUserID:self.jobUserId withBlock:^(oprationResultModel *oprationModel) {
                 [self hideHud];
                 if([[oprationModel getStatus] isEqualToNumber:[NSNumber numberWithInt:BASE_SUCCESS]]){
                     
-                    ALERT(@"收藏成功，可前往“关注的人”查看");
-                    self.navigationItem.rightBarButtonItem.title=@"已收藏";
+                    ALERT(Text_LikeSuccess);
+                    self.navigationItem.rightBarButtonItem.title=Btn_Favorited;
                     self.rightBarBtn.enabled=NO;
 #warning 带完成收藏成功后的逻辑
-                    //            RESideMenu *sideMenu=[RESideMenu sharedInstance];
-                    //            //获取原来的数
-                    ////            [sideMenu setBadgeView:2 badgeText:@"1"];
                 }else
                 {
                     NSString *error=[NSString stringWithFormat:@"%@",[oprationModel getInfo]];
@@ -515,23 +539,13 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     // Dispose of any resources that can be recreated.
 }
 
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
-
 
 - (IBAction)invitationAction:(id)sender {
     if (![UIViewController isLogin]) {
         [self notLoginHandler];
     }
     else{
-        UIActionSheet *actionSheet=[[UIActionSheet alloc]initWithTitle:@"" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"选择职位"  otherButtonTitles:@"创建新职位", nil];
+        UIActionSheet *actionSheet=[[UIActionSheet alloc]initWithTitle:@"" delegate:self cancelButtonTitle:Text_CancelBtnText destructiveButtonTitle:Text_JobSelection  otherButtonTitles:Text_CreateNewJob, nil];
         actionSheet.actionSheetStyle=UIActionSheetStyleBlackTranslucent;
         [actionSheet showInView:self.view];
     }
@@ -539,13 +553,13 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 - (IBAction)showVedioAction:(id)sender {
     if ([[self.thisUser getuserVideoURL]length]<4 ) {
-        ALERT(@"该用户没有视频");
+        ALERT(Text_NoVedio);
         return;
     }
     previewVedioVC *vc = [[previewVedioVC alloc]init];
     vc.vedioPath = [self.thisUser getuserVideoURL];
     vc.type = [NSNumber numberWithInt:preview];
-    vc.title = @"我的视频介绍";
+    vc.title = Tit_Vedio;
     [self.navigationController pushViewController:vc animated:YES];
     
 }
@@ -556,20 +570,18 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         jobListViewController *joblistForChoice=[[jobListViewController alloc]init];
         joblistForChoice.user_id=[self.thisUser getjob_user_id];
         [self.navigationController pushViewController:joblistForChoice animated:YES];
-        //        [actionSheet dismissWithClickedButtonIndex:nil animated:YES];
-        
     }else if (buttonIndex == 1) {
         if ([LoginManager isOrNotLogin]==NO) {
-            ALERT(@"请先登录");
+            ALERT(Text_NotLogin);
             return;
         }
         if ([LoginManager isOrNotSettingComProfile]==NO) {
-            ALERT(@"请先到“企业详请“编辑企业信息，再发布职位!");
+            ALERT(Text_NoCompanyDetail);
             return;
         }
         jobPublicationViewController *newJobVC=[[jobPublicationViewController alloc]init];
         [self.navigationController pushViewController:newJobVC animated:YES];
-        //        [actionSheet dismissWithClickedButtonIndex:nil animated:YES];
+       
         
     }else if(buttonIndex == 2) {
         
@@ -597,7 +609,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     [netAPI refuseJobApply:[self.thisUser getApply_id] withBlock:^(oprationResultModel *oprationModel) {
         [weakSelf hideHud];
         if ([[oprationModel getStatus]isEqualToNumber:[NSNumber numberWithInt:BASE_SUCCESS]]) {
-            ALERT(@"成功");
+            ALERT(Text_Success);
             self.refuseBtn.enabled=NO;
             self.acceptBtn.enabled=NO;
             //修改前页代码
@@ -621,7 +633,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     [netAPI acceptJobApply:[self.thisUser getApply_id] withBlock:^(oprationResultModel *oprationModel) {
         [weakSelf hideHud];
         if ([[oprationModel getStatus]isEqualToNumber:[NSNumber numberWithInt:BASE_SUCCESS]]) {
-            ALERT(@"成功");
+            ALERT(Text_Success);
             self.refuseBtn.enabled=NO;
             self.acceptBtn.enabled=NO;
             [[BadgeManager shareSingletonInstance]minusApplyCount];

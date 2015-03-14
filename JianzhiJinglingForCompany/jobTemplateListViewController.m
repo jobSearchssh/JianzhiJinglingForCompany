@@ -49,7 +49,7 @@
 }
 
 - (void)viewDidLoad {
-     [super viewDidLoad];
+    [super viewDidLoad];
     self.edgesForExtendedLayout=UIRectEdgeNone;
     self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithImage:Nil style:UIBarButtonItemStyleBordered target:self action:@selector(publishNewJob)];
     [self.navigationItem.rightBarButtonItem setTitle:@"创建新职位"];
@@ -74,7 +74,7 @@
     _tableView.scrollEnabled=YES;
     [_tableView addHeaderWithTarget:self action:@selector(headerRefresh)];
     [_tableView addFooterWithTarget:self action:@selector(footerRefresh)];
-   
+    
     [self downloadDataListStartAt:self.pageManager.firstStartIndex  Length:self.pageManager.pageSize];
 }
 
@@ -342,15 +342,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 -(void)publishNewJob
 {
     if (![UIViewController isLogin]) {
@@ -375,7 +366,7 @@
     [self hideHud];
     [self.tableView headerEndRefreshing];
     [self.tableView footerEndRefreshing];
-
+    
 }
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -406,7 +397,7 @@
             }
             break;
         }
-
+            
         default:
             break;
     }
@@ -494,6 +485,6 @@
 -(void)autoLoadAfterLogin
 {
     [self headerRefresh];
-
+    
 }
 @end

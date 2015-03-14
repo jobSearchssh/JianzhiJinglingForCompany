@@ -8,7 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
+
+FOUNDATION_EXTERN NSDictionary *const JobTypeDict;
+
+
+
 @interface GlobalConstant : NSObject
 
++(instancetype)shareInstance;
+
 @property (nonatomic,readonly)NSDictionary *jobTypeDict;
+@property (nonatomic,readonly)NSDictionary *eduTypeDict;
+@property (nonatomic,readonly)NSDictionary *payTypeDict;
+
 @end

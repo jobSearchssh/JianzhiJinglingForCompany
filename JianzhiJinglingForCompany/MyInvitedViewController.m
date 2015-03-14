@@ -72,7 +72,7 @@ static MyInvitedViewController *thisVC;
     cellNum=0;
     _tableView.dataSource=self;
     _tableView.delegate=self;
-    self.navigationItem.title=@"我的邀请";
+    self.navigationItem.title=Tit_Invitation;
     self.datasourceArray=[NSMutableArray array];
     [_tableView addHeaderWithTarget:self action:@selector(headerRefreshing)];
     [_tableView addFooterWithTarget:self action:@selector(footerRefreshing)];
@@ -187,7 +187,7 @@ static MyInvitedViewController *thisVC;
     for (NSString *value in keyword) {
         [typeForReanlysis setObject:value forKey:[TYPESELECTEDDICT objectForKey:value]];
     }
-    NSString *usrintention=@"求职目标:";
+    NSString *usrintention=Text_JobTarget;
     for (int i=0; i<[[user getuserHopeJobType] count]; i++) {
         NSString *aaa=[NSString stringWithFormat:@"%@",[[user getuserHopeJobType]objectAtIndex:i]];
         usrintention = [usrintention stringByAppendingString:[NSString stringWithFormat:@" %@",[typeForReanlysis objectForKey:aaa]]];
@@ -195,17 +195,17 @@ static MyInvitedViewController *thisVC;
     
     cell.usrJobReq.text=usrintention;
     
-    NSString *handlerString=@"处理结果： ";
+    NSString *handlerString=Text_HandleResults;
     if ([[invitation getinviteStatus]intValue]==0) {
-        handlerString=[handlerString stringByAppendingString:@"未处理"];
+        handlerString=[handlerString stringByAppendingString:Text_UnHandle];
     }else if ([[invitation getinviteStatus]intValue]==1)
     {
-        handlerString=[handlerString stringByAppendingString:@"拒绝"];
+        handlerString=[handlerString stringByAppendingString:Text_Refuse];
         
     }else if ([[invitation getinviteStatus]intValue]==2)
     {
         
-        handlerString=[handlerString stringByAppendingString:@"接受"];
+        handlerString=[handlerString stringByAppendingString:Text_Accept];
     }
     
     cell.usrBreifIntro.text=handlerString;
@@ -248,7 +248,7 @@ static MyInvitedViewController *thisVC;
     
     
     //标记已读未读
-    NSNumber *isRead=[invitation getenterpriseInviteIsRead];
+    NSNumber *isRead=[NSNumber numberWithInt:[[invitation getenterpriseInviteIsRead] intValue]];
     if ([isRead intValue]==0) {
         cell.badgeView.badgeText=@"1";
     }
@@ -259,7 +259,7 @@ static MyInvitedViewController *thisVC;
 {
     NSMutableArray *rightUtilityButtons = [NSMutableArray new];
     //        [rightUtilityButtons sw_addUtilityButtonWithColor:[UIColor colorWithRed:23.0/255.0 green:87.0/255.0 blue:150.0/255.0 alpha:1.0] icon:[UIImage imageNamed:@"trash"]];
-    [rightUtilityButtons sw_addUtilityButtonWithColor:[UIColor colorWithRed:23.0/255.0 green:87.0/255.0 blue:150.0/255.0 alpha:1.0] title:@"取消邀请"];
+    [rightUtilityButtons sw_addUtilityButtonWithColor:[UIColor colorWithRed:23.0/255.0 green:87.0/255.0 blue:150.0/255.0 alpha:1.0] title:Btn_UnInvitation];
     return rightUtilityButtons;
 }
 
@@ -288,9 +288,8 @@ static MyInvitedViewController *thisVC;
         //减少badge
         [[BadgeManager shareSingletonInstance]minusMessageCount];
         
-        
         [netAPI setRecordAlreadyRead:[[NSUserDefaults standardUserDefaults]objectForKey:CURRENTUSERID] applyOrInviteId:cell.userId type:@"0" withBlock:^(oprationResultModel *oprationModel) {
-            
+            [self headerRefreshing];
             NSLog(@"%@",[oprationModel getInfo]);
             
         }];
@@ -411,7 +410,7 @@ static MyInvitedViewController *thisVC;
     //  +(void)deleteTheJob:(NSString *)enterprise_id job_id:(NSString *)job_id withBlock:(operationReturnBlock)oprationReturnBlock;
     if (user_id==nil || [selectedCellRow row]<0 || [selectedCellRow row]>=[self.datasourceArray count]) {
         //处理删除请求
-        ALERT(@"错误,请重试");
+        ALERT(Text_Error);
         return ;
         
     }
@@ -430,12 +429,12 @@ static MyInvitedViewController *thisVC;
 -(void)doCancelFavoriteReq
 {
     if (selectedUserInvitedId==nil) {
-        ALERT(@"UserId不存在,请重试");
+        ALERT(Text_Error);
         return;
     }
     NSUserDefaults *mysettings=[NSUserDefaults standardUserDefaults];
     NSString *com_id=[mysettings objectForKey:CURRENTUSERID];
-    [self showHudInView:self.tableView hint:@"取消中"];
+    [self showHudInView:self.tableView hint:Text_Cancelling];
     [netAPI cancelInvitedUser:com_id invite_id:selectedUserInvitedId withBlock:^(oprationResultModel *oprationModel) {
         [self hideHud];
         if ([[oprationModel getStatus]isEqualToNumber:[
@@ -445,11 +444,11 @@ static MyInvitedViewController *thisVC;
                 NSIndexPath *path=selectedCellRow;
                 [self deleteCellAtIndexPath:path];
                 [self.tableView reloadData];
-                ALERT(@"删除成功");
+                ALERT(Text_DeleteSuccess);
             }
             else
             {
-                ALERT(@"列表错误，请重试");
+                ALERT(Text_LoadAfterDeleteError);
             }
         }else
         {

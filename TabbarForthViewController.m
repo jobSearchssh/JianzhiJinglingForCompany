@@ -212,7 +212,7 @@
         {
             CustomButton1 *btn=(CustomButton1*)[self.view viewWithTag:i];
             NSLog(@"i=%d",i);
-            NSLog(@"btn will changed:%d",btn.tag);
+            NSLog(@"btn will changed:%ld",(long)btn.tag);
             [btn buttonColorUnClick];
         }
     }

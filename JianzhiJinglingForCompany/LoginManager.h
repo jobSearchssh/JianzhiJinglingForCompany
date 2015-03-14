@@ -9,24 +9,19 @@
 #import <Foundation/Foundation.h>
 #import "MLNaviViewController.h"
 
-
 @protocol LoginManagerDelegate <NSObject>
 @required
 
 -(void)presentViewModally:(UIViewController*)targetVC;
 
 @end
-
 @interface LoginManager : NSObject
-
-
-+(instancetype)shareInstance;
-
 
 @property (weak,nonatomic)id <LoginManagerDelegate> delegate;
 
 +(BOOL)isOrNotLogin;
 +(BOOL)isOrNotSettingComProfile;
+
 -(void)unLoginHandler;
 -(void)noProfileHandler;
 

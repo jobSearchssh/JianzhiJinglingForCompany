@@ -35,31 +35,6 @@
         }
     }];
     
-//    BmobQuery *query=[BmobQuery queryWithClassName:@"JobUser"];
-//    [query whereKey:@"userName" equalTo:username];
-//    [query findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
-//        if (!error) {
-//            if ([array count]==0) {
-//                BmobObject *jobUser=[BmobObject objectWithClassName:@"JobUser"];
-//                [jobUser setObject:username forKey:@"userName"];
-//                [jobUser setObject:pwd forKey:@"userPassword"];
-//                [jobUser saveInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
-//                    if (isSuccessful) {
-//                        [self saveUserInfoLocally:jobUser];
-//                        [self registerIsSucceed:YES feedback:@"注册成功"];
-//                    }else{
-//                        [self registerIsSucceed:NO feedback:@"网络请求错误，注册失败"];
-//                    }
-//                }];
-//            }else{
-//                [self registerIsSucceed:NO feedback:@"该用户名已被注册"];
-//            }
-//        }else{
-//            [self registerIsSucceed:NO feedback:@"网络请求错误，注册失败"];
-//        }
-//    }];
-    
-    
 }
 
 -(void)registerIsSucceed:(BOOL)result feedback:(NSString*)feedback{
@@ -94,7 +69,7 @@
 -(void)loginComProfile
 {
     NSUserDefaults *mysettings=[NSUserDefaults standardUserDefaults];
-    if ([mysettings objectForKey:COMPROFILEFlag]) {
+    if ([mysettings boolForKey:COMPROFILEFlag]) {
         return;
     }
     NSString *com_id=[mysettings objectForKey:CURRENTUSERID];
@@ -177,6 +152,8 @@
         [mySettingData setObject:nil forKey:CURRENTINTRODUCTION];
         [mySettingData setObject:nil forKey:CURRENTUSERADDRESS];
         [mySettingData setBool:NO forKey:COMPROFILEFlag];
+        
+        
         [mySettingData synchronize];
         [[NSNotificationCenter defaultCenter]postNotificationName:@"logoutSuccess" object:nil];
     }

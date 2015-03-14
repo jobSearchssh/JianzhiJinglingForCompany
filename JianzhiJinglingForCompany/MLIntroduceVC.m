@@ -84,7 +84,17 @@
         }
         imgView.image=img;
         [self.scrollView addSubview:imgView];
-        
+        if (i==3) {
+            UIButton *btn=[[UIButton alloc]init];
+            
+            btn.frame= CGRectMake(213*[[UIScreen mainScreen] bounds].size.width/960, 1433*[[UIScreen mainScreen] bounds].size.height/1704, 543*[[UIScreen mainScreen] bounds].size.width/960, 112*[[UIScreen mainScreen] bounds].size.height/1704);
+            
+            btn.titleLabel.text=@"";
+            btn.backgroundColor=[UIColor clearColor];
+            [btn addTarget:self action:@selector(touchStart) forControlEvents:UIControlEventTouchUpInside];
+            [imgView addSubview:btn];
+            imgView.userInteractionEnabled=YES;
+        }
 //        if (i==3) {
 //            UIButton *btn=[[UIButton alloc]init];
 //            if (DEVICE_IS_IPHONE5) {
@@ -154,14 +164,5 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

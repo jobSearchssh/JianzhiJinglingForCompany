@@ -134,7 +134,7 @@ static PersonListViewController *thisVC;
 
 -(void)segementedControlInit
 {
-    self.segement=[[UISegmentedControl alloc]initWithItems:@[@"我的关注",@"已同意",@"未处理"]];
+    self.segement=[[UISegmentedControl alloc]initWithItems:@[Text_Focus,Text_Agree,Text_UnHandle]];
     self.segement.selectedSegmentIndex=MyFavoriteTableViewFlag;
     self.navigationItem.titleView=self.segement;
     [self.segement addTarget:self
@@ -168,6 +168,11 @@ static PersonListViewController *thisVC;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
+    backItem.title = Text_Back;
+    self.navigationItem.backBarButtonItem = backItem;
+    
+    
     [self tableViewInit];
     [self segementedControlInit];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateUI) name:@"update" object:nil];
@@ -292,7 +297,7 @@ static PersonListViewController *thisVC;
 {
     NSMutableArray *rightUtilityButtons = [NSMutableArray new];
     //        [rightUtilityButtons sw_addUtilityButtonWithColor:[UIColor colorWithRed:23.0/255.0 green:87.0/255.0 blue:150.0/255.0 alpha:1.0] icon:[UIImage imageNamed:@"trash"]];
-    [rightUtilityButtons sw_addUtilityButtonWithColor:[UIColor colorWithRed:23.0/255.0 green:87.0/255.0 blue:150.0/255.0 alpha:1.0] title:@"取消关注"];
+    [rightUtilityButtons sw_addUtilityButtonWithColor:[UIColor colorWithRed:23.0/255.0 green:87.0/255.0 blue:150.0/255.0 alpha:1.0] title:Text_UnFocus];
     return rightUtilityButtons;
 }
 
@@ -378,6 +383,7 @@ static PersonListViewController *thisVC;
     person.thisUser=user;
     person.hideRightBarButton=YES;
     person.hidesBottomBarWhenPushed=YES;
+    
     [self.navigationController pushViewController:person animated:YES];
     [self performSelector:@selector(deselect) withObject:nil afterDelay:1.0f];
 

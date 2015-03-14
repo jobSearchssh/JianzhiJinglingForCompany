@@ -362,7 +362,6 @@
                     <exclude reference="dvp-eI-eSR"/>
                 </mask>
                 <mask key="constraints">
-                    <exclude reference="EMw-6m-NSn"/>
                     <exclude reference="0I3-bR-bhq"/>
                     <exclude reference="pJO-IA-lXK"/>
                     <exclude reference="qc2-aR-3XM"/>
@@ -370,6 +369,7 @@
                     <exclude reference="Hs6-Ge-bbc"/>
                     <exclude reference="JuB-Uk-QRX"/>
                     <exclude reference="u77-gq-OZB"/>
+                    <exclude reference="EMw-6m-NSn"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
@@ -378,8 +378,6 @@
                     <include reference="dvp-eI-eSR"/>
                 </mask>
                 <mask key="constraints">
-                    <include reference="EMw-6m-NSn"/>
-                    <exclude reference="n33-S0-lCo"/>
                     <include reference="0I3-bR-bhq"/>
                     <include reference="pJO-IA-lXK"/>
                     <include reference="qc2-aR-3XM"/>
@@ -387,6 +385,8 @@
                     <include reference="Hs6-Ge-bbc"/>
                     <include reference="JuB-Uk-QRX"/>
                     <include reference="u77-gq-OZB"/>
+                    <include reference="EMw-6m-NSn"/>
+                    <exclude reference="n33-S0-lCo"/>
                 </mask>
             </variation>
             <point key="canvasLocation" x="701" y="630"/>

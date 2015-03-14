@@ -11,7 +11,6 @@
 
 #import "FirstCollectionViewController.h"
 
-#import "MLMessageVC.h"
 #import "JobPublishedListViewController.h"
 #import "MLMatchVC.h"
 #import "TabbarForthViewController.h"
@@ -59,26 +58,18 @@ static MainTabBarViewController* thisVC=nil;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //    [self.tabBar setBackgroundColor:TabBarColor];
-    // Do any additional setup after loading the view from its nib.
-    //设置颜色
-//    if (![UIViewController isLogin]) {
-//        [self notLoginHandler];
-//        //        MLLoginVC *viewController = [MLLoginVC sharedInstance];
-//        //        [self presentViewController:viewController animated:YES completion:nil];
-//    }
+
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(checkUnLoadConProfile) name:@"checkUnLoadConProfile" object:nil];
     
     [[BadgeManager shareSingletonInstance] addObserver:self forKeyPath:@"applyCount" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:NULL];
     
-    
-    
+
     [self.tabBar setBarTintColor:TabBarColor];
     [self initViewControllers];
     [self modifyTabbarItem];
     [self initReSideMenu];
-    //    _sideMenu=[RESideMenu sharedInstance];
+    
 }
 
 -(void)checkUnLoadConProfile
@@ -151,38 +142,24 @@ static MainTabBarViewController* thisVC=nil;
     UITabBarItem *tabBarItem4=[tabBar.items objectAtIndex:3];
     UITabBarItem *tabBarItem5=[tabBar.items objectAtIndex:4];
     
-    tabBarItem1.title=@"求职者";
+    tabBarItem1.title=TabbarText1;
     tabBarItem1.image=[UIImage imageNamed:@"userTabbar"];
     
-    tabBarItem2.title=@"消息";
+    tabBarItem2.title=TabbarText2;
     tabBarItem2.image=[UIImage imageNamed:@"letter"];
-    tabBarItem3.title=@"发布";
+    tabBarItem3.title=TabbarText3;
     tabBarItem3.image=[UIImage imageNamed:@"edit"];
     
-    tabBarItem4.title=@"精灵管家";
+    tabBarItem4.title=TabbarText4;
     tabBarItem4.image=[UIImage imageNamed:@"calendar"];
     
-    tabBarItem5.title=@"企业信息";
+    tabBarItem5.title=TabbarText5;
     tabBarItem5.image=[UIImage imageNamed:@"moreTabbar"];
-    
-    //    [[self.tabBar.items objectAtIndex:0] setFinishedSelectedImage:[[UIImage imageNamed:@"name"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"name"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-    //
-    //
-    //    //
-    //    [[self.tabBar.items objectAtIndex:1] setFinishedSelectedImage:[[UIImage imageNamed:@"letter"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"letter"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-    //
-    //    [[self.tabBar.items objectAtIndex:1] setFinishedSelectedImage:[[UIImage imageNamed:@"letter"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"letter"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-    //
-    //    [[self.tabBar.items objectAtIndex:1] setFinishedSelectedImage:[[UIImage imageNamed:@"notice"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"notice"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-    //
-    //     [[self.tabBar.items objectAtIndex:1] setFinishedSelectedImage:[[UIImage imageNamed:@"letter"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"letter"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-    
 }
 
 
 - (void)viewWillLayoutSubviews{
-    
-    //    [self.tabBar setSelectedImageTintColor: [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0]];
+
 }
 
 
@@ -200,7 +177,7 @@ static MainTabBarViewController* thisVC=nil;
     NSUserDefaults *mySettingData = [NSUserDefaults standardUserDefaults];
     NSString *username=[mySettingData objectForKey:CURRENTUSERNAME];
     if (username!=nil) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"确定要退出？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定",nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:Text_Note message:Text_ConfirmLogOut delegate:self cancelButtonTitle:Text_CancelBtnText otherButtonTitles:Text_ConfirmBrntext,nil];
         alert.tag=123344;
         [alert show];
     }

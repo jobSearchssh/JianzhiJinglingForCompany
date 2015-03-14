@@ -25,6 +25,9 @@ static NSString *baseURL = @"http://123.57.5.113:8081/";
 - (void)main{
     
     @try {
+        //添加自动释放池，控制内存峰值 效果待验证 by gyb 
+        @autoreleasepool {
+       
         //第一步，生成链接地址
         NSURL *url = [NSURL URLWithString:[[NSString alloc]initWithFormat:@"%@%@",baseURL,postLoca]];
         //第二步，创建请求
@@ -54,6 +57,8 @@ static NSString *baseURL = @"http://123.57.5.113:8081/";
         }];
         
         [task resume];
+            
+        }
         
     }
     @catch (NSException *exception) {

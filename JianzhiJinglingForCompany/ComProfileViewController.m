@@ -37,7 +37,7 @@
         return;
     }
     if (self.thisCompany==nil) {
-        [self showHudInView:self.view hint:@"正在加载..."];
+        [self showHudInView:self.view hint:Text_Loading];
         NSUserDefaults *mysettings=[NSUserDefaults standardUserDefaults];
         NSString *com_id=[mysettings objectForKey:CURRENTUSERID];
         [netAPI getEnterpriseDetail:com_id withBlock:^(enterpriseDetailReturnModel *detailModel) {
@@ -111,6 +111,13 @@
     [super viewWillAppear:animated];
     [self hideHud];
     //如果加载成功过，就不要刷新
+    if([LoginManager isOrNotLogin]==NO)
+    {
+        ALERT(Text_NotLogin);
+        return;
+    }
+    
+    
     if([LoginManager isOrNotSettingComProfile]==NO){
         ALERT(Text_NoCompanyDetail);
         return;
@@ -144,11 +151,11 @@
     isLoadSucceed=NO;
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loadDataFromEditAgain:) name:@"资料修改成功" object:nil];
      [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(autoData) name:@"autoLoadNearData" object:nil];
-    self.title=@"企业信息";
+    self.title=Tit_EnterpriseInfo;
     // Do any additional setup after loading the view from its nib.
     self.edgesForExtendedLayout=UIRectEdgeNone;
     self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithImage:Nil style:UIBarButtonItemStyleBordered target:self action:@selector(editResume)];
-    [self.navigationItem.rightBarButtonItem setTitle:@"编辑"];
+    [self.navigationItem.rightBarButtonItem setTitle:Btn_Edit];
     
     self.comIntro.scrollEnabled= YES;//是否可以拖动
     
@@ -205,14 +212,5 @@
             break;
     }
 }
-    /*
-     #pragma mark - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-     // Get the new view controller using [segue destinationViewController].
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
+
 @end

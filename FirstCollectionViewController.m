@@ -70,15 +70,11 @@ static  FirstCollectionViewController *thisVC=nil;
     [self.navigationController.navigationBar setTitleTextAttributes:titleBarAttributes];
     self.navigationItem.title=@"附近的人";
     // Uncomment the following line to preserve selection between presentations
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    
+
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(autoLoadNearData) name:@"autoLoadNearData" object:nil];
     
     // Register cell classes
-    
-    
-    
+
     self.collectionView.backgroundColor=[UIColor darkGrayColor];
     // Register cell classes
     [self.collectionView registerClass:[CustomCollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
@@ -96,8 +92,6 @@ static  FirstCollectionViewController *thisVC=nil;
     [searchButton addTarget:self action:@selector(searchBarAction) forControlEvents:UIControlEventTouchUpInside];
     self.searchBarItem=[[UIBarButtonItem alloc]initWithCustomView:searchButton];
     self.navigationItem.rightBarButtonItem=self.searchBarItem;
-    
-    //    [tapGestureRecognizer setCancelsTouchesInView:NO];
     
     //addRefreshButton
     [self.collectionView addHeaderWithTarget:self action:@selector(headerRefresh)];
@@ -133,8 +127,6 @@ static  FirstCollectionViewController *thisVC=nil;
 //search功能入口函数
 -(void)searchBarAction
 {
-//        ALERT(@"功能还在完善中，谢谢。。。！");
-    
     MLFilterVC *filterVC=[[MLFilterVC alloc]init];
     filterVC.hidesBottomBarWhenPushed=YES;
     filterVC.edgesForExtendedLayout=UIRectEdgeNone;
@@ -147,18 +139,6 @@ static  FirstCollectionViewController *thisVC=nil;
 #pragma --mark filterDelegate
 -(void)finishFilter:(int)_distance Length:(int)length
 {
-//    //刷新列表
-//    NSUserDefaults *mysettings=[NSUserDefaults standardUserDefaults];
-//    
-//    NSString *com_id=[mysettings objectForKey:CURRENTUSERID];
-//    if (com_id==nil) {
-//        ALERT(@"未登录");
-//        return;
-//    }
-//    if (rightNowGPS==nil) {
-//        ALERT(@"定位失败,请刷新重试");
-//        return;
-//    }
     NSInteger distanceParameter=_distance;
     [netAPI queryNearestUsersWithDistance:@"null" start:1 length:length lon:[rightNowGPS getLon] lat:[rightNowGPS getLat] distance:distanceParameter withBlock:^(userListModel *userListModel) {
         [self hideHud];
@@ -183,15 +163,6 @@ static  FirstCollectionViewController *thisVC=nil;
 
 
 
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 #pragma --mark  网络请求
 //附近的人，变的逻辑 随时刷新
 -(void)startLocationService
@@ -219,44 +190,9 @@ static  FirstCollectionViewController *thisVC=nil;
 
 -(void)prepareRequestParametersStartAt:(int)index Length:(int)size
 {
-//    NSUserDefaults *mysettings=[NSUserDefaults standardUserDefaults];
-//    
-//    NSString *com_id=[mysettings objectForKey:CURRENTUSERID];
-//    if (com_id==nil) {
-//        return;
-//    }
-//    if (rightNowGPS==nil) {
-//        return;
-//    }
     [self showHudInView:self.collectionView hint:Text_Loading];
     [self loadData:@"null" GeoModel:rightNowGPS StartAt:index Length:size];
 }
-
-//-(void)upDateloadData:(NSString*)com_id GeoModel:(geoModel*)geo StartAt:(int)index Length:(int)size
-//{
-//    if (_datasource==nil) {
-//        _datasource=[NSMutableArray array];
-//    }
-//    [netAPI queryNearestUsers:com_id start:index length:size lon:[geo getLon] lat:[geo getLat] withBlock:^(userListModel *userListModel) {
-//        self.navigationItem.title=@"附近的人";
-//        [self hideHud];
-//        [self.collectionView headerEndRefreshing];
-//        [self.collectionView footerEndRefreshing];
-//        if ([[userListModel getStatus] isEqualToNumber:[NSNumber numberWithInt:BASE_SUCCESS]]) {
-//            [_datasource removeAllObjects];
-//            NSLog(@"queryNearestUsers info = %@",[userListModel getInfo]);
-//            [_datasource addObjectsFromArray:[userListModel getuserArray]];
-//            cellNum=[_datasource count];
-//            [self.collectionView reloadData];
-
-//        }
-//        else{
-//            UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"提示" message:[userListModel getInfo] delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:@"重试",nil];
-//            alertView.tag=30001;
-//            [alertView show];
-//        }
-//    }];
-//}
 
 
 -(void)loadData:(NSString*)com_id GeoModel:(geoModel*)geo StartAt:(int)index Length:(int)size
@@ -318,10 +254,7 @@ static  FirstCollectionViewController *thisVC=nil;
         CLLocationDistance distance = MAMetersBetweenMapPoints(point1,point2);
         float kmDistance=distance/1000;
         cell.distanceLabelWithoutUnit.text=[NSString stringWithFormat:@"%.2fkm",kmDistance];
-        //        ALERT(cell.distanceLabelWithoutUnit.text);
-        //    cell.ContentImage.image=[UIImage imageNamed:@"img1"];
-        //    [cell sizeToFit];
-        //设置图片
+
         
         //设置头像
         NSString *imageUrl;
@@ -428,7 +361,6 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
     [self.pageManager resetPageSplitingManager];
     [self startLocationService];
     touchRefresh=YES;
-    //    [self prepareRequestParametersStartAt:1 Length:pageSize];
 }
 
 //下拉加载更多

@@ -53,7 +53,6 @@
             {
                 ALERT(@"没有职位，请先返回发布一个职位");
                 return ;
-                //                [self.navigationController popViewControllerAnimated:YES];
             }
             if (_dataSource==nil) {
                 _dataSource=[NSMutableArray array];
@@ -99,7 +98,7 @@
         for (NSIndexPath *index in _selectedJobArray)
         {
             jobModel *job=[_selectedJobArray objectForKey:index];
-             jobID=[jobID stringByAppendingFormat:@"%@,",[job getjobID] ];
+            jobID=[jobID stringByAppendingFormat:@"%@,",[job getjobID] ];
         }
         jobID=[jobID substringToIndex:[jobID length]];
         NSString *com_id=[[NSUserDefaults standardUserDefaults]objectForKey:CURRENTUSERID];
@@ -111,88 +110,16 @@
                 [MBProgressHUD showSuccess:@"所有邀请已发出" toView:self.view];
             }else
             {
-            NSString *errorstring=[NSString stringWithFormat:@"发送失败，原因:%@",[oprationModel getInfo]];
+                NSString *errorstring=[NSString stringWithFormat:@"发送失败，原因:%@",[oprationModel getInfo]];
                 ALERT(errorstring);
-             
+                
             }
             
             
         }];
         //
-        //        dispatch_group_t group=dispatch_group_create();
-        //        //20s
-        //        dispatch_time_t timeout=dispatch_time(DISPATCH_TIME_NOW, 20000000000);
-        //        ALERT(@"邀请已发送");
-        
-//        //汇总信息
-//        __block int progress=0;
-//        NSUInteger total=[_selectedJobArray count];
-//        [self showHudInView:self.view hint:[NSString stringWithFormat:@"发送邀请中...%d/%lu",progress,(unsigned long)total]];
-//        
-//        __block NSString *errorInfo=@"";
-//        //用Dict的key 的唯一性， 记录失败信息，用于最后拼接
-//        __block NSMutableDictionary *errorInfoDict=[NSMutableDictionary dictionary];
-//        
-//        NSString *com_id=[[NSUserDefaults standardUserDefaults]objectForKey:CURRENTUSERID];
-//        //指示迭代次数
-//        int iteration=0;
-//        for (NSIndexPath *index in _selectedJobArray) {
-//            iteration++;
-//            jobModel *job=[_selectedJobArray objectForKey:index];
-//            [netAPI inviteUserWithEnterpriseId:com_id userId:self.user_id jobId:[job getjobID] withBlock:^(oprationResultModel *oprationModel) {
-//                if ([[oprationModel getStatus]intValue]==BASE_SUCCESS) {
-//                    progress++;
-//                    [self showHudInView:self.view hint:[NSString stringWithFormat:@"发送邀请中...%d/%lu",progress,(unsigned long)total]];
-//                }
-//                else {
-//                    //
-//                    [self hideHud];
-//                    NSString *string=[NSString stringWithFormat:@"%@,",[oprationModel getInfo]];
-//                    //如果改错误不存在，就返回
-//                    if (![[errorInfoDict objectForKey:string] isEqualToString:@"existed"])
-//                    [errorInfoDict setObject:@"existed" forKey:string];
-//                    
-////                    if(![errorInfo isEqualToString:string])
-////                    errorInfo=[errorInfo stringByAppendingString:string];
-//                }
-//                //判断是不请求都发出完了
-//                if(iteration==total){
-//                    [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
-//                if (progress==total && iteration==total) {
-//                    [self hideHud];
-//                    
-//                    [MBProgressHUD showSuccess:@"所有邀请已发送" toView:self.view];
-//                }
-//                else
-//                {
-//                    [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
-//                    //总结Key,去重
-//                    for (NSString *Keystring in [errorInfoDict allKeys]) {
-//                        errorInfo=[errorInfo stringByAppendingString:Keystring];
-//                    }
-//                    NSString *info=[NSString stringWithFormat:@"%d个邀请已发送,%lu个失败,失败详情：%@",progress,(total-progress),errorInfo];
-//                    ALERT(info);
-//                
-//                }
-//                }
-//            }];
-//            
-//        }
-//    }
-    //        dispatch_group_notify(group, dispatch_get_main_queue(), ^{
-    //            if (progress==total) {
-    //                [MBProgressHUD showSuccess:@"所有邀请已发送" toView:self.view];
-    //            }
-    //            else
-    //            {
-    //               [MBProgressHUD showSuccess:[NSString stringWithFormat:@"%d个邀请已发送",progress] toView:self.view];
-    //            }
-    //
-    //        });
-    //        dispatch_group_wait(group, timeout);
-    //        dispatch_release(group);
     }
-        else
+    else
     {
         ALERT(@"请先选择职位");
         return;
@@ -253,7 +180,7 @@
             {
                 cell.selectedFlag=CELLSELECTED;
                 cell.checkIconView.image=[UIImage imageNamed:@"check"];
-            
+                
             }
         }
         

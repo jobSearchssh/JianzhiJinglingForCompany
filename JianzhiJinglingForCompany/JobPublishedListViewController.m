@@ -80,7 +80,7 @@
 //    self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithImage:Nil style:UIBarButtonItemStyleBordered target:self action:@selector(publishNewJob)];
 //    [self.navigationItem.rightBarButtonItem setTitle:@"创建新职位"];
     
-    self.navigationItem.title=@"我的发布";
+    self.navigationItem.title=Btn_MyJob;
     
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -131,7 +131,7 @@
     NSString *com_id=[mySettings objectForKey:@"currentUserObjectId"];
     NSLog(@"com_id:%@",com_id);
     
-    [self showHudInView:self.tableView hint:@"加载中.."];
+    [self showHudInView:self.tableView hint:Text_Loading];
     [netAPI queryEnterpriseJobs:com_id start:start length:length withBlock:^(jobListModel *jobListModel) {
         [self hideHud];
         [self.tableView headerEndRefreshing];
@@ -159,7 +159,7 @@
         else
         {
             [self hideHud];
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:[jobListModel getInfo] delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:@"取消",nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:Text_Note message:[jobListModel getInfo] delegate:nil cancelButtonTitle:Text_OK otherButtonTitles:Text_CancelBtnText,nil];
             [alert show];
         }
     }];
@@ -191,7 +191,10 @@
             cell.jobAddressDetailLabel.text=[job getjobWorkAddressDetail];
             cell.jobUpdateTimeLabel.text=[[job getcreated_at] timeIntervalDescription];
             cell.Job_id=[job  getjobID];
-            cell.recruitNumLabel.text=[NSString stringWithFormat:@"招募:%d/%d",[[job getjobHasAccepted]intValue],[[job getjobRecruitNum]intValue]];
+            
+        
+            
+            cell.recruitNumLabel.text=[NSString stringWithFormat:@"%@:%d/%d",Text_Hired,[[job getjobHasAccepted]intValue],[[job getjobRecruitNum]intValue]];
             NSString *imageurl=[NSString stringWithFormat:@"%@",[job getjobEnterpriseImageURL]];
             if ([imageurl length]>4) {
                 if ([[imageurl substringToIndex:4]isEqualToString:@"http"]) {
@@ -452,12 +455,12 @@
     //  +(void)deleteTheJob:(NSString *)enterprise_id job_id:(NSString *)job_id withBlock:(operationReturnBlock)oprationReturnBlock;
     if (job_id==nil || selectedCellRow<0 || selectedCellRow>=[self.dataSourceArray count]) {
         //处理删除请求
-        ALERT(@"错误,请重试");
+        ALERT(Text_Error);
         return ;
         
     }
     //处理删除请求
-    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:@"确定删除此条职位？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:Text_DeleteJobWarning delegate:self cancelButtonTitle:Text_CancelBtnText otherButtonTitles:Text_ConfirmBrntext, nil];
     alert.tag=60001;
     [alert show];
     selectedJobId=job_id;
@@ -469,12 +472,12 @@
 -(void)doDeleteReq
 {
     if (selectedJobId==nil) {
-        ALERT(@"JobId不存在,请重试");
+        ALERT(Text_JobNotExist);
         return;
     }
     NSUserDefaults *mysettings=[NSUserDefaults standardUserDefaults];
     NSString *com_id=[mysettings objectForKey:CURRENTUSERID];
-    [self showHudInView:self.tableView hint:@"删除中"];
+    [self showHudInView:self.tableView hint:Text_Deleting];
     [netAPI deleteTheJob:com_id job_id:selectedJobId withBlock:^(oprationResultModel *oprationModel) {
         [self hideHud];
         if ([[oprationModel getStatus]isEqualToNumber:[
@@ -484,11 +487,11 @@
                 NSIndexPath *index=[NSIndexPath indexPathForRow:selectedCellRow inSection:0];
                 [self deleteCellAtIndexPath:index];
                 [self.tableView reloadData];
-                ALERT(@"删除成功");
+                ALERT(Text_DeleteSuccess);
             }
             else
             {
-                ALERT(@"列表错误，请重试");
+                ALERT(Text_LoadAfterDeleteError);
             }
         }else
         {

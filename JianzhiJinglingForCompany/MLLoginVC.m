@@ -76,13 +76,11 @@ static  MLLoginVC *thisVC=nil;
 //    self.edgesForExtendedLayout=UIRectEdgeNone;
     //监听登出成功接口
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(logoutSuccessAction) name:@"logoutSuccess"object:nil];
+
     
-    
-//    UINavigationItem *navigationItem = [[UINavigationItem alloc] initWithTitle:nil];
-    
-    [self.navigationItem setTitle:@"兼职精灵企业版"];
+    [self.navigationItem setTitle:Tit_Login];
      UIBarButtonItem *closeButton=[[UIBarButtonItem
-                                    alloc]initWithTitle:@"  返回"  style:UIBarButtonItemStylePlain target:self action:@selector(disMissBtnAction:)];
+                                    alloc]initWithTitle:[NSString stringWithFormat:@"   %@",Text_Back]  style:UIBarButtonItemStylePlain target:self action:@selector(disMissBtnAction:)];
     
     [closeButton setTintColor:[UIColor whiteColor]];
     
@@ -91,7 +89,7 @@ static  MLLoginVC *thisVC=nil;
     
     chooseLoginBtn=[[UIButton alloc] initWithFrame:CGRectMake(0, 64, [[UIScreen mainScreen] bounds].size.width/2, 44)];
     chooseLoginBtn.backgroundColor=[UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1.0];
-    [chooseLoginBtn setTitle:@"登录" forState:UIControlStateNormal];
+    [chooseLoginBtn setTitle:Btn_Login forState:UIControlStateNormal];
     [chooseLoginBtn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
     [chooseLoginBtn addTarget:self action:@selector(chooseLogin) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:chooseLoginBtn];
@@ -99,7 +97,7 @@ static  MLLoginVC *thisVC=nil;
     chooseRegisterBtn=[[UIButton alloc] initWithFrame:CGRectMake([[UIScreen mainScreen] bounds].size.width/2, 64, [[UIScreen mainScreen] bounds].size.width/2, 44)];
     chooseRegisterBtn.backgroundColor=[UIColor darkGrayColor];
     [chooseRegisterBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [chooseRegisterBtn setTitle:@"注册" forState:UIControlStateNormal];
+    [chooseRegisterBtn setTitle:Btn_Regist forState:UIControlStateNormal];
     [chooseRegisterBtn addTarget:self action:@selector(chooseRegister) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:chooseRegisterBtn];
     
@@ -113,14 +111,15 @@ static  MLLoginVC *thisVC=nil;
     
     
     //for check box
-    QCheckBox *_check1 = [[QCheckBox alloc] initWithDelegate:self];
-    _check1.tag=1;
-    _check1.frame = CGRectMake(25, 120, 25, 25);
-    [_check1 setTitle:nil forState:UIControlStateNormal];
-    [_check1 setTitleColor:[UIColor colorWithRed:23.0/255.0 green:87.0/255.0 blue:150.0/255.0 alpha:1.0] forState:UIControlStateNormal];
-    [_check1.titleLabel setFont:[UIFont boldSystemFontOfSize:13.0f]];
-    [self.loginView addSubview:_check1];
-    [_check1 setChecked:YES];
+    //隐藏保存密码
+//    QCheckBox *_check1 = [[QCheckBox alloc] initWithDelegate:self];
+//    _check1.tag=1;
+//    _check1.frame = CGRectMake(25, 120, 25, 25);
+//    [_check1 setTitle:nil forState:UIControlStateNormal];
+//    [_check1 setTitleColor:[UIColor colorWithRed:23.0/255.0 green:87.0/255.0 blue:150.0/255.0 alpha:1.0] forState:UIControlStateNormal];
+//    [_check1.titleLabel setFont:[UIFont boldSystemFontOfSize:13.0f]];
+//    [self.loginView addSubview:_check1];
+//    [_check1 setChecked:YES];
     
     QCheckBox *_check2 = [[QCheckBox alloc] initWithDelegate:self];
     _check2.tag=2;
@@ -151,19 +150,12 @@ static  MLLoginVC *thisVC=nil;
     
 }
 
-//-(void)viewWillLayoutSubviews
-//{
-//
-//    self.loginView.frame=CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, 220);
-//    self.registerView.frame=CGRectMake([[UIScreen mainScreen] bounds].size.width, 0, [[UIScreen mainScreen] bounds].size.width, 330);
-//}
+
 
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-//    self.loginView.frame=CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, 220);
-//    self.registerView.frame=CGRectMake([[UIScreen mainScreen] bounds].size.width, 0, [[UIScreen mainScreen] bounds].size.width, 330);
-//    [self checkLoginStatus];
+
     if (isPushWhenInRegistrationState) {
         [self chooseRegister];
         isPushWhenInRegistrationState=NO;
@@ -171,6 +163,8 @@ static  MLLoginVC *thisVC=nil;
     }
     [self chooseLogin];
 }
+
+#pragma mark 内部方法
 
 -(void)checkLoginStatus
 {
@@ -182,7 +176,7 @@ static  MLLoginVC *thisVC=nil;
         self.logoutBtn.hidden=YES;
         self.userAccount.text=username;
         self.userPassword.text=@"******";
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"确定要退出？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定",nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:Text_Note message:Text_ConfirmLogOut delegate:self cancelButtonTitle:Text_CancelBtnText otherButtonTitles:Text_ConfirmBrntext,nil];
         alert.tag=LogoutAlertViewTag;
         [alert show];
     }else
@@ -239,6 +233,11 @@ static  MLLoginVC *thisVC=nil;
     inputUserPassword=_userPassword.text;
 }
 
+
+
+
+
+#pragma mark Btn触发事件
 - (IBAction)touchLoginBtn:(id)sender {
     
     if ([[NSUserDefaults standardUserDefaults] objectForKey:CURRENTUSERID]!=nil) {
@@ -276,7 +275,7 @@ static  MLLoginVC *thisVC=nil;
             if ([mySettingData objectForKey:CURRENTLOGOURL]) {
                 Urlstring=[mySettingData objectForKey:CURRENTLOGOURL];
             }
-            [_sideMenu setTableItem:0 Title:currentUsrName Subtitle:@"点击退出" ImageUrl:Urlstring];
+            [_sideMenu setTableItem:0 Title:currentUsrName Subtitle:Btn_Logout ImageUrl:Urlstring];
         }
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:Text_LoginSucess message:nil delegate:nil cancelButtonTitle:Text_ConfirmBrntext otherButtonTitles:nil];
         [alert show];
@@ -309,6 +308,8 @@ static  MLLoginVC *thisVC=nil;
         [alert show];
     }
 }
+
+
 
 - (IBAction)phoneEditingChanged:(id)sender {
     if(self.phoneNumber.text.length==11)
@@ -475,8 +476,7 @@ static  MLLoginVC *thisVC=nil;
         {
            alertString=[alertString stringByAppendingString:Text_VMSObsolete];
         }
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:alertString delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-//        [alert show];
+
         [MBProgressHUD showError:alertString toView:self.view];
     }
     
@@ -491,8 +491,6 @@ static  MLLoginVC *thisVC=nil;
         case LogoutAlertViewTag:
             if(buttonIndex==0)
             {
-//                self.logoutBtn.hidden=NO;
-//                self.loginButton.hidden=YES;
             
             }
             if (buttonIndex==1) {
@@ -512,15 +510,7 @@ static  MLLoginVC *thisVC=nil;
     }
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 - (IBAction)logoutBtnAction:(id)sender {
     inputUserAccount=_userAccount.text;

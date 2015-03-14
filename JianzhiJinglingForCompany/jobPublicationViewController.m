@@ -214,7 +214,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     collectionViewDataArray=nil;
     workPlaceFlag=FALSE;
     self.mainScrollView.delegate=self;
-    [self.navigationItem setTitle:@"发布职位"];
+    [self.navigationItem setTitle:Tit_PublishJob];
     
     // Do any additional setup after loading the view from its nib.
     //初始化空着野指针
@@ -226,11 +226,12 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     [sourceImages addObject:[UIImage imageNamed:@"2.jpg"]];
     
 //    typeSelectedDict=@{@"模特/礼仪":@"0", @"促销/导购":@"1", @"销售":@"2" ,@"传单派发":@"3" ,@"安保":@"4" ,@"钟点工":@"5", @"法律事务":@"6", @"服务员":@"7" ,@"婚庆":@"8", @"配送/快递":@"9", @"化妆":@"10", @"护工/保姆":@"11", @"演出":@"12", @"问卷调查":@"13", @"志愿者":@"14" ,@"网络营销":@"15" ,@"导游":@"16", @"游戏代练":@"17", @"家教":@"18", @"软件/网站开发":@"19", @"会计":@"20", @"平面设计/制作":@"21", @"翻译":@"22", @"装修":@"23", @"影视制作":@"24", @"搬家":@"25", @"其他":@"26"};
-    typeSelectedDict=[[GlobalConstant alloc]init].jobTypeDict;
+    GlobalConstant *globalClass=[GlobalConstant shareInstance];
+    typeSelectedDict=globalClass.jobTypeDict;
     
-    eduDict=@{@"不限":@"1",@"初中及以下":@"2",@"高中":@"3",@"大专":@"4",@"本科":@"5",@"硕士":@"6",@"博士及以上":@"7"};
+    eduDict=globalClass.eduTypeDict;
     
-    paymentSelectedDict=@{@"日结":@"0",@"周结":@"1",@"月结":@"2",@"项目结":@"3"};
+    paymentSelectedDict=globalClass.payTypeDict;
     
     
     //第一项
@@ -280,7 +281,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     
     
     self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithImage:Nil style:UIBarButtonItemStyleBordered target:self action:@selector(editJob)];
-    [self.navigationItem.rightBarButtonItem setTitle:@"编辑"];
+    [self.navigationItem.rightBarButtonItem setTitle:Btn_Edit];
     self.navigationItem.rightBarButtonItem.enabled=self.editButtonEnable;
     
     //第四项
@@ -309,7 +310,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     //添加PickView 响应时间
     _radio_male = [[QRadioButton alloc] initWithDelegate:self groupId:@"groupId1"];
     _radio_male.frame = CGRectMake(self.genderLabel.frame.origin.x+self.genderLabel.frame.size.width+10, self.genderLabel.frame.origin.y-10, 50, 40);
-    [_radio_male setTitle:@"男" forState:UIControlStateNormal];
+    [_radio_male setTitle:Btn_Male forState:UIControlStateNormal];
     [_radio_male setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
     [_radio_male.titleLabel setFont:[UIFont boldSystemFontOfSize:13.0f]];
     [self.jobInfo4View addSubview:_radio_male];
@@ -317,13 +318,13 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     
     _radio_female = [[QRadioButton alloc] initWithDelegate:self groupId:@"groupId1"];
     _radio_female.frame = CGRectMake(_radio_male.frame.origin.x+_radio_male.frame.size.width, self.genderLabel.frame.origin.y-10, 50, 40);
-    [_radio_female setTitle:@"女" forState:UIControlStateNormal];
+    [_radio_female setTitle:Btn_Female forState:UIControlStateNormal];
     [_radio_female setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
     [_radio_female.titleLabel setFont:[UIFont boldSystemFontOfSize:13.0f]];
     [self.jobInfo4View addSubview:_radio_female];
     _radio_noDemand = [[QRadioButton alloc] initWithDelegate:self groupId:@"groupId1"];
     _radio_noDemand.frame = CGRectMake(_radio_female.frame.origin.x+_radio_female.frame.size.width, self.genderLabel.frame.origin.y-10, 50, 40);
-    [_radio_noDemand setTitle:@"不限" forState:UIControlStateNormal];
+    [_radio_noDemand setTitle:Btn_NoLimit forState:UIControlStateNormal];
     [_radio_noDemand setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
     [_radio_noDemand.titleLabel setFont:[UIFont boldSystemFontOfSize:13.0f]];
     [self.jobInfo4View addSubview:_radio_noDemand];
@@ -333,7 +334,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     if(PublishedJob==self.viewStatus)
     {
         //如果是查看已发布的页面走这里初始化
-        self.navigationItem.title=@"历史发布";
+        self.navigationItem.title=Tit_JobHistory;
         //        self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithImage:Nil style:UIBarButtonItemStyleBordered target:self action:@selector(editJob)];
         //        [self.navigationItem.rightBarButtonItem setTitle:@"修改"];
         
@@ -382,7 +383,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         self.publishBtn.hidden=YES;
         self.publishedAgainBtn.hidden=NO;
         self.publishedAgainBtn.enabled=NO;
-        [self.publishedAgainBtn setTitle:@"先编辑，再发布" forState:UIControlStateNormal];
+        [self.publishedAgainBtn setTitle:Btn_EditBefore forState:UIControlStateNormal];
     }else
     {
         self.publishBtn.hidden=NO;
@@ -408,9 +409,9 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 //加载网络请求，加载新提交的job
 -(void)publishedJobLoadData
 {
-    [self showHudInView:self.view hint:@"正在加载中"];
+    [self showHudInView:self.view hint:Text_Loading];
     if (self.publishedJob==nil) {
-        ALERT(@"错误");
+        ALERT(Text_Error);
         return;
     }
     [self updateViewWhenGetDataSuccessful:self.publishedJob];
@@ -505,16 +506,16 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     NSLog(@"%@",_radio_female.checked==YES?@"YES":@"NO");
     NSLog(@"%@",_radio_male.checked==YES?@"YES":@"NO");
     NSLog(@"%@",_radio_noDemand.checked==YES?@"YES":@"NO");
-    if ([[job getjobGenderReq] isEqualToNumber:[NSNumber numberWithInt:0]])
+    if ([[job getjobGenderReq] isEqualToNumber:[NSNumber numberWithInt:1]])
     {//男
         [_radio_male setChecked:TRUE];
         
     }
-    else if([[job getjobGenderReq] isEqualToNumber:[NSNumber numberWithInt:1]])
+    else if([[job getjobGenderReq] isEqualToNumber:[NSNumber numberWithInt:2]])
     {//女
         [_radio_female setChecked:YES];
     }
-    else if([[job getjobGenderReq] isEqualToNumber:[NSNumber numberWithInt:2]])
+    else if([[job getjobGenderReq] isEqualToNumber:[NSNumber numberWithInt:0]])
     {//不限
         [_radio_noDemand setChecked:YES];
     }else
@@ -682,111 +683,111 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 {
     BOOL flag=false;
     if (nowGeo==nil) {
-        ALERT(@"缺少定位信息，请重新点击定位");
+        ALERT(Text_LocateErrorAndRetry);
         return flag;
     }
     //检查 Title
     if (self.jobTitleTextField.text==nil) {
-        ALERT(@"标题不完整");
+        ALERT(Text_NoTitle);
         return flag;
     }
     if (self.beginTimeLabel.text==nil) {
-        ALERT(@"开始时间不完整");
+        ALERT(Text_NoBeginTime);
         return flag;
     }
     if (self.endTimeLabel.text==nil) {
-        ALERT(@"工作时间不完整");
+        ALERT(Text_NoEndTime);
         return flag;
     }if (self.typeLabel.text==nil || TypeString==nil) {
-        ALERT(@"工作类型不完整");
+        ALERT(Text_NoJobType);
         return flag;
     }
     //检验数字
     if (self.wantedNumTextField.text==nil) {
-        ALERT(@"招募数量不完整");
+        ALERT(Text_NoJobRecruit);
         return flag;
     }else if(![RegexTest isIntNumber:self.wantedNumTextField.text]){
-        ALERT(@"招募数量有错误");
+        ALERT(Text_NoJobRecruit);
         return flag;
     }
     if(self.salaryTextField.text==nil)
     {
-        ALERT(@"薪资输入不完整");
+        ALERT(Text_NoJobSalary);
         return flag;
         
     }else if(![RegexTest isIntNumber:self.salaryTextField.text])
     {
-        ALERT(@"输入有错误");
+        ALERT(Text_NoJobSalary);
         return flag;
     }
     
     if (self.paymentMethodLabel.text==nil || paywayString==nil) {
-        ALERT(@"结算方式不完整");
+        ALERT(Text_NoJobPayType);
         return flag;
     }
     
     if (self.jobDescriptTextField.text==nil) {
-        ALERT(@"工作描述不完整");
+        ALERT(Text_NoJobDesc);
         return flag;
     }
     
     
     if (self.ageTextField.text==nil | self.ageMaxTextField.text==nil) {
-        ALERT(@"年龄输入有错误");
+        ALERT(Text_NoJobAge);
         return flag;
     }else if(![RegexTest isIntNumber:self.ageTextField.text] || ![RegexTest isIntNumber:self.ageMaxTextField.text])
     {
-        ALERT(@"年龄有错误，请输入数字");
+        ALERT(Text_NoJobAge);
         return flag;
     }
     
     if (self.heightTextField.text==nil | self.heightMaxTextField.text==nil) {
-        ALERT(@"身高资料不完整");
+        ALERT(Text_NoJobHeight);
         return flag;
     }
     else if(![RegexTest isIntNumber:self.heightTextField.text]||![RegexTest isIntNumber:self.heightMaxTextField.text])
     {
-        ALERT(@"身高请输入数字,请仔细检查");
+        ALERT(Text_NoJobHeight);
         return flag;
     }
     
     
     if(self.eduTitleLabel.text==nil || eduString==nil)
     {
-        ALERT(@"教育资料不完整");
+        ALERT(Text_NoJobEdu);
         return flag;
     }
     
     if(self.contactPersonLabel.text==nil)
     {
-        ALERT(@"资料不完整");
+        ALERT(Text_NoDetail);
         return flag;
     }
     
     if (self.contactPhone.text==nil) {
-        ALERT(@"资料不完整");
+        ALERT(Text_NoDetail);
         return flag;
     }else if(![RegexTest isIntNumber:self.contactPhone.text])
     {
-        ALERT(@"电话输入有错误,请仔细检查");
+        ALERT(Text_NoDetail);
         return flag;
     }
     if (self.addressTextField.text==nil) {
-        ALERT(@"工作地址不完整");
+        ALERT(Text_NoDetail);
         return flag;
     }
     
     if (!workTimeFlag ||collectionViewDataArray==nil) {
-        ALERT(@"请设置工作时间");
+        ALERT(Text_NoWorkTime);
         return flag;
     }
     
     if (self.jobDescriptTextField.text==nil) {
-        ALERT(@"请输入工作描述");
+        ALERT(Text_NoJobDesc);
         return flag;
     }
     if (!workPlaceFlag) {
-        ALERT(@"请输入工作位置");
+        ALERT(Text_NoJobLocation);
         return flag;
     }
     
@@ -811,7 +812,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     NSString *com_id=[mysettings objectForKey:@"currentUserObjectId"];
     
     if (com_id==nil) {
-        ALERT(@"请先登录");
+        ALERT(Text_NotLogin);
         return;
     }
     
@@ -823,7 +824,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     [newJob setenterprise_id:com_id];
     [self.thisJob setenterprise_id:com_id];
     if (![self checkFromBeforeUpLoad]) {
-        ALERT(@"上传失败，数据输入错误");
+        ALERT(Text_loadError);
         return;
     }
     
@@ -952,7 +953,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 //            [self.thisJob getBaseString]
             NSLog(@"BaseString: %@",[self.thisJob getBaseString]);
         
-            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"确认发布职位" delegate:self cancelButtonTitle:@"再看看" otherButtonTitles:@"发布", nil];
+            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:Text_Note message:Text_PublishConfirm delegate:self cancelButtonTitle:Text_CancelBtnText otherButtonTitles:Text_ConfirmBrntext, nil];
             alert.tag=12301;
             [alert show];
         }
@@ -969,7 +970,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 -(void)doPublishTemplate
 {
-    [self showHudInView:self.mainScrollView hint:@"发布中.."];
+    [self showHudInView:self.mainScrollView hint:Text_Commiting];
     [netAPI createJobTemplate:self.thisJob withBlock:^(oprationResultModel *oprationModel) {
         [self hideHud];
         if ([[oprationModel getStatus]isEqualToNumber:[NSNumber numberWithInt:BASE_SUCCESS]]) {
@@ -990,12 +991,12 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 -(void)doPublishJob
 {
-    [self showHudInView:self.mainScrollView hint:@"发布中.."];
+    [self showHudInView:self.mainScrollView hint:Text_Commiting];
     [netAPI createJob:self.thisJob withBlock:^(oprationResultModel *oprationModel) {
         [self hideHud];
         if ([[oprationModel getStatus]isEqualToNumber:[NSNumber numberWithInt:BASE_SUCCESS]]) {
             NSLog(@"新建job id = %@",[oprationModel getOprationID]);
-            ALERT(@"发布成功，请前往“我的发布”中查看！");
+            ALERT(Text_PublishSuccess);
 #warning （待完成）职位发布完成后操作，比如设置下我的发布列表；通知更新
             [self.navigationController popToRootViewControllerAnimated:YES];
 //            RESideMenu *sideMune=[RESideMenu sharedInstance];
@@ -1004,7 +1005,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         else
         {
             NSLog(@"新建job id = %@",[oprationModel getOprationID]);
-            NSString *errorString=[NSString stringWithFormat:@"发布失败,原因:%@",[oprationModel getInfo]];
+            NSString *errorString=[NSString stringWithFormat:@"error:%@",[oprationModel getInfo]];
             ALERT(errorString);
         }
     }];
@@ -1110,13 +1111,8 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 -(void)datePickerInitwithTag:(NSInteger)tag
 {
     
-    //设置默认显示的时间
-    //    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDate *now;
-    //    NSDateComponents *comps = [[NSDateComponents alloc] init];
-    //    NSInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit;
     now=[NSDate date];
-    //    comps = [calendar components:unitFlags fromDate:now];
     self.datePicker=[[ZHPickView alloc]initDatePickWithDate:now datePickerMode:UIDatePickerModeDate isHaveNavControler:NO];
     self.datePicker.tag=tag;
     self.datePicker.delegate=self;
@@ -1138,7 +1134,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
             BeginTime=[dateformatter dateFromString:result];
             if (endTime!=nil) {
                 if ([endTime isEarlierThanDate:BeginTime]) {
-                    ALERT(@"提示:工作结束时间早于开始时间");
+                    ALERT(Text_EndBeforeBegin);
                     break;
                 }
             }
@@ -1149,7 +1145,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         {
             NSString *result=[resultString substringToIndex:(resultString.length-15)];
             if (BeginTime==nil) {
-                ALERT(@"请先选择开始时间");
+                ALERT(Text_NoBeginTime);
                 break;
             }
             NSDateFormatter *dateformatter=[[NSDateFormatter alloc]init];
@@ -1157,7 +1153,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
             endTime=[dateformatter dateFromString:result];
             
             if ([endTime isEarlierThanDate:BeginTime]) {
-                ALERT(@"提示:工作结束时间早于开始时间");
+                ALERT(Text_EndBeforeBegin);
                 break;
             }
             self.endTimeLabel.text=result;
@@ -1219,9 +1215,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 -(void)eduPickViewInitWithTag:(NSInteger)tag
 {
-    if(eduDict==nil) eduDict=@{@"不限":@"1",@"初中及以下":@"2",@"高中":@"3",@"大专":@"4",@"本科":@"5",@"硕士":@"6",@"博士及以上":@"7"};
-    
-    
+
     NSArray *keywordArray=[eduDict allKeys];
     self.datePicker=[[ZHPickView alloc]initPickviewWithArray:keywordArray isHaveNavControler:NO];
     self.datePicker.tag=tag;
@@ -1241,14 +1235,14 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 - (void)didSelectedRadioButton:(QRadioButton *)radio groupId:(NSString *)groupId {
     NSLog(@"did selected radio:%@ groupId:%@", radio.titleLabel.text, groupId);
     gender=1;
-    if ([radio.titleLabel.text isEqualToString:@"男"]) {
-        [self.thisJob setjobGenderReq:0];
-    }
-    else if ([radio.titleLabel.text isEqualToString:@"女"]) {
+    if ([radio.titleLabel.text isEqualToString:Btn_Male]) {
         [self.thisJob setjobGenderReq:1];
     }
-    else if ([radio.titleLabel.text isEqualToString:@"不限"]) {
+    else if ([radio.titleLabel.text isEqualToString:Btn_Female]) {
         [self.thisJob setjobGenderReq:2];
+    }
+    else if ([radio.titleLabel.text isEqualToString:Btn_NoLimit]) {
+        [self.thisJob setjobGenderReq:0];
     }
 }
 
@@ -1271,9 +1265,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 -(void)typePickViewInitWithTag:(NSInteger)tag
 {
-    if (typeSelectedDict==nil) {
-        typeSelectedDict=@{@"模特/礼仪":@"0", @"促销/导购":@"1", @"销售":@"2" ,@"传单派发":@"3" ,@"安保":@"4" ,@"钟点工":@"5", @"法律事务":@"6", @"服务员":@"7" ,@"婚庆":@"8", @"配送/快递":@"9", @"化妆":@"10", @"护工/保姆":@"11", @"演出":@"12", @"问卷调查":@"13", @"志愿者":@"14" ,@"网络营销":@"15" ,@"导游":@"16", @"游戏代练":@"17", @"家教":@"18", @"软件/网站开发":@"19", @"会计":@"20", @"平面设计/制作":@"21", @"翻译":@"22", @"装修":@"23", @"影视制作":@"24", @"搬家":@"25", @"其他":@"26"};
-    }
+    
     NSArray *keywordArray=[typeSelectedDict allKeys];
     self.datePicker=[[ZHPickView alloc]initPickviewWithArray:keywordArray isHaveNavControler:NO];
     self.datePicker.tag=tag;
@@ -1352,8 +1344,8 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 -(void)errorHideHudAfterDelay
 {
     [self hideHud];
-    ALERT(@"请求超时");
-    self.jobPlaceLabel.titleLabel.text=@"请手动选择";
+//    ALERT(@"请求超时");
+    self.jobPlaceLabel.titleLabel.text=Text_HandleChoice;
     
 }
 
@@ -1378,7 +1370,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 }
 
 -(void)editJob{
-    ALERT(@"开始编辑");
+    ALERT(Text_EditBegin);
     [self canEditMode];
 }
 
@@ -1390,9 +1382,9 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     UIActionSheet *actionSheet = [[UIActionSheet alloc]
                                   initWithTitle:Nil
                                   delegate:self
-                                  cancelButtonTitle:@"取消"
+                                  cancelButtonTitle:Text_CancelBtnText
                                   destructiveButtonTitle:Nil
-                                  otherButtonTitles:@"选择本地图片",@"拍照",nil];
+                                  otherButtonTitles:Text_ChoosePhoto,Text_TakingPhoto,nil];
     actionSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
     actionSheet.tag = 0;
     [actionSheet showInView:self.view];
@@ -1405,9 +1397,9 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     UIActionSheet *actionSheet = [[UIActionSheet alloc]
                                   initWithTitle:Nil
                                   delegate:self
-                                  cancelButtonTitle:@"取消"
+                                  cancelButtonTitle:Text_Cancelling
                                   destructiveButtonTitle:Nil
-                                  otherButtonTitles:@"选择本地图片",@"拍照",nil];
+                                  otherButtonTitles:Text_ChoosePhoto,Text_TakingPhoto,nil];
     actionSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
     actionSheet.tag = 0;
     [actionSheet showInView:self.view];
@@ -1436,7 +1428,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
                 imagePickerController.allowsEditing = TRUE;
                 [self presentViewController:imagePickerController animated:YES completion:^{}];
             }else{
-                UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:@"提示" message:@"无法使用照相功能" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+                UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:Text_Note message:Text_NoCamera delegate:nil cancelButtonTitle:Text_OK otherButtonTitles:nil];
                 [alterTittle show];
             }
             return;
@@ -1493,46 +1485,15 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     picker = Nil;
     [self dismissModalViewControllerAnimated:YES];
     if (![self writeImageToDoc:image]) {
-        UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:@"提示" message:@"写入文件夹错误,请重试" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+        UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:Text_Note message:Text_FileWriteError delegate:nil cancelButtonTitle:Text_OK otherButtonTitles:nil];
         [alterTittle show];
     }else{
-        //添加图片
-        //        imageButton *btnPic=[[imageButton alloc]initWithFrame:CGRectMake(-PIC_WIDTH, INSETS, PIC_WIDTH, PIC_HEIGHT)];
-        //        btnPic.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-        //        btnPic.titleLabel.font = [UIFont systemFontOfSize:13];
-        //        UIImage *darkTemp = [temp rt_darkenWithLevel:0.5f];
-        //        [btnPic setBackgroundImage:darkTemp forState:UIControlStateNormal];
-        //        [btnPic setFrame:CGRectMake(-PIC_WIDTH, INSETS, PIC_WIDTH, PIC_HEIGHT)];
-        //        [addedPicArray addObject:btnPic];
-        //        [btnPic setRestorationIdentifier:[NSString stringWithFormat:@"%lu",(unsigned long)addedPicArray.count-1]];
-        //        [btnPic addTarget:self action:@selector(deletePicAction:) forControlEvents:UIControlEventTouchUpInside];
-        //        [btnPic setStatus:uplaoding];
-        //        [self.picScrollView addSubview:btnPic];
-        //
-        //        for (imageButton *btn in addedPicArray) {
-        //            CABasicAnimation *positionAnim=[CABasicAnimation animationWithKeyPath:@"position"];
-        //            [positionAnim setFromValue:[NSValue valueWithCGPoint:CGPointMake(btn.center.x, btn.center.y)]];
-        //            [positionAnim setToValue:[NSValue valueWithCGPoint:CGPointMake(btn.center.x+INSETS+PIC_WIDTH, btn.center.y)]];
-        //            [positionAnim setDelegate:self];
-        //            [positionAnim setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
-        //            [positionAnim setDuration:0.25f];
-        //            [btn.layer addAnimation:positionAnim forKey:nil];
-        //
-        //            [btn setCenter:CGPointMake(btn.center.x+INSETS+PIC_WIDTH, btn.center.y)];
-        //        }
-        //        [self refreshScrollView];
-        
-        //        if ([addedPicArray count]>1)
-        //        {
-        //            ALERT(@"请选择一张图片");
-        //            return;
-        //        }
-        self.logoImageView.image=temp;
+            self.logoImageView.image=temp;
         //上传图片
         [BmobFile filesUploadBatchWithPaths:@[fileTempPath]
                               progressBlock:^(int index, float progress) {
                                   dispatch_async(dispatch_get_main_queue(), ^{
-                                      [self showHudInView:self.view hint:[NSString stringWithFormat:@"上传:%ld％",(long)(progress*100)]];
+                                      [self showHudInView:self.view hint:[NSString stringWithFormat:@"Loading:%ld％",(long)(progress*100)]];
                                       if (progress==1) {
                                           [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
                                       }
@@ -1548,20 +1509,20 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
                                               dispatch_async(dispatch_get_main_queue(), ^{
                                                   
                                                   [self.thisJob setjobEnterpriseImageURL:imageTemp];
-                                                  [MBProgressHUD showError:@"上传成功" toView:self.view];
+                                                  [MBProgressHUD showError:Text_Success toView:self.view];
                                               });
                                           }else{
                                               [self hideHud];
                                               dispatch_async(dispatch_get_main_queue(), ^{
                                                   [self.thisJob setjobEnterpriseImageURL:@"null"];
-                                                  [MBProgressHUD showError:@"上传失败" toView:self.view];
+                                                  [MBProgressHUD showError:Text_Failed toView:self.view];
                                               });
                                           }
                                       }
                                   }else{
                                       dispatch_async(dispatch_get_main_queue(), ^{
                                           [self.thisJob setjobEnterpriseImageURL:@"null"];
-                                          [MBProgressHUD showError:@"上传失败" toView:self.view];
+                                          [MBProgressHUD showError:Text_Failed toView:self.view];
                                       });
                                   }
                               }];
@@ -1676,15 +1637,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     self.locatePicker = nil;
 }
 
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 -(void)cannotEditMode
 {
@@ -1711,11 +1663,10 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     self.jobInfo3View.userInteractionEnabled=YES;
     self.jobInfo4View.userInteractionEnabled=YES;
     self.jobInfo6View.userInteractionEnabled=YES;
-    [self.publishedAgainBtn setTitle:@"再次发布" forState:UIControlStateNormal];
+    [self.publishedAgainBtn setTitle:Btn_PublishAgain forState:UIControlStateNormal];
 }
 
 - (IBAction)publisedAgainAction:(id)sender {
-    //    ALERT(@"再次发布");
     if ([self checkFromBeforeUpLoad]) {
         [self preparePublish:1];
     }

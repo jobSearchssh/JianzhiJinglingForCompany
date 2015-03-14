@@ -40,7 +40,7 @@
 
 -(void)noProfileHandler
 {
-    UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"提示" message:@"您还未填写企业信息，为了不影响您使用，请先去补充？" delegate:self cancelButtonTitle:@"再看看" otherButtonTitles:@"马上去", nil];
+    UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:Text_Note message:Text_NotSettingProfileNote delegate:self cancelButtonTitle:Text_CancelBtnText otherButtonTitles:Text_OK, nil];
     alertView.tag=settingsAlertTag;
     [alertView show];
 }
@@ -48,7 +48,7 @@
 
 -(void)unLoginHandler
 {
-    UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:nil message:@"还未登录，请先登录" delegate:self cancelButtonTitle:@"再看看" otherButtonTitles:@"马上去", nil];
+    UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:nil message:Text_NotLogin delegate:self cancelButtonTitle:Text_CancelBtnText otherButtonTitles:Text_ConfirmBrntext, nil];
     alertView.tag=loginAlertTag;
     [alertView show];
 }
@@ -69,23 +69,12 @@
         case settingsAlertTag:
         {
             if (buttonIndex==selectOK) {
-               
-                ALERT(@"设置资料");
-        
-                
             }
             break;
         }
         default:
             break;
     }
-    
-    
-}
-
-
-+(void)timeOut
-{
     
     
 }

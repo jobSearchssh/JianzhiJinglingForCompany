@@ -85,11 +85,11 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         
     }else if (buttonIndex == 1) {
         if ([LoginManager isOrNotLogin]==NO) {
-            ALERT(@"请先登录");
+            ALERT(Text_NotLogin);
             return;
         }
         if ([LoginManager isOrNotSettingComProfile]==NO) {
-            ALERT(@"请先到“企业详请“编辑企业信息，再发布职位!");
+            ALERT(Text_NoCompanyDetail);
             return;
         }
         jobPublicationViewController *newJobVC=[[jobPublicationViewController alloc]init];
@@ -177,7 +177,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     previewVedioVC *vc = [[previewVedioVC alloc]init];
     vc.vedioPath = [self.userModel getuserVideoURL];
     vc.type = [NSNumber numberWithInt:preview];
-    vc.title = @"我的视频介绍";
+    vc.title = Text_NoVedio;
     vc.hidesBottomBarWhenPushed=YES;
     [self.navigationController pushViewController:vc animated:YES];
 }
@@ -208,7 +208,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         //设置姓名
         self.jobTitleLabel.text=[NSString stringWithFormat:@"%@",[self.userModel getuserName]];
         //设置性别
-        if ([[self.userModel getuserGender]intValue]==0) {
+        if ([[self.userModel getuserGender]intValue]==1) {
             self.genderLogoImage.image=[UIImage imageNamed:@"resume_male"];
         }else
         {
@@ -224,7 +224,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         //设置距离
         geoModel *usergeo=[self.userModel getuserLocationGeo];
         
-        self.jobDistanceLabel.text=[NSString stringWithFormat:@"%.2f",[userModel getDistance:@[[NSNumber numberWithDouble:[usergeo getLat]],[NSNumber numberWithDouble:[usergeo getLon]]]]];
+        self.jobDistanceLabel.text=[NSString stringWithFormat:@"%.2fkm",[userModel getDistance:@[[NSNumber numberWithDouble:[usergeo getLat]],[NSNumber numberWithDouble:[usergeo getLon]]]]];
         
         //设置时间戳
         self.jobPublishTimeLabel.text=[[self.userModel getUpdateAt]timeIntervalDescription];
@@ -280,7 +280,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     if (cell == nil) {
         cell = [[freeselectViewCell alloc]init];
     }
-    //[[cell imageView]setFrame:CGRectMake(0, 0, freecellwidth, freecellwidth)];
+ 
     if (indexPath.row>=0 && indexPath.row<7) {
         cell.imageView.image = [selectfreetimetitleArray objectAtIndex:indexPath.row];
     }
@@ -317,14 +317,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     // Dispose of any resources that can be recreated.
 }
 
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
+
 
 @end

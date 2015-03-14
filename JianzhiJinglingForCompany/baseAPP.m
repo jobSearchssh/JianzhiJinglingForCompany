@@ -31,6 +31,10 @@ static NSString *usrID;
     return usrID;
 }
 
+/**
+ 获取当前NSOperationQueue
+ 单例实现
+ **/
 +(NSOperationQueue *)getBaseNSOperationQueue{
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
